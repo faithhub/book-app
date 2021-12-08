@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -16,15 +17,6 @@ class AuthController extends Controller
     {
         try {
             if ($_POST) {
-                $data = array(
-                    'name' => $request->name,
-                    'username' => $request->username,
-                    'email' => $request->email,
-                    'mobile' => $request->mobile,
-                    'password' => Hash::make($request->password),
-                    'gender' => $request->gender,
-                    'dob' => $request->dob,
-                );
 
                 $rules = array(
                     'name' => ['required', 'max:255'],
@@ -54,9 +46,20 @@ class AuthController extends Controller
                     Session::flash('error', 'Error fill your data appropriately');
                     return back()->withErrors($validator)->withInput();
                 }
+                
+                $data = array(
+                    'name' => $request->name,
+                    'username' => $request->username,
+                    'email' => $request->email,
+                    'mobile' => $request->mobile,
+                    'password' => Hash::make($request->password),
+                    'gender' => $request->gender,
+                    'dob' => $request->dob,
+                );
+
                 User::create($data);
                 Session::flash('success', 'Registered successfully');
-                return route('user.login');
+                return redirect()->route('user.login');
             } else {
                 $data['title'] = "User Registration Page";
                 return view('user.auth.register', $data);
@@ -71,10 +74,6 @@ class AuthController extends Controller
     {
         try {
             if ($_POST) {
-                $data = array(
-                    'username' => $request->username,
-                    'password' => $request->password,
-                );
 
                 $rules = array(
                     'username' => ['required'],
@@ -93,6 +92,19 @@ class AuthController extends Controller
                     Session::flash('error', 'Error fill your data appropriately');
                     return back()->withErrors($validator)->withInput();
                 }
+                
+                $data = array(
+                    'username' => $request->username,
+                    'password' => $request->password,
+                );
+                if(!Auth::attempt($data)){
+                    Session::flash('error', 'Incorrect Credentials');
+                    return back();
+                }
+
+                dd(Auth::user());
+
+                // return redirect()->route('user.dashboard');
 
                 Session::flash('success', 'Registered successfully');
                 return route('user.login');
@@ -104,5 +116,11 @@ class AuthController extends Controller
             Session::flash('error', $th->getMessage());
             return back();
         }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('user.login');
     }
 }

@@ -19,7 +19,7 @@
     <!-- Responsive CSS -->
     <!-- <link rel="stylesheet" href="{{ asset('css/responsive.css') }}"> -->
 </head>
-@include('user.layouts.alert')
+@include('user.layouts.includes.alert')
 <style>
     .card {
         margin: 5rem;

@@ -19,7 +19,7 @@
     <!-- Responsive CSS -->
     <!-- <link rel="stylesheet" href="{{ asset('css/responsive.css') }}"> -->
 </head>
-@include('user.layouts.alert')
+@include('user.layouts.includes.alert')
 <style>
     .card {
         margin: 5rem;
@@ -100,10 +100,10 @@
                         <div class="row g-2 mb-4">
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <select class="form-select" id="floatingSelectGridGender" aria-label="Floating label select example">
+                                    <select class="form-select" name="gender" id="floatingSelectGridGender" aria-label="Floating label select example">
                                         <option selected>Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
+                                        <option value="Male" {{ old('gender') == 'Male' ? "selected" : '' }}>Male</option>
+                                        <option value="Female" {{ old('gender') == 'Female' ? "selected" : '' }}>Female</option>
                                     </select>
                                     <label for="floatingSelectGridGender">Gender</label>
                                     @error('gender')
@@ -128,7 +128,7 @@
                         <div class="row g-2 mb-4">
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="password" class="form-control" name="password" value="{{ old('password') }}" id="floatingInputGridFullpassword">
+                                    <input type="password" class="form-control" name="password" id="floatingInputGridFullpassword">
                                     <label for="floatingInputGridFullpassword">Password</label>
                                     @error('password')
                                     <span class="invalid-feedback" role="alert" style="display: block">
