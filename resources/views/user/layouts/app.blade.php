@@ -5,13 +5,15 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Booksto - Responsive Bootstrap 4 Admin Dashboard Template</title>
+    <title>Virtual Law Library - {{ $title ?? '' }}</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('logos/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('logos/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('logos/favicon.png') }}">
     <!-- Favicon -->
     @include('user.layouts.includes.style')
 </head>
 
 <body>
-    <!-- loader Start -->
     <div id="loading">
         <div id="loading-center">
         </div>

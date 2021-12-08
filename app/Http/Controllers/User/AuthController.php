@@ -120,7 +120,14 @@ class AuthController extends Controller
 
     public function logout()
     {
-        Auth::logout();
-        return redirect()->route('user.login');
+        dd(Auth::user());
+        if(Auth::user()) // this means that the admin was logged in.
+        {
+            dd(Auth::user());
+            // Auth::guard('admin')->logout();
+            // return redirect()->route('admin.login');
+        }
+        // Auth::logout();
+        // return redirect()->route('user.login');
     }
 }

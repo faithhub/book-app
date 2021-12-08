@@ -8,9 +8,9 @@
                         </div>
                         <div class="iq-navbar-logo d-flex justify-content-between">
                             <a href="index.html" class="header-logo">
-                                <img src="images/logo.png" class="img-fluid rounded-normal" alt="">
+                                <img src="{{ asset('logos/logo.png') }}" class="img-fluid rounded-normal" alt="">
                                 <div class="logo-title">
-                                    <span class="text-primary text-uppercase">Booksto</span>
+                                    <span class="text-primary text-uppercase">VLL AFRICA</span>
                                 </div>
                             </a>
                         </div>
@@ -24,12 +24,12 @@
                             </ul>
                         </nav>
                     </div>
-                    <div class="iq-search-bar">
+                    <!-- <div class="iq-search-bar">
                         <form action="#" class="searchbox">
                             <input type="text" class="text search-input" placeholder="Search Here...">
                             <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                         </form>
-                    </div>
+                    </div> -->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
                         <i class="ri-menu-3-line"></i>
                     </button>
@@ -113,7 +113,6 @@
                             </li>
                             <li class="line-height pt-3">
                                 <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
-                                    <img src="images/user/1.jpg" class="img-fluid rounded-circle mr-3" alt="user">
                                     <div class="caption">
                                         <h6 class="mb-1 line-height">Barry Tech</h6>
                                         <p class="mb-0 text-primary">$20.32</p>
@@ -126,7 +125,7 @@
                                                 <h5 class="mb-0 text-white line-height">Hello Barry Tech</h5>
                                                 <span class="text-white font-size-12">Available</span>
                                             </div>
-                                            <a href="profile.html" class="iq-sub-card iq-bg-primary-hover">
+                                            <a href="{{ route('user.profile') }}" class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">
                                                         <i class="ri-file-user-line"></i>
@@ -137,41 +136,19 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="profile-edit.html" class="iq-sub-card iq-bg-primary-hover">
-                                                <div class="media align-items-center">
-                                                    <div class="rounded iq-card-icon iq-bg-primary">
-                                                        <i class="ri-profile-line"></i>
-                                                    </div>
-                                                    <div class="media-body ml-3">
-                                                        <h6 class="mb-0 ">Edit Profile</h6>
-                                                        <p class="mb-0 font-size-12">Modify your personal details.</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="account-setting.html" class="iq-sub-card iq-bg-primary-hover">
+                                            <a href="{{ route('user.change.password') }}" class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">
                                                         <i class="ri-account-box-line"></i>
                                                     </div>
                                                     <div class="media-body ml-3">
-                                                        <h6 class="mb-0 ">Account settings</h6>
-                                                        <p class="mb-0 font-size-12">Manage your account parameters.</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="privacy-setting.html" class="iq-sub-card iq-bg-primary-hover">
-                                                <div class="media align-items-center">
-                                                    <div class="rounded iq-card-icon iq-bg-primary">
-                                                        <i class="ri-lock-line"></i>
-                                                    </div>
-                                                    <div class="media-body ml-3">
-                                                        <h6 class="mb-0 ">Privacy Settings</h6>
-                                                        <p class="mb-0 font-size-12">Control your privacy parameters.</p>
+                                                        <h6 class="mb-0 ">Change Password</h6>
+                                                        <p class="mb-0 font-size-12">Update your account password.</p>
                                                     </div>
                                                 </div>
                                             </a>
                                             <div class="d-inline-block w-100 text-center p-3">
-                                                <a class="bg-primary iq-sign-btn" href="sign-in.html" role="button">Sign out<i class="ri-login-box-line ml-2"></i></a>
+                                                <a class="bg-primary iq-sign-btn" href="{{ route('user.logout') }}" role="button">Sign out<i class="ri-login-box-line ml-2"></i></a>
                                             </div>
                                         </div>
                                     </div>
