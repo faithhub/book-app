@@ -40,13 +40,13 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'web_vendor' => [
+        'vendor' => [
             'driver' => 'session',
-            'provider' => 'vendors',
+            'provider' => 'vendor',
         ],
-        'web_admin' => [
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'admins',
+            'provider' => 'admin',
         ],
     ],
 
@@ -72,11 +72,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'vendors' => [
+        'vendor' => [
             'driver' => 'eloquent',
             'model' => App\Models\Vendor::class,
         ],
-        'admins' => [
+        'admin' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],

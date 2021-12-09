@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Virtual Law Library - User Sign Up</title>
+    <title>Virtual Law Library - Vendor Sign Up</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="images/favicon.ico" />
     <!-- Bootstrap CSS -->
@@ -43,11 +43,11 @@
         <div class="row d-flex justify-content-center align-items-center" style="overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;">
             <div class="card col-md-8 offest-md-2">
                 <div class="">
-                    <form method="POST" action="{{ route('user.register') }}">
+                    <form method="POST" action="{{ route('vendor.register') }}">
                         @csrf
                         <div class="text-center py-4">
                             <img class="img-fluid" src="{{ asset('logos/logo.png') }}" alt="Logo" style="max-width: 80px;">
-                            <h2>Sign Up</h2>
+                            <h2>Vendor Sign Up</h2>
                         </div>
                         <div class="row g-2 mb-4">
                             <div class="col-md">
@@ -154,7 +154,7 @@
                             <button class="btn btn-success" type="submit">Submit</button>
                         </div>
                         <div class="text-center">
-                            <p>Already have an account? <a href="{{ route('user.login') }}" class="">Login here</a></p>
+                            <p>Already have an account? <a href="{{ route('vendor.login') }}" class="">Login here</a></p>
                         </div>
                     </form>
                 </div>

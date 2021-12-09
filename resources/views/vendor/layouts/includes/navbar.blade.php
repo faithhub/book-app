@@ -114,7 +114,7 @@
                             <li class="line-height pt-3">
                                 <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
                                     <div class="caption">
-                                        <h6 class="mb-1 line-height">{{ Auth::user()->username }}</h6>
+                                        <h6 class="mb-1 line-height">Barry Tech</h6>
                                         <p class="mb-0 text-primary">$20.32</p>
                                     </div>
                                 </a>
@@ -122,7 +122,7 @@
                                     <div class="iq-card shadow-none m-0">
                                         <div class="iq-card-body p-0 ">
                                             <div class="bg-primary p-3">
-                                                <h5 class="mb-0 text-white line-height">{{ Auth::user()->username }}</h5>
+                                                <h5 class="mb-0 text-white line-height">Hello Barry Tech</h5>
                                                 <span class="text-white font-size-12">Available</span>
                                             </div>
                                             <a href="{{ route('user.profile') }}" class="iq-sub-card iq-bg-primary-hover">

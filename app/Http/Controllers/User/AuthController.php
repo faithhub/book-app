@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest.user')->except('logout');
+    }
+
     public function register(Request $request)
     {
         try {
@@ -46,7 +51,7 @@ class AuthController extends Controller
                     Session::flash('error', 'Error fill your data appropriately');
                     return back()->withErrors($validator)->withInput();
                 }
-                
+
                 $data = array(
                     'name' => $request->name,
                     'username' => $request->username,
@@ -81,7 +86,7 @@ class AuthController extends Controller
                 );
 
                 $fieldNames = array(
-                    'username' => 'Username',                    
+                    'username' => 'Username',
                     'password' => 'Password',
                 );
 
@@ -92,22 +97,18 @@ class AuthController extends Controller
                     Session::flash('error', 'Error fill your data appropriately');
                     return back()->withErrors($validator)->withInput();
                 }
-                
+
                 $data = array(
                     'username' => $request->username,
                     'password' => $request->password,
                 );
-                if(!Auth::attempt($data)){
+                if (!Auth::attempt($data)) {
                     Session::flash('error', 'Incorrect Credentials');
                     return back();
                 }
 
-                dd(Auth::user());
-
-                // return redirect()->route('user.dashboard');
-
-                Session::flash('success', 'Registered successfully');
-                return route('user.login');
+                Session::flash('success', 'Login successfully');
+                return redirect()->route('user.dashboard');
             } else {
                 $data['title'] = "User Login Page";
                 return view('user.auth.login', $data);
@@ -120,12 +121,13 @@ class AuthController extends Controller
 
     public function logout()
     {
-        dd(Auth::user());
-        if(Auth::user()) // this means that the admin was logged in.
+        // dd(Auth::user());
+        if (Auth::user()) // this means that the admin was logged in.
         {
-            dd(Auth::user());
+            Auth::logoutCurrentDevice();
+            // dd(Auth::user());
             // Auth::guard('admin')->logout();
-            // return redirect()->route('admin.login');
+            return redirect()->route('user.login');
         }
         // Auth::logout();
         // return redirect()->route('user.login');
