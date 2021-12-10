@@ -101,7 +101,7 @@
                             <div class="col-md">
                                 <div class="form-floating">
                                     <select class="form-select" name="gender" id="floatingSelectGridGender" aria-label="Floating label select example">
-                                        <option selected>Select Gender</option>
+                                        <option selected value="">Select Gender</option>
                                         <option value="Male" {{ old('gender') == 'Male' ? "selected" : '' }}>Male</option>
                                         <option value="Female" {{ old('gender') == 'Female' ? "selected" : '' }}>Female</option>
                                     </select>

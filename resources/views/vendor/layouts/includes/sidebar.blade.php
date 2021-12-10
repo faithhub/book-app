@@ -23,22 +23,22 @@
                 <li>
                     <a href="admin-dashboard.html" class="active"><i class="ri-file-pdf-line"></i>Bookshop</a>
                 </li>
-                <li class="">
+                <li class="{{ request()->is('vendor/my-books') || request()->is('vendor/upload-new-books')  ? 'active active-menu' : '' }}">
                     <a href="#admin" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="ri-book-line iq-arrow-left"></i><span>My Library</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                     <ul id="admin" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                        <li><a href=""><i class="ri-book-line"></i>Bought Book</a></li>
-                        <li><a href=""><i class="ri-book-line"></i>Rent Books</a></li>
+                        <li class="{{ request()->is('vendor/my-books')  ? 'active' : '' }}"><a href="{{ route('vendor.my.books') }}"><i class="ri-book-line"></i>My Books</a></li>
+                        <li class="{{ request()->is('vendor/upload-new-book')  ? 'active' : '' }}"><a href="{{ route('vendor.upload.new.book') }}"><i class="ri-book-line"></i>Upload New Book</a></li>
                     </ul>
                 </li>
                 
-                <li>
+                <!-- <li>
                     <a href="admin-dashboard.html" class="active"><i class="ri-checkbox-multiple-blank-line"></i>Checkout</a>
                 </li>
                 <li>
                     <a href="admin-dashboard.html" class="active"><i class="ri-heart-line"></i>Watchlist</a>
-                </li>
+                </li> -->
                 
-                <li class="{{ request()->is('vendor/profile') || request()->is('vendor/edit-profile') || request()->is('vendor/change-password')  ? 'active active-menu' : '' }}">
+                <li class="{{ request()->is('vendor/profile') || request()->is('vendor/change-password')  ? 'active active-menu' : '' }}">
                     <a href="#settings" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="las la-th-list iq-arrow-left"></i><span>Settings</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                     <ul id="settings" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                         <li class="{{ request()->is('vendor/profile')  ? 'active' : '' }}"><a href="{{ route('vendor.profile') }}"><i class="las la-id-card-alt"></i>My Profile</a></li>

@@ -33,6 +33,9 @@ class AuthController extends Controller
                     'password' => ['required', 'min:8', 'confirmed'],
                     'gender' => ['required', 'max:255'],
                     'dob' => ['required', 'max:255'],
+                    'bank' => ['required', 'max:255'],
+                    'acc_number' => ['required', 'max:255'],
+                    'acc_name' => ['required', 'max:255'],
                 );
 
                 $fieldNames = array(
@@ -44,6 +47,9 @@ class AuthController extends Controller
                     'password_confirmation' => 'Confirm Password',
                     'dob' => 'Date Of Birth',
                     'gender' => 'Gender',
+                    'bank' => 'Bank',
+                    'acc_number' => 'Account Number',
+                    'acc_name' => 'Account Name',
                 );
 
                 $validator = Validator::make($request->all(), $rules);
@@ -62,6 +68,9 @@ class AuthController extends Controller
                     'password' => Hash::make($request->password),
                     'gender' => $request->gender,
                     'dob' => $request->dob,
+                    'bank' => $request->bank,
+                    'acc_number' => $request->acc_number,
+                    'acc_name' => $request->acc_name,
                 );
 
                 Vendor::create($data);
@@ -111,7 +120,7 @@ class AuthController extends Controller
                 }
 
                 // dd(Auth::guard('vendor'));
-                Session::flash('success', 'Login successfully');
+                Session::flash('success', 'Successfully Logged In');
                 return redirect(RouteServiceProvider::VENDOR);
             }
 

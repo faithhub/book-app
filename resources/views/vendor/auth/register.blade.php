@@ -101,7 +101,7 @@
                             <div class="col-md">
                                 <div class="form-floating">
                                     <select class="form-select" name="gender" id="floatingSelectGridGender" aria-label="Floating label select example">
-                                        <option selected>Select Gender</option>
+                                        <option selected value="">Select Gender</option>
                                         <option value="Male" {{ old('gender') == 'Male' ? "selected" : '' }}>Male</option>
                                         <option value="Female" {{ old('gender') == 'Female' ? "selected" : '' }}>Female</option>
                                     </select>
@@ -124,16 +124,17 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>                        
+                        </div>
                         <div class="row g-2 mb-4">
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <select class="form-select" name="bank" id="floatingSelectGridbank" aria-label="Floating label select example">
-                                        <option selected>Select Bank</option>
+                                    <input type="text" class="form-control" name="bank" value="{{ old('bank') }}" id="floatingInputGridFullbank">
+                                    <!-- <select class="form-select" name="bank" id="floatingSelectGridbank" aria-label="Floating label select example">
+                                        <option selected value="">Select Bank</option>
                                         <option value="Male" {{ old('bank') == 'Male' ? "selected" : '' }}>Male</option>
                                         <option value="Female" {{ old('bank') == 'Female' ? "selected" : '' }}>Female</option>
-                                    </select>
-                                    <label for="floatingSelectGridbank">Banks</label>
+                                    </select> -->
+                                    <label for="floatingInputGridFullbank">Banks</label>
                                     @error('bank')
                                     <span class="invalid-feedback" role="alert" style="display: block">
                                         <strong>{{ $message }}</strong>
@@ -178,7 +179,7 @@
                             </div>
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="password" class="form-control" name="password_confirmation"  id="floatingInputGridFullpassword_confirmation">
+                                    <input type="password" class="form-control" name="password_confirmation" id="floatingInputGridFullpassword_confirmation">
                                     <label for="floatingInputGridFullpassword_confirmation">Confirm Password</label>
                                     @error('password_confirmation')
                                     <span class="invalid-feedback" role="alert" style="display: block">
