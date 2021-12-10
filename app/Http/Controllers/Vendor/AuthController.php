@@ -4,15 +4,18 @@ namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Vendor;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    
+
     public function __construct()
     {
         // $this->middleware('guest.vendor')->except('logout');
@@ -22,7 +25,6 @@ class AuthController extends Controller
     {
         try {
             if ($_POST) {
-
                 $rules = array(
                     'name' => ['required', 'max:255'],
                     'username' => ['required', 'unique:vendors'],
@@ -65,10 +67,13 @@ class AuthController extends Controller
                 Vendor::create($data);
                 Session::flash('success', 'Registered successfully');
                 return redirect()->route('vendor.login');
-            } else {
-                $data['title'] = "Vendor Registration Page";
+            }
+
+            if (View::exists('vendor.auth.register')) {
+                $data['title'] =  "Vendor Registration Page";
                 return view('vendor.auth.register', $data);
             }
+            abort(Response::HTTP_NOT_FOUND);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return back();
@@ -79,7 +84,6 @@ class AuthController extends Controller
     {
         try {
             if ($_POST) {
-
                 $rules = array(
                     'username' => ['required'],
                     'password' => ['required', 'min:8'],
@@ -98,27 +102,25 @@ class AuthController extends Controller
                     return back()->withErrors($validator)->withInput();
                 }
 
-                $data = array(
-                    'username' => $request->username,
-                    'password' => $request->password,
-                );
 
-                dd(Auth::guard('vendor')->attempt($data));
+                $credentials = $request->except(['_token']);
 
-                // if (!Auth::guard('vendor')->attempt($data)) {
-                //     Session::flash('error', 'Incorrect Credentials');
-                //     return back();
-                // }
+                if (!Auth::guard('vendor')->attempt($credentials)) {
+                    Session::flash('error', 'Credentials not matced in our records!');
+                    return back();
+                }
 
-                dd(Auth::guard('vendor'));
+                // dd(Auth::guard('vendor'));
                 Session::flash('success', 'Login successfully');
-                return redirect()->route('vendor.dashboard');
-            } else {
-                $data['title'] = "User Login Page";
+                return redirect(RouteServiceProvider::VENDOR);
+            }
+
+            if (View::exists('vendor.auth.login')) {
+                $data['title'] =  "Vendor Login Page";
                 return view('vendor.auth.login', $data);
             }
+            abort(Response::HTTP_NOT_FOUND);
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             Session::flash('error', $th->getMessage());
             return back();
         }
@@ -130,10 +132,9 @@ class AuthController extends Controller
         if (Auth::user()) // this means that the admin was logged in.
         {
             Auth::logoutCurrentDevice();
-            // dd(Auth::user());
-            // Auth::guard('admin')->logout();
-            return redirect()->route('user.login');
+            return redirect()->route('vendor.login');
         }
+        return redirect()->route('vendor.login');
         // Auth::logout();
         // return redirect()->route('user.login');
     }

@@ -21,6 +21,9 @@ class CreateVendorsTable extends Migration
             $table->string('gender');
             $table->string('dob');
             $table->string('mobile');
+            $table->string('bank');
+            $table->string('acc_number');
+            $table->string('acc_name');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

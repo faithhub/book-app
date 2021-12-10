@@ -19,7 +19,7 @@
     <!-- Responsive CSS -->
     <!-- <link rel="stylesheet" href="{{ asset('css/responsive.css') }}"> -->
 </head>
-@include('user.layouts.includes.alert')
+@include('vendor.layouts.includes.alert')
 <style>
     .card {
         margin: 5rem;
@@ -118,6 +118,45 @@
                                     <input type="date" class="form-control" name="dob" value="{{ old('dob') }}" id="floatingInputGridFulldob">
                                     <label for="floatingInputGridFulldob">Date of Birth</label>
                                     @error('dob')
+                                    <span class="invalid-feedback" role="alert" style="display: block">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="row g-2 mb-4">
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <select class="form-select" name="bank" id="floatingSelectGridbank" aria-label="Floating label select example">
+                                        <option selected>Select Bank</option>
+                                        <option value="Male" {{ old('bank') == 'Male' ? "selected" : '' }}>Male</option>
+                                        <option value="Female" {{ old('bank') == 'Female' ? "selected" : '' }}>Female</option>
+                                    </select>
+                                    <label for="floatingSelectGridbank">Banks</label>
+                                    @error('bank')
+                                    <span class="invalid-feedback" role="alert" style="display: block">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" name="acc_number" value="{{ old('acc_number') }}" id="floatingInputGridFullacc_number">
+                                    <label for="floatingInputGridFullacc_number">Account Number</label>
+                                    @error('acc_number')
+                                    <span class="invalid-feedback" role="alert" style="display: block">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" name="acc_name" value="{{ old('acc_name') }}" id="floatingInputGridFullacc_name">
+                                    <label for="floatingInputGridFullacc_name">Account Name</label>
+                                    @error('acc_name')
                                     <span class="invalid-feedback" role="alert" style="display: block">
                                         <strong>{{ $message }}</strong>
                                     </span>

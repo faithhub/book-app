@@ -115,7 +115,7 @@
                                 <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
                                     <div class="caption">
                                         <h6 class="mb-1 line-height">{{ Auth::user()->username }}</h6>
-                                        <p class="mb-0 text-primary">$20.32</p>
+                                        <!-- <p class="mb-0 text-primary">$20.32</p> -->
                                     </div>
                                 </a>
                                 <div class="iq-sub-dropdown iq-user-dropdown">

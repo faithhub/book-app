@@ -18,12 +18,12 @@ class Vendor
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::guard('vendor'))
+        if(Auth::guard('vendor')->check())
         {
             return $next($request);
         }else{
             Session::flash('permission_warning', 'Permission not granted');
-            return redirect()->route('user.login');
+            return redirect()->route('vendor.login');
         }
     }
 }

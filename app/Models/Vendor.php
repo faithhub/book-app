@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-class Vendor extends Model
+class Vendor extends Model implements AuthenticatableContract
 {
+    use Authenticatable;
     use HasFactory;
     protected $fillable = [
         'name',
@@ -15,7 +18,10 @@ class Vendor extends Model
         'username',
         'mobile',
         'dob',
-        'gender'
+        'gender',
+        'bank',
+        'acc_number',
+        'acc_name'
     ];
 
     /**

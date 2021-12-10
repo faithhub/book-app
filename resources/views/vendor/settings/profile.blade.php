@@ -1,5 +1,5 @@
-@extends('user.layouts.app')
-@section('user')
+@extends('vendor.layouts.app')
+@section('vendor')
 <!-- Page Content  -->
 <div id="content-page" class="content-page">
     <div class="container-fluid">
@@ -15,7 +15,7 @@
                                     </div>
                                 </div>
                                 <div class="iq-card-body">
-                                    <form action="{{ route('user.profile') }}" method="POST">
+                                    <form action="{{ route('vendor.profile') }}" method="POST">
                                         @csrf
                                         <div class=" row align-items-center">
                                             <div class="form-group col-sm-6">

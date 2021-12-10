@@ -10,7 +10,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('logos/favicon.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('logos/favicon.png') }}">
     <!-- Favicon -->
-    @include('user.layouts.includes.style')
+    @include('vendor.layouts.includes.style')
 </head>
 
 <body>
@@ -21,22 +21,22 @@
     <!-- loader END -->
     <!-- Wrapper Start -->
     <div class="wrapper">
-        @include('user.layouts.includes.alert')
+        @include('vendor.layouts.includes.alert')
         <!-- Sidebar  -->
-        @include('user.layouts.includes.sidebar')
+        @include('vendor.layouts.includes.sidebar')
         <!-- TOP Nav Bar -->
-        @include('user.layouts.includes.navbar')
+        @include('vendor.layouts.includes.navbar')
         <!-- TOP Nav Bar END -->
         <!-- Page Content  -->
-        @yield('user')
+        @yield('vendor')
     </div>
     <!-- Wrapper END -->
     <!-- Footer -->
-    @include('user.layouts.includes.footer')
+    @include('vendor.layouts.includes.footer')
     <!-- color-customizer END -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    @include('user.layouts.includes.script')
+    @include('vendor.layouts.includes.script')
 </body>
 
 </html>

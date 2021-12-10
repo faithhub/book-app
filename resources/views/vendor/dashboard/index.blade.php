@@ -1,5 +1,5 @@
-@extends('user.layouts.app')
-@section('user')
+@extends('vendor.layouts.app')
+@section('vendor')
 <div id="content-page" class="content-page">
 
     <div class="col-lg-12">
