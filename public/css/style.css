@@ -77,6 +77,11 @@ a:hover { text-decoration: none; color: #e63946; }
 .dropdown-item { font-size: 14px; }
 .dropdown-menu { border-radius: 5px; color: #e63946; }
 
+.active{
+  color: var(--iq-title-text);
+  font-weight: 600;
+  font-size: 20px !important;
+}
 /* scroller */
 .scroller { overflow-y: auto; scrollbar-color: var(--iq-primary) var(--iq-light-primary); scrollbar-width: thin; }
 .scroller::-webkit-scrollbar-thumb { background-color: var(--iq-primary); }

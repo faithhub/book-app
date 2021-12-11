@@ -17,27 +17,17 @@
     <div id="sidebar-scrollbar">
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
-                <li class="active active-menu">
-                    <a href="admin-dashboard.html" class="active"><i class="las la-house-damage"></i>Dashboard</a>
-                </li>
-                <li>
-                    <a href="admin-dashboard.html" class="active"><i class="ri-file-pdf-line"></i>Bookshop</a>
-                </li>
-                <li class="{{ request()->is('vendor/my-books') || request()->is('vendor/upload-new-books')  ? 'active active-menu' : '' }}">
-                    <a href="#admin" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="ri-book-line iq-arrow-left"></i><span>My Library</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                    <ul id="admin" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                        <li class="{{ request()->is('vendor/my-books')  ? 'active' : '' }}"><a href="{{ route('vendor.my.books') }}"><i class="ri-book-line"></i>My Books</a></li>
-                        <li class="{{ request()->is('vendor/upload-new-book')  ? 'active' : '' }}"><a href="{{ route('vendor.upload.new.book') }}"><i class="ri-book-line"></i>Upload New Book</a></li>
-                    </ul>
-                </li>
-                
-                <!-- <li>
-                    <a href="admin-dashboard.html" class="active"><i class="ri-checkbox-multiple-blank-line"></i>Checkout</a>
-                </li>
-                <li>
-                    <a href="admin-dashboard.html" class="active"><i class="ri-heart-line"></i>Watchlist</a>
-                </li> -->
-                
+
+                <li class="{{ request()->is('vendor')  ? 'active' : '' }}"><a href="{{ route('vendor.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a></li>
+
+                <li class="{{ request()->is('vendor/my-books')  ? 'active' : '' }}"><a href="{{ route('vendor.my.books') }}"><i class="ri-book-line"></i>My Books</a></li>
+
+                <li class="{{ request()->is('vendor/upload-new-book')  ? 'active' : '' }}"><a href="{{ route('vendor.upload.new.book') }}"><i class="ri-file-pdf-line"></i>Upload New Book</a></li>
+
+                <li class="{{ request()->is('vendor/upload-new-book')  ? 'active' : '' }}"><a href="{{ route('vendor.upload.new.book') }}"><i class="ri-file-pdf-line"></i>Inbox</a></li>
+
+                <li class="{{ request()->is('vendor/upload-new-book')  ? 'active' : '' }}"><a href="{{ route('vendor.upload.new.book') }}"><i class="ri-file-pdf-line"></i>About Us</a></li>
+
                 <li class="{{ request()->is('vendor/profile') || request()->is('vendor/change-password')  ? 'active active-menu' : '' }}">
                     <a href="#settings" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="las la-th-list iq-arrow-left"></i><span>Settings</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                     <ul id="settings" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
@@ -45,9 +35,9 @@
                         <li class="{{ request()->is('vendor/change-password')  ? 'active' : '' }}"><a href="{{ route('vendor.change.password') }}"><i class="ri-lock-line"></i>Change Password</a></li>
                     </ul>
                 </li>
-                
+
                 <li>
-                    <a href="{{ route('vendor.logout') }}" class="active"><i class="ri-file-pdf-line"></i>Logout</a>
+                    <a href="{{ route('vendor.logout') }}"><i class="ri-file-pdf-line"></i>Logout</a>
                 </li>
             </ul>
         </nav>

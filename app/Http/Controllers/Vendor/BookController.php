@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
+use App\Models\BookCategory;
+use App\Models\BookMaterial;
+use App\Models\Country;
 use App\Models\Vendor;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response as FacadesResponse;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
@@ -39,23 +44,23 @@ class BookController extends Controller
 
             if ($_POST) {
                 $rules = array(
-                    'name' => ['required', 'max:255'],
-                    'mobile' => ['required', 'min:11', 'max:11'],
-                    'gender' => ['required', 'max:255'],
-                    'dob' => ['required', 'max:255'],
-                    'bank' => ['required', 'max:255'],
-                    'acc_number' => ['required', 'max:255'],
-                    'acc_name' => ['required', 'max:255'],
+                    'book_cat' => ['required', 'max:255'],
+                    'book_name' => ['required', 'min:11', 'max:11'],
+                    'book_price' => ['required', 'max:255'],
+                    'book_rent' => ['required', 'max:255'],
+                    'book_author' => ['required', 'max:255'],
+                    'book_pdf' => ['required', 'max:255'],
+                    'book_desc' => ['required', 'max:255'],
                 );
 
                 $fieldNames = array(
-                    'name' => 'Full Name',
-                    'mobile' => 'Mobile Number',
-                    'dob' => 'Date Of Birth',
-                    'gender' => 'Gender',
-                    'bank' => 'Bank',
-                    'acc_number' => 'Account Number',
-                    'acc_name' => 'Account Name',
+                    'book_cat' => 'Book Category',
+                    'book_name' => 'Book Title',
+                    'book_rent' => 'Book Rent Per Day',
+                    'book_price' => 'Book Price',
+                    'book_author' => 'Book Author',
+                    'book_pdf' => 'Book PDF',
+                    'book_desc' => 'Book Description',
                 );
 
                 $validator = Validator::make($request->all(), $rules);
@@ -66,25 +71,45 @@ class BookController extends Controller
                     return back()->withErrors($validator)->withInput();
                 }
 
-                $user = Vendor::find(Auth::guard('vendor')->user()->id);
-                $user->name = $request->name;
-                $user->mobile = $request->mobile;
-                $user->gender = $request->gender;
-                $user->dob = $request->dob;
-                $user->bank = $request->bank;
-                $user->acc_number = $request->acc_number;
-                $user->acc_name = $request->acc_name;
-                $user->save();
+                $file = $request->file('book_pdf');
+                $book_name = 'BOOkPDF' . date('dMY') . time() . '.' . $file->getClientOriginalExtension();
+                $fileDestination = 'books';
+                $file->move($fileDestination, $book_name);
 
-                Session::flash('success', 'Profile  successfully');
-                return back();
+                $data = array(
+                    'vendor_id' => Auth::guard('vendor')->user()->id,
+                    'book_cat' => $request->book_cat,
+                    'book_name' => $request->book_name,
+                    'book_rent' => $request->book_rent,
+                    'book_price' => $request->book_price,
+                    'book_author' => $request->book_author,
+                    'book_pdf' => $book_name,
+                    'book_desc' => $request->book_desc,
+                );
+
+                Book::create($data);
+                Session::flash('success', 'Book Uloaded Successfully');
+                return redirect()->route('vendor.my.books');
             }
 
             $data['title'] = "Vendor Upload New Book";
+            $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
+            $data['countries'] = Country::orderBy('id', 'asc')->get();
+            $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
             return view('vendor.books.upload-new-book', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return redirect(RouteServiceProvider::VENDOR);
         }
+    }
+
+    public function view_book()
+    {
+        $filename = 'test.pdf';
+        $path = storage_path($filename);
+        return FacadesResponse::make(file_get_contents($path), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $filename . '"'
+        ]);
     }
 }
