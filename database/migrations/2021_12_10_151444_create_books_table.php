@@ -15,15 +15,26 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->integer('vendor_id')->unsigned()->references('id')->inTable('vendors');
-            $table->integer('category_id')->unsigned()->references('id')->inTable('book_categories');
-            $table->integer('material_id')->unsigned()->references('id')->inTable('book_materials');
+            $table->bigInteger('vendor_id')->unsigned();
+            $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade');
+            $table->bigInteger('book_cat')->unsigned();
+            $table->foreign('book_cat')->references('id')->on('book_categories')->onDelete('cascade');
+            $table->bigInteger('book_material_type')->unsigned();
+            $table->foreign('book_material_type')->references('id')->on('book_materials')->onDelete('cascade');
+            $table->bigInteger('book_country')->unsigned();
+            $table->foreign('book_country')->references('id')->on('countries')->onDelete('cascade');
             $table->string('book_name');
+            $table->string('book_paid_free');
             $table->string('book_price');
-            $table->string('book_rent');
+            $table->string('book_tag');
             $table->longText('book_desc');
             $table->string('book_author');
-            $table->string('book_pdf');
+            $table->string('book_cover_type');
+            $table->string('book_material_pdf')->nullable();
+            $table->string('book_material_video')->nullable();
+            $table->string('book_cover')->nullable();
+            $table->string('video_cover')->nullable();
+            $table->string('book_year');
             $table->timestamps();
         });
     }

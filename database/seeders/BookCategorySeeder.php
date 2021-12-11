@@ -56,17 +56,17 @@ class BookCategorySeeder extends Seeder
             [
                 'name' => 'Jurisprudence & Conflicts of Law',
                 'status' => 'Active',
-                'role' => 'Admin',
+                'role' => 'Vendor',
             ],
             [
                 'name' => 'Family law',
                 'status' => 'Active',
-                'role' => 'Admin',
+                'role' => 'Vendor',
             ],
             [
                 'name' => 'Others',
                 'status' => 'Active',
-                'role' => 'Admin',
+                'role' => 'Vendor',
             ],
             // [
             //     'name' => 'Laws',

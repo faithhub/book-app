@@ -38,7 +38,7 @@
                                         </div>
                                     </div>
                                     <div class="iq-card-body">
-                                        <form method="POST" action="{{ route('vendor.upload.new.book') }}">
+                                        <form method="POST" action="{{ route('vendor.upload.new.book') }}" enctype="multipart/form-data">
                                             @csrf
                                             <div class="row align-items-center">
                                                 <div class="form-group col-sm-12">
@@ -62,8 +62,8 @@
                                                 </div>
                                                 <div class="form-group col-sm-12">
                                                     <label for="cpass"><b>Year of Publish:</b></label>
-                                                    <input type="number" class="form-control" id="cpass" value="{{old('book_name')}}" name="book_name">
-                                                    @error('book_name')
+                                                    <input type="number" class="form-control" id="cpass" value="{{old('book_year')}}" name="book_year">
+                                                    @error('book_year')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -72,15 +72,15 @@
 
                                                 <div class="form-group col-sm-12">
                                                     <label for="cpass"><b>Country of Publish:</b></label>
-                                                    <select class="form-control" id="cpassk" name="country" id="exampleFormControlSelect1">
+                                                    <select class="form-control" id="cpassk" name="book_country" id="exampleFormControlSelect1">
                                                         <option value="">Select a Country</option>
                                                         @if(isset($countries))
                                                         @foreach($countries as $cats)
-                                                        <option value="{{$cats->country_label}}" {{ old('country') == $cats->id ? "selected" : '' }}>{{$cats->country_label}}</option>
+                                                        <option value="{{$cats->id}}" {{ old('book_country') == $cats->id ? "selected" : '' }}>{{$cats->country_label}}</option>
                                                         @endforeach
                                                         @endif
                                                     </select>
-                                                    @error('book_name')
+                                                    @error('book_country')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -92,7 +92,7 @@
                                                         <option value="">Select a Category</option>
                                                         @if(isset($book_cats))
                                                         @foreach($book_cats as $cats)
-                                                        <option value="{{$cats->name}}" {{ old('book_cat') == $cats->id ? "selected" : '' }}>{{$cats->name}}</option>
+                                                        <option value="{{$cats->id}}" {{ old('book_cat') == $cats->id ? "selected" : '' }}>{{$cats->name}}</option>
                                                         @endforeach
                                                         @endif
                                                     </select>
@@ -104,18 +104,18 @@
                                                 </div>
                                                 <div class="form-group col-sm-12">
                                                     <label for="cpassk"><b>Paid/Free</b></label>
-                                                    <select class="form-control" id="cpassk" onchange="bookPrice(this.value)" name="book_price" id="exampleFormControlSelect1">
+                                                    <select class="form-control" id="bookPriceID" onchange="bookPrice(this.value)" name="book_paid_free" id="exampleFormControlSelect1">
                                                         <option value="">Choose One</option>
-                                                        <option value="Paid" {{ old('book_price') == 'Paid' ? "selected" : '' }}>Paid</option>
-                                                        <option value="Free" {{ old('book_price') == 'Free' ? "selected" : '' }}>Free</option>
+                                                        <option value="Paid" {{ old('book_paid_free') == 'Paid' ? "selected" : '' }}>Paid</option>
+                                                        <option value="Free" {{ old('book_paid_free') == 'Free' ? "selected" : '' }}>Free</option>
                                                     </select>
-                                                    @error('book_cat')
+                                                    @error('book_paid_free')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group col-sm-6" id="PaidDiv1" style="display: none;">
+                                                <div class="form-group col-sm-12" id="PaidDiv1" style="display: none;">
                                                     <label for="cpass"><b>Price:</b></label>
                                                     <input type="number" class="form-control" id="cpass" value="{{old('book_price')}}" name="book_price">
                                                     @error('book_price')
@@ -124,7 +124,7 @@
                                                     </span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group col-sm-6" id="PaidDiv2" style="display: none;">
+                                                <!-- <div class="form-group col-sm-6" id="PaidDiv2" style="display: none;">
                                                     <label for="cpass"><b>Rent Price Per Day:</b></label>
                                                     <input type="number" class="form-control" id="cpass" value="{{old('book_rent')}}" name="book_rent">
                                                     @error('book_rent')
@@ -132,11 +132,11 @@
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                     @enderror
-                                                </div>
+                                                </div> -->
                                                 <div class="form-group col-sm-12">
                                                     <label for="cpass"><b>Tag:</b></label>
-                                                    <input type="text" class="form-control" id="cpass" value="{{old('tag')}}" name="tag">
-                                                    @error('tag')
+                                                    <input type="text" class="form-control" id="cpass" value="{{old('book_tag')}}" name="book_tag">
+                                                    @error('book_tag')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -144,15 +144,15 @@
                                                 </div>
                                                 <div class="form-group col-sm-12">
                                                     <label for="cpassk"><b>Type of Material</b></label>
-                                                    <select class="form-control" id="cpassk" name="book_cat" id="exampleFormControlSelect1">
+                                                    <select class="form-control" id="materialTypeID" onchange="materialType(this.value)" name="book_material_type" id="exampleFormControlSelect1">
                                                         <option value="">Select a Type</option>
                                                         @if(isset($materials))
                                                         @foreach($materials as $cats)
-                                                        <option value="{{$cats->name}}" {{ old('book_cat') == $cats->id ? "selected" : '' }}>{{$cats->name}}</option>
+                                                        <option value="{{$cats->id}}" {{ old('book_material_type') == $cats->id ? "selected" : '' }}>{{$cats->name}}</option>
                                                         @endforeach
                                                         @endif
                                                     </select>
-                                                    @error('book_cat')
+                                                    @error('book_material_type')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -160,12 +160,12 @@
                                                 </div>
                                                 <div class="form-group col-sm-12">
                                                     <label for="cpassk"><b>Book Cover / Video Cover</b></label>
-                                                    <select class="form-control" id="cpassk" onchange="coverType(this.value)" name="cover_type" id="exampleFormControlSelect1">
+                                                    <select class="form-control" id="coverTypeID" onchange="coverType(this.value)" name="book_cover_type" id="exampleFormControlSelect1">
                                                         <option value="">Choose One</option>
-                                                        <option value="Book Cover" {{ old('cover_type') == 'Book Cover' ? "selected" : '' }}>Book Cover</option>
-                                                        <option value="Video Cover" {{ old('cover_type') == 'Video Cover' ? "selected" : '' }}>Video Cover</option>
+                                                        <option value="Book Cover" {{ old('book_cover_type') == 'Book Cover' ? "selected" : '' }}>Book Cover</option>
+                                                        <option value="Video Cover" {{ old('book_cover_type') == 'Video Cover' ? "selected" : '' }}>Video Cover</option>
                                                     </select>
-                                                    @error('book_cat')
+                                                    @error('book_cover_type')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -195,13 +195,25 @@
                                                     </span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group col-sm-12">
-                                                    <label for="cpass"><b>Book Material:</b></label>
+                                                <div class="form-group col-sm-12" id="pdfUpload">
+                                                    <label for="cpass"><b>Upload Material PDF:</b></label>
                                                     <div class="custom-file">
-                                                        <input type="file" accept="application/pdf" name="book_pdf" class="custom-file-input" id="customFile">
+                                                        <input type="file" accept="application/pdf" name="book_material_pdf" class="custom-file-input" id="customFile">
                                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                                     </div>
-                                                    @error('book_pdf')
+                                                    @error('book_material_pdf')
+                                                    <span class="invalid-feedback mb-2" role="alert" style="display: block">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group col-sm-12" id="videoUpload" style="display: none;">
+                                                    <label for="cpass"><b>Upload Material Video:</b></label>
+                                                    <div class="custom-file">
+                                                        <input type="file" accept="video/*" name="book_material_video" class="custom-file-input" id="customFile">
+                                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                                    </div>
+                                                    @error('book_material_video')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -250,6 +262,19 @@
         }
     }
 
+    function materialType(id) {
+        switch (id) {
+            case "5":
+                document.getElementById('videoUpload').style.display = 'block';
+                document.getElementById('pdfUpload').style.display = 'none';
+                break;
+            default:
+                document.getElementById('videoUpload').style.display = 'none';
+                document.getElementById('pdfUpload').style.display = 'block';
+                break;
+        }
+    }
+
     function coverType(id) {
         switch (id) {
             case "Book Cover":
@@ -269,6 +294,19 @@
         }
 
     }
+    document.onreadystatechange = function() {
+        materialTypeID = document.getElementById('materialTypeID').value
+        materialType(materialTypeID)
+
+        coverTypeID = document.getElementById('coverTypeID').value
+        coverType(coverTypeID)
+
+        bookPriceID = document.getElementById('bookPriceID').value
+        bookPrice(bookPriceID)
+    }
+    window.onload = coverType(id);
+    window.onload = materialType(id);
+
     $(document).ready(function() {
         //to disable the entire page
         // $("body").on("contextmenu", function(e) {
