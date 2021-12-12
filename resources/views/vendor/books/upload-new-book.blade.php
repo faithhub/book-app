@@ -31,7 +31,7 @@
                         <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
 
                             <div class="col-lg-8 offset-lg-2 mt-5">
-                                <div class="iq-card" style="border-radius: 30px;">
+                                <div class="iq-card shadow" style="border-radius: 30px;">
                                     <div class="iq-card-header d-flex justify-content-between">
                                         <div class="iq-header-title">
                                             <h4 class="card-title">Upload New Book</h4>

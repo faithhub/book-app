@@ -27,12 +27,11 @@ class BookController extends Controller
     public function my_books()
     {
         try {
-            if (View::exists('vendor.books.my-books')) {
-                $data['title'] = "Vendor My Books";
-                return view('vendor.books.my-books', $data);
-            }
-
-            abort(Response::HTTP_NOT_FOUND);
+            $data['title'] = "Vendor My Books";
+            $data['sn'] = 1;
+            $data['books'] = $b = Book::where('vendor_id', Auth::guard('vendor')->user()->id)->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->paginate(5);
+            //dd($b);
+            return view('vendor.books.my-books', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return redirect(RouteServiceProvider::VENDOR);
@@ -154,13 +153,18 @@ class BookController extends Controller
     }
 
 
-    public function view_book()
+    public function view_book($id)
     {
-        $filename = 'test.pdf';
-        $path = storage_path($filename);
-        return FacadesResponse::make(file_get_contents($path), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $filename . '"'
-        ]);
+        try {
+            $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
+            $data['countries'] = Country::orderBy('id', 'asc')->get();
+            $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
+            $data['book'] = $b = Book::where(['vendor_id' => Auth::guard('vendor')->user()->id, 'id' => $id])->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->first();
+            $data['title'] = $b->book_name;
+            return view('vendor.books.view-book', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::VENDOR);
+        }
     }
 }

@@ -40,7 +40,11 @@ Route::group(
         Route::match(['get', 'post'], '/login', [\App\Http\Controllers\Vendor\AuthController::class, 'login'])->name('vendor.login');
         Route::match(['get'], '/logout', [\App\Http\Controllers\Vendor\AuthController::class, 'logout'])->name('vendor.logout');
         Route::group(['middleware' => ['auth.vendor']], function () {
+            //Dashboard
             Route::get('/', [\App\Http\Controllers\Vendor\DashboardController::class, 'index'])->name('vendor.dashboard');
+
+            //About Us
+            Route::get('/about', [\App\Http\Controllers\Vendor\DashboardController::class, 'about'])->name('vendor.about');
             
             //Profile
             Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Vendor\SettingsController::class, 'profile'])->name('vendor.profile');
@@ -51,6 +55,7 @@ Route::group(
             //Books
             Route::get('/my-books', [\App\Http\Controllers\Vendor\BookController::class, 'my_books'])->name('vendor.my.books');
             Route::match(['get', 'post'], '/upload-new-book', [\App\Http\Controllers\Vendor\BookController::class, 'upload_new_book'])->name('vendor.upload.new.book');
+            Route::get('/view-book/{id}', [\App\Http\Controllers\Vendor\BookController::class, 'view_book'])->name('vendor.view.book');
         });
     }
 );

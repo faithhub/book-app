@@ -1,6 +1,6 @@
 <div class="iq-sidebar">
     <div class="iq-sidebar-logo d-flex justify-content-between">
-        <a href="index.html" class="header-logo">
+        <a href="{{ route('vendor.dashboard') }}" class="header-logo">
             <img src="{{ asset('logos/logo.png') }}" class="img-fluid rounded-normal" alt="">
             <div class="logo-title">
                 <span class="text-primary text-uppercase">VLL AFRICA</span>
@@ -20,13 +20,13 @@
 
                 <li class="{{ request()->is('vendor')  ? 'active' : '' }}"><a href="{{ route('vendor.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a></li>
 
-                <li class="{{ request()->is('vendor/my-books')  ? 'active' : '' }}"><a href="{{ route('vendor.my.books') }}"><i class="ri-book-line"></i>My Books</a></li>
+                <li class="{{ request()->is('vendor/my-books') || request()->is('vendor/view-book/*')  ? 'active' : '' }}"><a href="{{ route('vendor.my.books') }}"><i class="ri-book-line"></i>My Books</a></li>
 
                 <li class="{{ request()->is('vendor/upload-new-book')  ? 'active' : '' }}"><a href="{{ route('vendor.upload.new.book') }}"><i class="ri-file-pdf-line"></i>Upload New Book</a></li>
 
                 <li class="{{ request()->is('vendor/upload-new-book')  ? 'active' : '' }}"><a href="{{ route('vendor.upload.new.book') }}"><i class="ri-file-pdf-line"></i>Inbox</a></li>
 
-                <li class="{{ request()->is('vendor/upload-new-book')  ? 'active' : '' }}"><a href="{{ route('vendor.upload.new.book') }}"><i class="ri-file-pdf-line"></i>About Us</a></li>
+                <li class="{{ request()->is('vendor/about')  ? 'active' : '' }}"><a href="{{ route('vendor.about') }}"><i class="ri-file-pdf-line"></i>About Us</a></li>
 
                 <li class="{{ request()->is('vendor/profile') || request()->is('vendor/change-password')  ? 'active active-menu' : '' }}">
                     <a href="#settings" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="las la-th-list iq-arrow-left"></i><span>Settings</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
