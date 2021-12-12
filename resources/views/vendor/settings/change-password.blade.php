@@ -4,11 +4,11 @@
 <div id="content-page" class="content-page">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-md-6 offset-md-3">
                 <div class="iq-edit-list-data">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
-                            <div class="iq-card">
+                            <div class="iq-card shadow">
                                 <div class="iq-card-header d-flex justify-content-between">
                                     <div class="iq-header-title">
                                         <h4 class="card-title">Change Password</h4>

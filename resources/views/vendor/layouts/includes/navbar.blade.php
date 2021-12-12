@@ -35,16 +35,15 @@
                             <li class="line-height pt-3">
                                 <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
                                     <div class="caption">
-                                        <h6 class="mb-1 line-height">{{ Auth::guard('vendor')->user()->username }}</h6>
-                                        <p class="mb-0 text-primary">$20.32</p>
+                                        <h6 class="mb-1 line-height text-capitalize" style="font-weight: 600 !important; letter-spacing: 2px;">{{ Auth::guard('vendor')->user()->username }}</h6>
+                                        <p class="mb-0" style="color: green; letter-spacing: 2px; font-weight: 600 !important;">Online</p>
                                     </div>
                                 </a>
                                 <div class="iq-sub-dropdown iq-user-dropdown">
                                     <div class="iq-card shadow-none m-0">
                                         <div class="iq-card-body p-0 ">
                                             <div class="bg-primary p-3">
-                                                <h5 class="mb-0 text-white line-height">{{ Auth::guard('vendor')->user()->username }}</h5>
-                                                <span class="text-white font-size-12">Available</span>
+                                                <h5 class="mb-0 text-white line-height text-capitalize" style="font-weight: 600 !important; letter-spacing: 2px;">{{ Auth::guard('vendor')->user()->username }}</h5>
                                             </div>
                                             <a href="{{ route('user.profile') }}" class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">

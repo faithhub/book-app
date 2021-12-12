@@ -78,7 +78,6 @@ class DashboardController extends Controller
                     ->bcc("adebayooluwadara@gmail.com")
                     ->send(new SendMail($data));
 
-                dd($data);
                 //Save Message in Database
                 Message::create($data);
                 Session::flash('success', 'Message Sent Successfully');

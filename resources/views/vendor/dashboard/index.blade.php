@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 col-lg-6 py-4">
-                <div class="iq-card iq-card-block iq-card-stretch iq-card-height rounded-new">
+                <div class="iq-card shadow iq-card-block iq-card-stretch iq-card-height rounded-new">
                     <div class="iq-card-body">
                         <div class="d-flex align-items-center">
                             <div class="rounded-circle iq-card-icon bg-primary"><i class="ri-book-line"></i></div>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="col-md-6 col-lg-6 py-4">
-                <div class="iq-card iq-card-block iq-card-stretch iq-card-height rounded-new">
+                <div class="iq-card shadow iq-card-block iq-card-stretch iq-card-height rounded-new">
                     <div class="iq-card-body">
                         <div class="d-flex align-items-center mb-3">
                             <div class="rounded-circle iq-card-icon bg-warning"><i class="ri-book-line"></i></div>
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="col-md-6 col-lg-6 py-4">
-                <div class="iq-card iq-card-block iq-card-stretch iq-card-height rounded-new">
+                <div class="iq-card shadow iq-card-block iq-card-stretch iq-card-height rounded-new">
                     <div class="iq-card-body">
                         <div class="d-flex align-items-center mb-3">
                             <div class="rounded-circle iq-card-icon bg-success"><i class="ri-book-line"></i></div>
@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="col-md-6 col-lg-6 py-4">
-                <div class="iq-card iq-card-block iq-card-stretch iq-card-height rounded-new">
+                <div class="iq-card shadow iq-card-block iq-card-stretch iq-card-height rounded-new">
                     <div class="iq-card-body">
                         <div class="d-flex align-items-center">
                             <div class="rounded-circle iq-card-icon bg-info"><i class="fa fa-users"></i></div>
