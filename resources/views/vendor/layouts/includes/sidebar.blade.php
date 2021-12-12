@@ -24,7 +24,7 @@
 
                 <li class="{{ request()->is('vendor/upload-new-book')  ? 'active active-now' : '' }}"><a href="{{ route('vendor.upload.new.book') }}"><i class="fa fa-book"></i>Upload New Book</a></li>
 
-                <li class="{{ request()->is('vendor/inbox')  ? 'active active-now' : '' }}"><a href="{{ route('vendor.inbox') }}"><i class="fa fa-envelope-open"></i>Inbox</a></li>
+                <li class="{{ request()->is('vendor/inbox') || request()->is('vendor/sent') || request()->is('vendor/create')  ? 'active active-now' : '' }}"><a href="{{ route('vendor.inbox') }}"><i class="fa fa-envelope-open"></i>Inbox</a></li>
 
                 <li class="{{ request()->is('vendor/about')  ? 'active active-now' : '' }}"><a href="{{ route('vendor.about') }}"><i class="fa fa-address-book"></i>About Us</a></li>
 

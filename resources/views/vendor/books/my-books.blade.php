@@ -17,10 +17,8 @@
                     </div>
                     <div class="iq-card-body single-similar-contens">
                         <ul class="list-inline p-0 mb-0 row">
-
                             @if(isset($books))
                             @foreach($books as $book)
-                            <!-- <p>{{$book}}</p> -->
                             <li class="col-md-4 mb-2">
                                 <div class="iq-card pr-2 pl-2 pb-3 pt-3 shadow">
                                     <div class="row align-items-center">

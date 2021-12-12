@@ -19,7 +19,6 @@
                     </div>
                     <div class="iq-card-body">
                         <ul class="list-group list-group-flush">
-
                             <a href="{{ route('vendor.create') }}">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">Create
                                     <span class="badge badge-primary badge-pill">New</span>
@@ -27,13 +26,13 @@
                             </a>
 
                             <a href="{{ route('vendor.inbox') }}">
-                                <li class="list-group-item shadow active-now-inbox d-flex justify-content-between align-items-center">Inbox
+                                <li class="list-group-item d-flex justify-content-between align-items-center">Inbox
                                     <span class="badge badge-primary badge-pill">{{ $inbox_count ?? '0' }}</span>
                                 </li>
                             </a>
-                            
+
                             <a href="{{ route('vendor.sent') }}">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">Sent
+                                <li class="list-group-item shadow active-now-inbox d-flex justify-content-between align-items-center">Sent
                                     <span class="badge badge-primary badge-pill">{{ $sent_count ?? '0' }}</span>
                                 </li>
                             </a>
@@ -44,7 +43,7 @@
             <div class="col-lg-8">
                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                     <div class="iq-card-header d-flex justify-content-between align-items-center">
-                        <h4 class="card-title mb-0">Inbox Messages</h4>
+                        <h4 class="card-title mb-0">Sent Messages</h4>
                     </div>
                     <div class="iq-card-body pb-4">
                         <ul class="list-inline pb-3 m-0">

@@ -17,19 +17,7 @@
                     </div>
                     <div class="navbar-breadcrumb">
                         <h5 class="mb-0 active text-capitalize" style="letter-spacing: 2px;">Welcome {{Auth::guard('vendor')->user()->username}}</h5>
-                        <!-- <nav aria-label="breadcrumb">
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Vendor</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                            </ul>
-                        </nav> -->
                     </div>
-                    <!-- <div class="iq-search-bar">
-                        <form action="#" class="searchbox">
-                            <input type="text" class="text search-input" placeholder="Search Here...">
-                            <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                        </form>
-                    </div> -->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
                         <i class="ri-menu-3-line"></i>
                     </button>

@@ -52,14 +52,14 @@
                             <div class="rounded-circle iq-card-icon bg-success"><i class="ri-book-line"></i></div>
                             <div class="text-left ml-3">
                                 <h5 class="mb-0"><span class="">Net Amount of Rented</span></h5>
-                                <h5 class="mb-0"><span class="counter">500</span></h5>
+                                <h5 class="mb-0">₦<span class="counter">500</span></h5>
                             </div>
                         </div>
                         <div class="d-flex align-items-center">
                             <div class="rounded-circle iq-card-icon bg-primary"><i class="ri-book-line"></i></div>
                             <div class="text-left ml-3">
                                 <h5 class="mb-0"><span class="">Net Amount of Purchased</span></h5>
-                                <h5 class="mb-0"><span class="counter">500</span></h5>
+                                <h5 class="mb-0">₦<span class="counter">500</span></h5>
                             </div>
                         </div>
                     </div>

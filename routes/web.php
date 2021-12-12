@@ -47,7 +47,9 @@ Route::group(
             Route::get('/about', [\App\Http\Controllers\Vendor\DashboardController::class, 'about'])->name('vendor.about');
             
             //Inbox
-            Route::get('/inbox', [\App\Http\Controllers\Vendor\DashboardController::class, 'inbox'])->name('vendor.inbox');
+            Route::match(['get', 'post'], '/create', [\App\Http\Controllers\Vendor\DashboardController::class, 'create'])->name('vendor.create');
+            Route::match(['get'], '/sent', [\App\Http\Controllers\Vendor\DashboardController::class, 'sent'])->name('vendor.sent');
+            Route::match(['get'], '/inbox', [\App\Http\Controllers\Vendor\DashboardController::class, 'inbox'])->name('vendor.inbox');
             
             //Profile
             Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Vendor\SettingsController::class, 'profile'])->name('vendor.profile');
