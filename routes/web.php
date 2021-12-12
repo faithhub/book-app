@@ -26,8 +26,17 @@ Route::group(
         Route::match(['get'], '/logout', [\App\Http\Controllers\User\AuthController::class, 'logout'])->name('user.logout');
         Route::group(['middleware' => ['auth.user']], function () {
             Route::get('/', [\App\Http\Controllers\User\DashboardController::class, 'index'])->name('user.dashboard');
+            
+            //View Book
+            Route::get('/view-book/{$id}', [\App\Http\Controllers\User\DashboardController::class, 'view_book'])->name('user.view.book');
+            
+            //View material based on type
+            Route::get('/material/{$id}', [\App\Http\Controllers\User\DashboardController::class, 'material'])->name('user.material');
+
+
+            //Settings
             Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\User\SettingsController::class, 'profile'])->name('user.profile');
-            Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\User\SettingsController::class, 'change_password'])->name('user.change.password');
+            Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\User\DashboardController::class, 'change_password'])->name('user.change.password');
         });
     }
 );

@@ -18,15 +18,25 @@
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
 
-                <li class="{{ request()->is('vendor')  ? 'active active-now' : '' }}"><a href="{{ route('vendor.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a></li>
+                <li class="{{ request()->is('vendor')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('vendor.dashboard') }}" ><i class="fa fa-home"></i><span>Dashboard</span></a>
+                </li>
 
-                <li class="{{ request()->is('vendor/my-books') || request()->is('vendor/view-book/*')  ? 'active active-now' : '' }}"><a href="{{ route('vendor.my.books') }}"><i class="fa fa-book"></i>My Books</a></li>
+                <li class="{{ request()->is('vendor/my-books') || request()->is('vendor/view-book/*')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('vendor.my.books') }}"><i class="fa fa-book"></i><span>My Books</span></a>
+                </li>
 
-                <li class="{{ request()->is('vendor/upload-new-book')  ? 'active active-now' : '' }}"><a href="{{ route('vendor.upload.new.book') }}"><i class="fa fa-book"></i>Upload New Book</a></li>
+                <li class="{{ request()->is('vendor/upload-new-book')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('vendor.upload.new.book') }}"><i class="fa fa-book"></i><span>Upload New Book</span></a>
+                </li>
 
-                <li class="{{ request()->is('vendor/inbox') || request()->is('vendor/sent') || request()->is('vendor/create')  ? 'active active-now' : '' }}"><a href="{{ route('vendor.inbox') }}"><i class="fa fa-envelope-open"></i>Inbox</a></li>
+                <li class="{{ request()->is('vendor/inbox') || request()->is('vendor/sent') || request()->is('vendor/create')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('vendor.inbox') }}"><i class="fa fa-envelope-open"></i><span>Inbox</span></a>
+                </li>
 
-                <li class="{{ request()->is('vendor/about')  ? 'active active-now' : '' }}"><a href="{{ route('vendor.about') }}"><i class="fa fa-address-book"></i>About Us</a></li>
+                <li class="{{ request()->is('vendor/about')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('vendor.about') }}"><i class="fa fa-address-book"></i><span>About Us</span></a>
+                </li>
 
                 <li class="{{ request()->is('vendor/profile') || request()->is('vendor/change-password')  ? 'active active-menu' : '' }}">
                     <a href="#settings" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="fa fa-cog iq-arrow-left"></i><span>Settings</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
@@ -37,19 +47,9 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('vendor.logout') }}"><i class="fa fa-power-off"></i>Logout</a>
+                    <a href="{{ route('vendor.logout') }}"><i class="fa fa-power-off"></i><span>Logout</span></a>
                 </li>
             </ul>
         </nav>
-        <!-- <div id="sidebar-bottom" class="p-3 position-relative">
-            <div class="iq-card">
-                <div class="iq-card-body">
-                    <div class="sidebarbottom-content">
-                        <div class="image"><img src="images/page-img/side-bkg.png" alt=""></div>
-                        <button type="submit" class="btn w-100 btn-primary mt-4 view-more">Become Membership</button>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
 </div>

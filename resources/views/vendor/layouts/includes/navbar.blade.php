@@ -16,14 +16,14 @@
                         </div>
                     </div>
                     <div class="navbar-breadcrumb">
-                        <h5 class="mb-0 active text-capitalize" style="letter-spacing: 2px;">Welcome {{Auth::guard('vendor')->user()->username}}</h5>
+                        <h5 class="mb-0 active text-capitalize" style="letter-spacing: 2px;">Welcome {{Auth::guard('vendor')->user()->name}}</h5>
                     </div>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
+                    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
                         <i class="ri-menu-3-line"></i>
-                    </button>
+                    </button> -->
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto navbar-list">
-                            <li class="nav-item nav-icon search-content">
+                            <!-- <li class="nav-item nav-icon search-content">
                                 <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
                                     <i class="ri-search-line"></i>
                                 </a>
@@ -31,7 +31,7 @@
                                     <input type="text" class="text search-input" placeholder="Type here to search...">
                                     <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                                 </form>
-                            </li>
+                            </li> -->
                             <li class="line-height pt-3">
                                 <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
                                     <div class="caption">

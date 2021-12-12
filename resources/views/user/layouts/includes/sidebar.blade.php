@@ -17,11 +17,9 @@
     <div id="sidebar-scrollbar">
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
-                <li class="active active-menu">
-                    <a href="admin-dashboard.html" class="active"><i class="las la-house-damage"></i>Dashboard</a>
-                </li>
-                <li>
-                    <a href="admin-dashboard.html" class="active"><i class="ri-file-pdf-line"></i>Bookshop</a>
+
+                <li class="{{ request()->is('user')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('user.dashboard') }}" class="active"><i class="fa fa-home"></i><span>Dashboard</span></a>
                 </li>
                 <li class="">
                     <a href="#admin" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="ri-book-line iq-arrow-left"></i><span>My Library</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
@@ -32,10 +30,7 @@
                 </li>
                 
                 <li>
-                    <a href="admin-dashboard.html" class="active"><i class="ri-checkbox-multiple-blank-line"></i>Checkout</a>
-                </li>
-                <li>
-                    <a href="admin-dashboard.html" class="active"><i class="ri-heart-line"></i>Watchlist</a>
+                    <a href="admin-dashboard.html" class=""><i class="ri-checkbox-multiple-blank-line"></i>Checkout</a>
                 </li>
                 
                 <li class="{{ request()->is('user/profile') || request()->is('user/edit-profile') || request()->is('user/change-password')  ? 'active active-menu' : '' }}">
@@ -47,7 +42,7 @@
                 </li>
                 
                 <li>
-                    <a href="{{ route('user.logout') }}" class="active"><i class="ri-file-pdf-line"></i>Logout</a>
+                    <a href="{{ route('user.logout') }}" class=""><i class="ri-file-pdf-line"></i>Logout</a>
                 </li>
             </ul>
         </nav>

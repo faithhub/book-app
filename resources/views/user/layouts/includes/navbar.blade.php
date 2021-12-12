@@ -15,35 +15,11 @@
                             </a>
                         </div>
                     </div>
-                    <div class="navbar-breadcrumb">
-                        <h5 class="mb-0">Dashbord</h5>
-                        <nav aria-label="breadcrumb">
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Dashbord</li>
-                            </ul>
-                        </nav>
+                    <div class="navbar-breadcrumb">                        
+                    <h5 class="mb-0 active text-capitalize" style="letter-spacing: 2px;">Welcome {{Auth::user()->name}}</h5>
                     </div>
-                    <!-- <div class="iq-search-bar">
-                        <form action="#" class="searchbox">
-                            <input type="text" class="text search-input" placeholder="Search Here...">
-                            <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                        </form>
-                    </div> -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
-                        <i class="ri-menu-3-line"></i>
-                    </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto navbar-list">
-                            <li class="nav-item nav-icon search-content">
-                                <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
-                                    <i class="ri-search-line"></i>
-                                </a>
-                                <form action="#" class="search-box p-0">
-                                    <input type="text" class="text search-input" placeholder="Type here to search...">
-                                    <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                                </form>
-                            </li>
                             <li class="nav-item nav-icon dropdown">
                                 <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
                                     <i class="ri-shopping-cart-2-line"></i>
@@ -114,16 +90,15 @@
                             <li class="line-height pt-3">
                                 <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
                                     <div class="caption">
-                                        <h6 class="mb-1 line-height">{{ Auth::user()->username }}</h6>
-                                        <!-- <p class="mb-0 text-primary">$20.32</p> -->
+                                        <h6 class="mb-1 line-height text-capitalize" style="font-weight: 600 !important; letter-spacing: 2px;">{{ Auth::user()->username }}</h6>
+                                        <p class="mb-0" style="color: green; letter-spacing: 2px; font-weight: 600 !important;">Online</p>
                                     </div>
                                 </a>
                                 <div class="iq-sub-dropdown iq-user-dropdown">
                                     <div class="iq-card shadow-none m-0">
                                         <div class="iq-card-body p-0 ">
                                             <div class="bg-primary p-3">
-                                                <h5 class="mb-0 text-white line-height">{{ Auth::user()->username }}</h5>
-                                                <span class="text-white font-size-12">Available</span>
+                                                <h5 class="mb-0 text-white line-height text-capitalize" style="font-weight: 600 !important; letter-spacing: 2px;">{{ Auth::user()->username }}</h5>
                                             </div>
                                             <a href="{{ route('user.profile') }}" class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
