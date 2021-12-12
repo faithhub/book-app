@@ -42,4 +42,15 @@ class DashboardController extends Controller
             return redirect(RouteServiceProvider::VENDOR);
         }
     }
+
+    public function inbox()
+    {
+        try {
+            $data['title'] = "Vendor Inbox";
+            return view('vendor.dashboard.inbox', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::VENDOR);
+        }
+    }
 }

@@ -46,6 +46,9 @@ Route::group(
             //About Us
             Route::get('/about', [\App\Http\Controllers\Vendor\DashboardController::class, 'about'])->name('vendor.about');
             
+            //Inbox
+            Route::get('/inbox', [\App\Http\Controllers\Vendor\DashboardController::class, 'inbox'])->name('vendor.inbox');
+            
             //Profile
             Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Vendor\SettingsController::class, 'profile'])->name('vendor.profile');
             

@@ -16,13 +16,13 @@
                         </div>
                     </div>
                     <div class="navbar-breadcrumb">
-                        <h5 class="mb-0">Dashboard</h5>
-                        <nav aria-label="breadcrumb">
+                        <h5 class="mb-0 active text-capitalize" style="letter-spacing: 2px;">Welcome {{Auth::guard('vendor')->user()->username}}</h5>
+                        <!-- <nav aria-label="breadcrumb">
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html">Vendor</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                             </ul>
-                        </nav>
+                        </nav> -->
                     </div>
                     <!-- <div class="iq-search-bar">
                         <form action="#" class="searchbox">
