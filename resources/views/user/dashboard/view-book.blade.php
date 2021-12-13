@@ -43,7 +43,7 @@
                                         <div class="price d-flex align-items-center font-weight-500 mb-2">
                                             <!-- <span class="font-size-20 pr-2 old-price">$99</span> -->
                                             @if($book->book_paid_free == "Paid")
-                                            <span class="font-size-24 text-dark"><b style="color: green;">{{$book->book_price}}</b></span>
+                                            <span class="font-size-24 text-dark"><b style="color: green;">₦{{number_format($book->book_price, 2)}}</b></span>
                                             @elseif($book->book_paid_free == "Free")
                                             <span class="font-size-24 text-dark"><b style="color: green;">Free</b></span>
                                             @endif
@@ -64,18 +64,22 @@
                                         <div class="text-primary mb-1">Tag: <span class="text-body text-me">{{$book->book_tag}}</span></div>
                                         <div class="text-primary mb-1">Year of Publish: <span class="text-body text-me blder">{{$book->book_year}}</span></div>
                                         <div class="text-primary mb-1">Country of Publish: <span class="text-body text-me">{{$book->country->country_label}}</span></div>
-                                        <div class="mb-2 d-flex align-items-center mt-2">
-                                            <div class="text-primary mb-1 p-2">Total number of sold: <span class="text-body text-me">6</span></div>
-                                            <div class="text-primary mb-1 p-2">Total number of Rent: <span class="text-body text-me">7</span></div>
+
+
+                                        @if($book->book_paid_free == "Paid")
+                                        <div class="mb-4 mt-3 d-flex align-items-center">
+                                            <a href='' onclick="return confirm('Are you sure you want to Buy this material?')" class="btn btn-primary view-more mr-2">Buy Book</a>
+                                            <a href='' onclick="return confirm('Are you sure you want to Rent this material?')" class="btn btn-primary view-more mr-2">Rent Book</a>
                                         </div>
-                                        <div class="mb-2 d-flex align-items-center mt-2">
+                                        @else
+                                        <div class="mb-4 mt-3 d-flex align-items-center">
                                             @if($book->book_material_type == "5")
-                                            <a download="" href='{{ asset("VIDEOMAT/$book->book_material_video") }}' class="btn btn-primary view-more mr-2">Download Material</a>
+                                            <a download="" onclick="return confirm('Are you sure you want to download this material?')" href='{{ asset("VIDEOMAT/$book->book_material_video") }}' class="btn btn-primary view-more mr-2">Download Material</a>
                                             @else
-                                            <a download="" href='{{ asset("MATERIALPPDF/$book->book_material_pdf") }}' class="btn btn-primary view-more mr-2">Download Material</a>
+                                            <a download="" onclick="return confirm('Are you sure you want to download this material?')" href='{{ asset("MATERIALPPDF/$book->book_material_pdf") }}' class="btn btn-primary view-more mr-2">Download Material</a>
                                             @endif
-                                            <!-- <a href="book-pdf.html" class="btn btn-primary view-more mr-2">Rent Book</a> -->
                                         </div>
+                                        @endif
                                         <!-- <div class="mb-4 d-flex align-items-center">
                                             <a href="book-pdf.html" class="btn btn-danger view-more mr-2">Rent Book</a>
                                         </div> -->

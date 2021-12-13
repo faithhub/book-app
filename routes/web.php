@@ -28,11 +28,15 @@ Route::group(
             Route::get('/', [\App\Http\Controllers\User\DashboardController::class, 'index'])->name('user.dashboard');
             
             //View Book
-            Route::get('/view-book/{$id}', [\App\Http\Controllers\User\DashboardController::class, 'view_book'])->name('user.view.book');
+            Route::get('/view-book/{name}/{id}', [\App\Http\Controllers\User\DashboardController::class, 'view_book'])->name('user.view.book');
             
             //View material based on type
-            Route::get('/material/{$id}', [\App\Http\Controllers\User\DashboardController::class, 'material'])->name('user.material');
-
+            Route::get('/view-material/{name}/{id}', [\App\Http\Controllers\User\DashboardController::class, 'material'])->name('user.material');
+            
+            //Add to car
+            Route::post('/add-cart', [\App\Http\Controllers\User\DashboardController::class, 'add_cart'])->name('user.add.cart');
+            Route::post('/remove-cart', [\App\Http\Controllers\User\DashboardController::class, 'remove_cart'])->name('user.remove.cart');
+            Route::match(['get', 'post'], '/checkout', [\App\Http\Controllers\User\DashboardController::class, 'checkout'])->name('user.checkout');
 
             //Settings
             Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\User\SettingsController::class, 'profile'])->name('user.profile');

@@ -4,9 +4,9 @@
     @if(isset($books))
     @foreach($mats as $value)
     <?php
-    $articles = \App\Models\Book::where('book_material_type', $value->id)->take(4)->get();
+    $articles = \App\Models\Book::where('book_material_type', $value->id)->orderBy('id', 'desc')->take(4)->get();
     ?>
-    
+
     @if($articles->count() > 0)
     <div class="col-lg-12">
         <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
@@ -15,7 +15,7 @@
                     <h4 class="card-title mb-0">{{$value->name}}</h4>
                 </div>
                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                    <a href="{{ route('user.material', $value->id) }}" class="btn btn-sm btn-primary view-more">View More</a>
+                    <a href="{{ url('user/view-material/'.$value->name.'/'.$value->id) }}" class="btn btn-sm btn-primary view-more">View More</a>
                 </div>
             </div>
             <div class="iq-card-body similar-contens">
@@ -23,7 +23,7 @@
                     @foreach($articles as $book)
                     <li class="col-md-3">
                         <div class="d-flex align-items-center">
-                            <div class="col-sm-5 p-0 position-relative image-overlap-shadow">
+                            <div class="col-sm-5 p-0 position-relative">
                                 <a href="javascript:void();">
                                     @if($book->book_cover_type == "Book Cover")
                                     <img class="img-fluid rounded w-100" src='{{ asset("BOOKCOVER/$book->book_cover") }}' alt="">
@@ -59,13 +59,24 @@
                                     </h6>
                                 </div>
                                 <div class="iq-product-action">
-                                    <a href="javascript:void();"><i class="ri-shopping-cart-2-fill text-primary"></i></a>
-                                    <!-- <a href="javascript:void();" class="ml-2"><i class="ri-heart-fill text-danger"></i></a> -->
+                                    @if($book->book_paid_free == "Paid")
+                                    <?php $carts = Session::get('user_carts'); ?>
+                                    @if(in_array($book->id, $carts))
+                                    <i class="ri-shopping-cart-2-fill p-1 text-primary cart btn">Added</i>
+                                    @else
+                                    <form action="{{ route('user.add.cart') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="book_id" value="{{$book->id}}">
+                                        <button id="add-to-cart" class="p-1 rounded"><i class="ri-shopping-cart-2-fill text-primary cart shadow">Add to Cart</i></button>
+                                    </form>
+                                    @endif
+                                    @else
+                                    <button id="add-to-cart" class="p-1 rounded"><i class="ri-shopping-cart-2-fill text-primary cart shadow">Free</i></button>
+                                    @endif
                                 </div>
 
                                 <div class="mb-2 d-flex align-items-center mt-2">
-                                    <!-- <a href="book-pdf.html" class="btn btn-primary view-more mr-2">View Book</a> -->
-                                    <a href="{{ route('user.view.book', $book->id) }}" class="btn btn-primary btn-sm mt-3">View Book</a>
+                                    <a href="{{ url('user/view-book/'.$book->book_name.'/'.$book->id) }}" class="btn btn-primary btn-sm mt-3">View Book</a>
                                 </div>
                             </div>
                         </div>

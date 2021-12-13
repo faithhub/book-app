@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\BookCategory;
 use App\Models\BookMaterial;
+use App\Models\Cart;
 use App\Models\Country;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
@@ -27,7 +28,6 @@ class DashboardController extends Controller
             $data['books'] = $b = Book::with('material')->orderBy('id', 'asc')->get()->groupBy('material.name');
             $data['books2'] = Book::orderBy('id', 'asc')->get();
             $data['mats'] = BookMaterial::orderBy('name', 'asc')->get();
-            //dd($b);
             $data['title'] = "User Dashboard";
             return view('user.dashboard.index', $data);
         } catch (\Throwable $th) {
@@ -36,8 +36,9 @@ class DashboardController extends Controller
         }
     }
 
-    public function view_book($id){
-        
+    public function view_book($name, $id)
+    {
+
         try {
             $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
             $data['countries'] = Country::orderBy('id', 'asc')->get();
@@ -50,18 +51,79 @@ class DashboardController extends Controller
             return redirect(RouteServiceProvider::USER);
         }
     }
-    public function material($id){
-        
+    public function material($name, $id)
+    {
         try {
             $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
             $data['countries'] = Country::orderBy('id', 'asc')->get();
             $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
-            $data['book'] = $b = Book::where(['id' => $id])->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->first();
-            $data['title'] = $b->book_name;
-            return view('user.dashboard.view-book', $data);
+            $data['mat'] = $mat = BookMaterial::where('id', $id)->first();
+            $data['books'] = $b = Book::where(['book_material_type' => $mat->id])->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'desc')->paginate(12);
+            $data['title'] = $mat->name;
+            return view('user.dashboard.material', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return redirect(RouteServiceProvider::USER);
+        }
+    }
+
+    public function add_cart(Request $request)
+    {
+        try {
+            $data = array(
+                'user_id' => Auth::user()->id,
+                'book_id' => $request->book_id
+            );
+            Cart::create($data);
+
+            $carts = Cart::where('user_id', Auth::user()->id)->with('book')->get();
+            $cart_count = $carts->count();
+            $user_carts = [];
+            foreach ($carts as $cart) {
+                array_push($user_carts, $cart->book_id);
+            }
+            Session::put('user_carts', $user_carts);
+            Session::put('my_carts', $carts);
+            Session::put('my_cart_count', $cart_count);
+
+            Session::flash('success', 'Book added to cart');
+            return back();
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+    public function remove_cart(Request $request)
+    {
+        try {
+            Cart::where(['user_id' => Auth::user()->id, 'book_id' => $request->book_id])->delete();
+            $carts = Cart::where('user_id', Auth::user()->id)->with('book')->get();
+            $cart_count = $carts->count();
+            $user_carts = [];
+            foreach ($carts as $cart) {
+                array_push($user_carts, $cart->book_id);
+            }
+            Session::put('user_carts', $user_carts);
+            Session::put('my_carts', $carts);
+            Session::put('my_cart_count', $cart_count);
+            Session::flash('success', 'Book removed to cart');
+            return back();
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function checkout(Request $request){
+        try {
+            //code...
+            $data['title'] = "Checkout";
+            $data['all_carts'] = Cart::where('user_id', Auth::user()->id)->with('book')->get();
+            // $data['total'] = Cart::where('user_id', Auth::user()->id)->with('book')->get();
+            return view('user.dashboard.checkout', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
         }
     }
 }

@@ -89,6 +89,12 @@ a:hover { text-decoration: none; color: #000; }
   border-radius: 10px !important;
   background-color: #d0d0e1 !important;
 }
+.cart{
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 3px;
+  font-weight: 600;
+}
 /* scroller */
 .scroller { overflow-y: auto; scrollbar-color: var(--iq-primary) var(--iq-light-primary); scrollbar-width: thin; }
 .scroller::-webkit-scrollbar-thumb { background-color: var(--iq-primary); }

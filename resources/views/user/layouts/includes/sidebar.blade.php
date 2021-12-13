@@ -18,8 +18,8 @@
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
 
-                <li class="{{ request()->is('user')  ? 'active active-now' : '' }}">
-                    <a href="{{ route('user.dashboard') }}" class="active"><i class="fa fa-home"></i><span>Dashboard</span></a>
+                <li class="{{ request()->is('user') || request()->is('user/view-book/*') || request()->is('user/view-material/*')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('user.dashboard') }}" class=""><i class="fa fa-home"></i><span>Dashboard</span></a>
                 </li>
                 <li class="">
                     <a href="#admin" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="ri-book-line iq-arrow-left"></i><span>My Library</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
@@ -29,11 +29,11 @@
                     </ul>
                 </li>
                 
-                <li>
-                    <a href="admin-dashboard.html" class=""><i class="ri-checkbox-multiple-blank-line"></i>Checkout</a>
+                <li class="{{ request()->is('user/checkout') ? 'active active-now' : '' }}">
+                    <a href="{{ route('user.checkout') }}" class=""><i class="ri-checkbox-multiple-blank-line"></i>Checkout</a>
                 </li>
                 
-                <li class="{{ request()->is('user/profile') || request()->is('user/edit-profile') || request()->is('user/change-password')  ? 'active active-menu' : '' }}">
+                <li class="{{ request()->is('user/profile') || request()->is('user/edit-profile') || request()->is('user/change-password')  ? 'active active-now' : '' }}">
                     <a href="#settings" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="las la-th-list iq-arrow-left"></i><span>Settings</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                     <ul id="settings" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                         <li class="{{ request()->is('user/profile')  ? 'active' : '' }}"><a href="{{ route('user.profile') }}"><i class="las la-id-card-alt"></i>My Profile</a></li>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -107,6 +108,15 @@ class AuthController extends Controller
                     return back();
                 }
 
+                $carts = Cart::where('user_id', Auth::user()->id)->with('book')->get();
+                $cart_count = $carts->count();
+                $user_carts = [];
+                foreach ($carts as $cart) {
+                    array_push($user_carts, $cart->book_id);
+                }
+                Session::put('user_carts', $user_carts);
+                Session::put('my_carts', $carts);
+                Session::put('my_cart_count', $cart_count);
                 Session::flash('success', 'Login successfully');
                 return redirect()->route('user.dashboard');
             } else {
@@ -125,6 +135,7 @@ class AuthController extends Controller
         if (Auth::user()) // this means that the admin was logged in.
         {
             Auth::logoutCurrentDevice();
+            Session::forget('user_carts');
             // dd(Auth::user());
             // Auth::guard('admin')->logout();
             return redirect()->route('user.login');
