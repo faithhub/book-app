@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\BookCategory;
 use App\Models\BookMaterial;
+use App\Models\BoughtBook;
 use App\Models\Cart;
 use App\Models\Country;
+use App\Models\RentedBook;
+use App\Models\Transaction;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,12 +80,26 @@ class DashboardController extends Controller
             Cart::create($data);
 
             $carts = Cart::where('user_id', Auth::user()->id)->with('book')->get();
+            
+            $boughts = BoughtBook::where('user_id', Auth::user()->id)->get();
+            $rents = RentedBook::where('user_id', Auth::user()->id)->get();
+            $boughts_books = [];
+            $rented_books = [];
+            foreach ($rents as $rent) {
+                array_push($rented_books, $rent->book_id);
+            }
+            foreach ($boughts as $bought) {
+                array_push($boughts_books, $bought->book_id);
+            }
+            Session::put('boughts_books', $boughts_books ?? [0]);
+            Session::put('rented_books', $rented_books ?? [0]);
+
             $cart_count = $carts->count();
             $user_carts = [];
             foreach ($carts as $cart) {
                 array_push($user_carts, $cart->book_id);
             }
-            Session::put('user_carts', $user_carts);
+            Session::put('user_carts', $user_carts ?? [0]);
             Session::put('my_carts', $carts);
             Session::put('my_cart_count', $cart_count);
 
@@ -103,7 +120,7 @@ class DashboardController extends Controller
             foreach ($carts as $cart) {
                 array_push($user_carts, $cart->book_id);
             }
-            Session::put('user_carts', $user_carts);
+            Session::put('user_carts', $user_carts ?? [0]);
             Session::put('my_carts', $carts);
             Session::put('my_cart_count', $cart_count);
             Session::flash('success', 'Book removed to cart');
@@ -133,7 +150,8 @@ class DashboardController extends Controller
         try {
             //code...
             $data['title'] = "Transactions";
-            $data['transactions'] = Cart::where('user_id', Auth::user()->id)->with('book')->get();
+            $data['sn'] = 1;
+            $data['transactions'] = Transaction::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(15);
             // $data['total'] = Cart::where('user_id', Auth::user()->id)->with('book')->get();
             return view('user.dashboard.payment-history', $data);
         } catch (\Throwable $th) {
@@ -155,7 +173,7 @@ class DashboardController extends Controller
                 if ($request->book_name == null && $request->book_author == null && $request->book_material_type == null && $request->book_cat == null && $request->book_paid_free == null) {
                     return view('user.dashboard.search', $data);
                 }
-                
+
                 $data['books'] = $b = Book::where('book_name', 'LIKE', '%' . $request->book_name . '%')
                     // ->orwhere('book_author', 'LIKE', '%' . $request->book_author . '%')
                     // ->orwhere('book_material_type', 'LIKE', '%' . $request->book_material_type . '%')
@@ -164,7 +182,7 @@ class DashboardController extends Controller
                     // ->orwhere('book_paid_free', 'LIKE', '%' . $request->book_paid_free . '%')
                     // ->orwhere('book_tag', 'LIKE', '%' . $request->book_tag . '%')
                     ->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'desc')->paginate(12);
-                    //dd($b);
+                //dd($b);
                 return view('user.dashboard.search', $data);
             }
             return view('user.dashboard.search', $data);
@@ -173,8 +191,8 @@ class DashboardController extends Controller
         }
     }
 
-    public function access_book($name, $id)    {
-
+    public function access_book($name, $id)
+    {
         try {
             $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
             $data['countries'] = Country::orderBy('id', 'asc')->get();
@@ -186,5 +204,31 @@ class DashboardController extends Controller
             Session::flash('error', $th->getMessage());
             return redirect(RouteServiceProvider::USER);
         }
+    }
+
+    public function save_payment(Request $request)
+    {
+        $carts = Cart::where('user_id', Auth::user()->id)->get();
+        foreach($carts as $cart){
+            BoughtBook::create([
+                'user_id' => Auth::user()->id,
+                'book_id' => $cart->book_id
+            ]);
+            $book = Book::where('id', $cart->book_id)->first();
+            $book->sold = $book->sold + 1;
+            $book->save();
+        }
+        $data = array(
+            'user_id' => Auth::user()->id,
+            'ref' => $request->ref,
+            'amount' => $request->amount
+        );
+        Transaction::create($data);
+        Cart::where('user_id', Auth::user()->id)->delete();
+        Session::forget('my_cart_count');
+        Session::forget('user_carts');
+        Session::forget('my_carts');
+        Session::put('user_carts', $user_carts ?? [0]);
+        return true;
     }
 }

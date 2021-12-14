@@ -35,6 +35,8 @@ class CreateBooksTable extends Migration
             $table->string('book_cover')->nullable();
             $table->string('video_cover')->nullable();
             $table->string('book_year');
+            $table->string('sold')->nullable();
+            $table->string('rent')->nullable();
             $table->timestamps();
         });
     }

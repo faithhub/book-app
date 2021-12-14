@@ -35,6 +35,7 @@ Route::group(
             
             //Payment History
             Route::get('/transactions', [\App\Http\Controllers\User\DashboardController::class, 'payment_history'])->name('user.payment.history');
+            Route::post('/save-payment', [\App\Http\Controllers\User\DashboardController::class, 'save_payment'])->name('user.save.payment');
             
             //Access book
             Route::get('/access-book/{name}/{id}', [\App\Http\Controllers\User\DashboardController::class, 'access_book'])->name('user.access_book');

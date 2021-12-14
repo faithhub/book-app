@@ -15,10 +15,29 @@
             },
             callback: function(response) {
                 let message = 'Payment complete! Reference: ' + response.reference;
-                alert(message);
+                // alert(message);
+                save(response.reference, amount.value)
                 window.location.href = "{{ route('user.payment.history') }}"
             }
         });
         handler.openIframe();
+    }
+
+    function save(ref, amount) {
+        console.log(ref)
+        var url = "{{ route('user.save.payment') }}"
+        var datas = {
+            '_token': "{{ csrf_token() }}",
+            'ref': ref,
+            'amount': amount
+        }
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: datas, // serializes the form's elements.
+            success: function(data) {
+                console.log(data); // show response from the php script.
+            }
+        });
     }
 </script>
