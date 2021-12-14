@@ -114,7 +114,8 @@ class DashboardController extends Controller
         }
     }
 
-    public function checkout(Request $request){
+    public function checkout(Request $request)
+    {
         try {
             //code...
             $data['title'] = "Checkout";
@@ -124,6 +125,66 @@ class DashboardController extends Controller
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return back();
+        }
+    }
+
+    public function payment_history()
+    {
+        try {
+            //code...
+            $data['title'] = "Transactions";
+            $data['transactions'] = Cart::where('user_id', Auth::user()->id)->with('book')->get();
+            // $data['total'] = Cart::where('user_id', Auth::user()->id)->with('book')->get();
+            return view('user.dashboard.payment-history', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return back();
+        }
+    }
+
+
+    public function search(Request $request)
+    {
+        try {
+            $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
+            $data['countries'] = Country::orderBy('id', 'asc')->get();
+            $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
+            $data['title'] = "Search Result Page";
+            $data['result'] = "No result found";
+            if ($_POST) {
+                if ($request->book_name == null && $request->book_author == null && $request->book_material_type == null && $request->book_cat == null && $request->book_paid_free == null) {
+                    return view('user.dashboard.search', $data);
+                }
+                
+                $data['books'] = $b = Book::where('book_name', 'LIKE', '%' . $request->book_name . '%')
+                    // ->orwhere('book_author', 'LIKE', '%' . $request->book_author . '%')
+                    // ->orwhere('book_material_type', 'LIKE', '%' . $request->book_material_type . '%')
+                    // ->orwhere('book_cat', 'LIKE', '%' . $request->book_cat . '%')
+                    // ->orwhere('book_country', 'LIKE', '%' . $request->book_country . '%')
+                    // ->orwhere('book_paid_free', 'LIKE', '%' . $request->book_paid_free . '%')
+                    // ->orwhere('book_tag', 'LIKE', '%' . $request->book_tag . '%')
+                    ->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'desc')->paginate(12);
+                    //dd($b);
+                return view('user.dashboard.search', $data);
+            }
+            return view('user.dashboard.search', $data);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
+    public function access_book($name, $id)    {
+
+        try {
+            $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
+            $data['countries'] = Country::orderBy('id', 'asc')->get();
+            $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
+            $data['book'] = $b = Book::where(['id' => $id])->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->first();
+            $data['title'] = $b->book_name;
+            return view('user.dashboard.access-book', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::USER);
         }
     }
 }

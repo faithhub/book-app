@@ -1,32 +1,36 @@
 @extends('user.layouts.app')
 @section('user')
 <div id="content-page" class="content-page">
-    @if(isset($mat))
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-8">
                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                     <div class="iq-card-header d-flex justify-content-between align-items-center position-relative mb-0 similar-detail">
                         <div class="iq-header-title">
-                            <h4 class="card-title mb-0">{{$mat->name}}</h4>
+                            <h4 class="card-title mb-0">Search Result</h4>
                         </div>
                         <div class="iq-card-header-toolbar d-flex align-items-center">
                         </div>
                     </div>
                     <div class="iq-card-body similar-contens">
                         <ul id="" class="list-inline p-0 mb-0 row">
+                            @if(isset($books))
                             @if($books->count() > 0)
+                            
                             @foreach($books as $book)
-                            <li class="col-md-4">
+                            <li class="col-md-6">
                                 <div class="d-flex align-items-center">
                                     <div class="col-sm-5 p-0 position-relative image-overlap-shadow">
                                         <a href="javascript:void();">
                                             @if($book->book_cover_type == "Book Cover")
                                             <img class="img-fluid rounded w-100" src='{{ asset("BOOKCOVER/$book->book_cover") }}' alt="">
                                             @elseif($book->book_cover_type == "Video Cover")
-                                            <div class="embed-responsive embed-responsive-1by1">
-                                                <iframe class="embed-responsive-item" src='{{ asset("VIDEOCOVER/$book->video_cover") }}' allowfullscreen></iframe>
-                                            </div>
+                                            <!-- <div class="embed-responsive embed-responsive-1by1">
+                                                <iframe class="embed-responsive-item" src='{{ asset("VIDEOCOVER/$book->video_cover") }}'></iframe>
+                                            </div> -->
+                                                <video class="embed-responsive embed-responsive-1by1" loop controls muted>
+                                                    <source src="{{ asset('VIDEOCOVER/'.$book->video_cover) }}" type="video/mp4" />
+                                                </video>
                                             @endif
                                         </a>
                                     </div>
@@ -34,7 +38,8 @@
                                         <div class="mb-2">
                                             <h6 class="mb-1">{{$book->book_name}}</h6>
                                             </span>
-                                            <p class="font-size-13 line-height mb-1">{{$book->book_author}}</p>
+                                            <p class="font-size-13 line-height mb-1">Author: {{$book->book_author}}</p>
+                                            <p class="font-size-13 line-height mb-1">Type: {{$book->material->name}}</p>
                                             <div class="d-block">
                                                 <span class="font-size-13 text-warning">
                                                     <i class="fa fa-star"></i>
@@ -55,7 +60,7 @@
                                                 </b>
                                             </h6>
                                         </div>
-                                        <div class="iq-product-action">
+                                        <div class="iq-product-action mt-1">
                                             @if($book->book_paid_free == "Paid")
                                             <?php $carts = Session::get('user_carts'); ?>
                                             @if(in_array($book->id, $carts))
@@ -79,6 +84,15 @@
                                 </div>
                             </li>
                             @endforeach
+                            @else
+                            <div class="col-sm-6 offset-sm-3">
+                               <h3 class="text-center">{{$result ?? '' }}</h3>
+                            </div>
+                            @endif
+                            @else
+                            <div class="col-sm-6 offset-sm-3">
+                               <h3 class="text-center">{{$result ?? '' }}</h3>
+                            </div>
                             @endif
                         </ul>
                     </div>
@@ -89,7 +103,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="col-lg-4">
                 <div class="iq-card">
@@ -174,6 +187,5 @@
             </div>
         </div>
     </div>
-    @endif
 </div>
 @endsection

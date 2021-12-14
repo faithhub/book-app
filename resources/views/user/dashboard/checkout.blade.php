@@ -27,14 +27,18 @@
                                                 @if($cart->book->book_cover_type == "Book Cover")
                                                 <img class="img-fluid rounded" src="{{ asset('BOOKCOVER/'.$cart->book->book_cover) }}" alt="">
                                                 @elseif($cart->book->book_cover_type == "Video Cover")
-                                                <iframe src="{{ asset('VIDEOCOVER/'.$cart->book->video_cover) }}" width="90" height="80" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                                                <video class="video-fluid z-depth-1" style="height: 100%; width: 80%; margin: auto;" loop controls muted>
+                                                    <source src="{{ asset('VIDEOCOVER/'.$cart->book->video_cover) }}" type="video/mp4" />
+                                                </video>
                                                 @endif
                                             </a>
                                         </span>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="checkout-product-details">
-                                            <h5>{{$cart->book->book_name}}</h5>
+                                            <a href="{{ url('user/view-book/'.$cart->book->book_name.'/'.$cart->book->id) }}">
+                                                <h5>{{$cart->book->book_name}}</h5>
+                                            </a>
                                             <p class="text-primary mb-0">Author: {{$cart->book->book_author}}</p>
                                         </div>
                                     </div>
@@ -74,20 +78,26 @@
                     </div>
                     <div class="iq-card-body">
                         <div class="form-group col-sm-12">
-
-                            @if(isset($all_carts))
-                            <?php $total = 0 ?>
-                            @foreach($all_carts as $cart)
-                            <?php $total += $cart->book->book_price ?>
-                            @endforeach
-                            @endif
+                                @if(isset($all_carts))
+                                <?php $total = 0 ?>
+                                @foreach($all_carts as $cart)
+                                <?php $total += $cart->book->book_price ?>
+                                @endforeach
+                                @endif
                             <b style="color: green; font-size: 20px;">₦{{number_format($total, 2)}}</b>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block d-block mt-3 next" style="font-size: 20px; letter-spacing: 2px;">Make Payment</button>
+                            <form id="paymentForm">
+                                <input type="hidden" value="{{Auth::user()->email}}" id="email-address">
+                                <input type="hidden" id="first-name" value="{{Auth::user()->name}}" />
+                                <input type="hidden" id="amount" value="{{$total}}"  required />
+                                <button type="submit" onclick="payWithPaystack()" class="btn btn-primary btn-block d-block mt-3" style="font-size: 20px; letter-spacing: 2px;">Make Payment</button>
+                            </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@include('user.dashboard.payment')
+<script src="https://js.paystack.co/v1/inline.js"></script>
 @endsection

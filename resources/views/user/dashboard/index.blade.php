@@ -15,7 +15,7 @@
                     <h4 class="card-title mb-0">{{$value->name}}</h4>
                 </div>
                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                    <a href="{{ url('user/view-material/'.$value->name.'/'.$value->id) }}" class="btn btn-sm btn-primary view-more">View More</a>
+                    <a href="{{ url('user/view-book-type/'.$value->name.'/'.$value->id) }}" class="btn btn-sm btn-primary view-more">View More</a>
                 </div>
             </div>
             <div class="iq-card-body similar-contens">
@@ -28,9 +28,12 @@
                                     @if($book->book_cover_type == "Book Cover")
                                     <img class="img-fluid rounded w-100" src='{{ asset("BOOKCOVER/$book->book_cover") }}' alt="">
                                     @elseif($book->book_cover_type == "Video Cover")
-                                    <div class="embed-responsive embed-responsive-1by1">
+                                    <video class="embed-responsive embed-responsive-1by1" loop controls muted>
+                                        <source src="{{ asset('VIDEOCOVER/'.$book->video_cover) }}" type="video/mp4" />
+                                    </video>
+                                    <!-- <div class="embed-responsive embed-responsive-1by1">
                                         <iframe class="embed-responsive-item" src='{{ asset("VIDEOCOVER/$book->video_cover") }}' allowfullscreen></iframe>
-                                    </div>
+                                    </div> -->
                                     @endif
                                 </a>
                             </div>

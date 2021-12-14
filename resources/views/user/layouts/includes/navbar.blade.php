@@ -33,17 +33,21 @@
                                     <?php $my_carts = Session::get('my_carts') ?>
                                     @if(isset($my_carts))
                                     @foreach($my_carts as $cart)
-                                    <a href="" class="iq-sub-card">
+                                    <div class="iq-sub-card">
                                         <div class="media align-items-center">
                                             <div class="">
                                                 @if($cart->book->book_cover_type == "Book Cover")
                                                 <img class="img-fluid rounded" src="{{ asset('BOOKCOVER/'.$cart->book->book_cover) }}" alt="">
                                                 @elseif($cart->book->book_cover_type == "Video Cover")
-                                                <iframe src="{{ asset('VIDEOCOVER/'.$cart->book->video_cover) }}" width="60" height="50" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                                                <video class="video-fluid z-depth-1" loop controls muted width="60" height="60">
+                                                    <source src="{{ asset('VIDEOCOVER/'.$cart->book->video_cover) }}" type="video/mp4" />
+                                                </video>
                                                 @endif
                                             </div>
                                             <div class="media-body ml-3">
-                                                <h6 class="mb-0 text-capitalize">{{$cart->book->book_name}}</h6>
+                                                <a href="{{ url('user/view-book/'.$cart->book->book_name.'/'.$cart->book->id) }}">
+                                                    <h6 class="mb-0 text-capitalize">{{$cart->book->book_name}}</h6>
+                                                </a>
                                                 <p class="mb-0">₦{{number_format($cart->book->book_price, 2)}}</p>
                                             </div>
                                             <form action="{{ route('user.remove.cart') }}" method="POST">
@@ -52,11 +56,11 @@
                                                 <div class="float-right font-size-24 text-danger"><button onclick="return confirm('Are you sure you want to remove this book from cart?')"><i class="ri-close-fill"></i></button></div>
                                             </form>
                                         </div>
-                                    </a>
+                                    </div>
                                     @endforeach
                                     @endif
                                     <div class="d-flex align-items-center text-center p-3">
-                                        <a class="btn btn-primary mr-2 iq-sign-btn" href="#" role="button">View Cart</a>
+                                        <a class="btn btn-primary mr-2" href="{{ route('user.checkout') }}" role="button">View Cart</a>
                                     </div>
                                 </div>
                             </div>

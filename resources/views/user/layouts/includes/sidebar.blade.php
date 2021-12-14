@@ -32,6 +32,9 @@
                 <li class="{{ request()->is('user/checkout') ? 'active active-now' : '' }}">
                     <a href="{{ route('user.checkout') }}" class=""><i class="ri-checkbox-multiple-blank-line"></i>Checkout</a>
                 </li>
+                <li class="{{ request()->is('user/transactions') ? 'active active-now' : '' }}">
+                    <a href="{{ route('user.payment.history') }}" class=""><i class="ri-checkbox-multiple-blank-line"></i>Transactions</a>
+                </li>
                 
                 <li class="{{ request()->is('user/profile') || request()->is('user/edit-profile') || request()->is('user/change-password')  ? 'active active-now' : '' }}">
                     <a href="#settings" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="las la-th-list iq-arrow-left"></i><span>Settings</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
