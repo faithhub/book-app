@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+//Login
+Route::match(['get', 'post'], '/', [\App\Http\Controllers\User\AuthController::class, 'login'])->name('user.login');
 
 //User Routes
 Route::group(
