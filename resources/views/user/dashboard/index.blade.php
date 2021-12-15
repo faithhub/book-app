@@ -31,9 +31,6 @@
                                     <video class="embed-responsive embed-responsive-1by1" loop controls muted>
                                         <source src="{{ asset('VIDEOCOVER/'.$book->video_cover) }}" type="video/mp4" />
                                     </video>
-                                    <!-- <div class="embed-responsive embed-responsive-1by1">
-                                        <iframe class="embed-responsive-item" src='{{ asset("VIDEOCOVER/$book->video_cover") }}' allowfullscreen></iframe>
-                                    </div> -->
                                     @endif
                                 </a>
                             </div>

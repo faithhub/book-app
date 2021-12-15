@@ -59,7 +59,7 @@ class BookCategorySeeder extends Seeder
                 'role' => 'Vendor',
             ],
             [
-                'name' => 'Family law',
+                'name' => 'Family and private law',
                 'status' => 'Active',
                 'role' => 'Vendor',
             ],

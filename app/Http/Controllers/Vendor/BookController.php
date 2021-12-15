@@ -61,12 +61,13 @@ class BookController extends Controller
                     'book_price' => ['required_if:book_paid_free,==,Paid'],
                     'book_tag' => ['required'],
                     'book_cover_type' => ['required'],
-                    'book_cover' => ['required_if:book_cover_type,==,Book Cover'],
-                    'video_cover' => ['required_if:book_cover_type,==,Video Cover'],
+                    'book_cover' => ['required_if:book_cover_type,==,Book Cover', 'max:10000'],
+                    'video_cover' => ['required_if:book_cover_type,==,Video Cover', 'mimes:mp4,ogx,oga,ogv,ogg,webm', 'max:10000'],
                     'book_material_type' => ['required'],
-                    'book_material_pdf' => ['required_unless:book_material_type,5'],
-                    'book_material_video' => ['required_if:book_material_type,==,5'],
+                    'book_material_pdf' => ['required_unless:book_material_type,5',  'mimetypes:application/pdf', 'max:15000'],
+                    'book_material_video' => ['required_if:book_material_type,==,5', 'mimes:mp4,ogx,oga,ogv,ogg,webm', 'max:20000'],
                     'book_desc' => ['required'],
+                    'policy' => ['required'],
                 );
 
                 $customMessages = [
@@ -92,6 +93,7 @@ class BookController extends Controller
                     'book_tag' => 'Tag',
                     'book_author' => 'Book Author',
                     'book_desc' => 'Book Description',
+                    'policy' => 'Policy',
                 );
 
                 $validator = Validator::make($request->all(), $rules, $customMessages);

@@ -124,15 +124,6 @@
                                                     </span>
                                                     @enderror
                                                 </div>
-                                                <!-- <div class="form-group col-sm-6" id="PaidDiv2" style="display: none;">
-                                                    <label for="cpass"><b>Rent Price Per Day:</b></label>
-                                                    <input type="number" class="form-control" id="cpass" value="{{old('book_rent')}}" name="book_rent">
-                                                    @error('book_rent')
-                                                    <span class="invalid-feedback mb-2" role="alert" style="display: block">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                    @enderror
-                                                </div> -->
                                                 <div class="form-group col-sm-12">
                                                     <label for="cpass"><b>Tag:</b></label>
                                                     <input type="text" class="form-control" id="cpass" value="{{old('book_tag')}}" name="book_tag">
@@ -228,10 +219,28 @@
                                                     </span>
                                                     @enderror
                                                 </div>
+                                                <div class="form-group col-sm-12">
+                                                    <div class="mb-3 form-check">
+                                                        <input type="checkbox" name="policy" class="form-check-input mt-2" id="exampleCheck1">
+                                                        <label class="form-check-label" for="exampleCheck1">I have read the <a href="" target="blank" style="color: green; font-weight: 600;">policy</a> and agree</label>
+                                                        @error('policy')
+                                                        <span class="invalid-feedback mb-2" role="alert" style="display: block">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                             </div>
                                             <button type="submit" class="btn btn-primary mr-2">Upload</button>
                                             <button type="reset" class="btn iq-bg-danger">Cancel</button>
                                         </form>
+
+                                        <div class="form-group">
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

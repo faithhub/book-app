@@ -104,6 +104,7 @@
                                         <option selected value="">Select Gender</option>
                                         <option value="Male" {{ old('gender') == 'Male' ? "selected" : '' }}>Male</option>
                                         <option value="Female" {{ old('gender') == 'Female' ? "selected" : '' }}>Female</option>
+                                        <option value="Others" {{ old('gender') == 'Others' ? "selected" : '' }}>Others</option>
                                     </select>
                                     <label for="floatingSelectGridGender">Gender</label>
                                     @error('gender')

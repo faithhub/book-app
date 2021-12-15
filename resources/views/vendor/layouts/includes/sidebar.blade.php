@@ -27,7 +27,7 @@
                 </li>
 
                 <li class="{{ request()->is('vendor/upload-new-book')  ? 'active active-now' : '' }}">
-                    <a href="{{ route('vendor.upload.new.book') }}"><i class="fa fa-book"></i><span>Upload New Book</span></a>
+                    <a href="{{ route('vendor.upload.new.book') }}"><i class="fa fa-book"></i><span>Upload New Material</span></a>
                 </li>
 
                 <li class="{{ request()->is('vendor/inbox') || request()->is('vendor/sent') || request()->is('vendor/create')  ? 'active active-now' : '' }}">
