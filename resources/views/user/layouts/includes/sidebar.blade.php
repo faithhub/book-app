@@ -30,10 +30,10 @@
                 </li>
                 
                 <li class="{{ request()->is('user/checkout') ? 'active active-now' : '' }}">
-                    <a href="{{ route('user.checkout') }}" class=""><i class="ri-checkbox-multiple-blank-line"></i>Checkout</a>
+                    <a href="{{ route('user.checkout') }}" class=""><i class="ri-checkbox-multiple-blank-line"></i><span>Checkout</span></a>
                 </li>
                 <li class="{{ request()->is('user/transactions') ? 'active active-now' : '' }}">
-                    <a href="{{ route('user.payment.history') }}" class=""><i class="ri-checkbox-multiple-blank-line"></i>Transactions</a>
+                    <a href="{{ route('user.payment.history') }}" class=""><i class="ri-checkbox-multiple-blank-line"></i><span>Transactions</span></a>
                 </li>
                 
                 <li class="{{ request()->is('user/profile') || request()->is('user/edit-profile') || request()->is('user/change-password')  ? 'active active-now' : '' }}">
@@ -45,7 +45,7 @@
                 </li>
                 
                 <li>
-                    <a href="{{ route('user.logout') }}" class=""><i class="ri-file-pdf-line"></i>Logout</a>
+                    <a href="{{ route('user.logout') }}" class=""><i class="ri-file-pdf-line"></i><span>Logout</span></a>
                 </li>
             </ul>
         </nav>
