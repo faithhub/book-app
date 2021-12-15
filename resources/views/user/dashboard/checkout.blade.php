@@ -78,20 +78,22 @@
                     </div>
                     <div class="iq-card-body">
                         <div class="form-group col-sm-12">
-                                @if(isset($all_carts))
-                                <?php $total = 0 ?>
-                                @foreach($all_carts as $cart)
-                                <?php $total += $cart->book->book_price ?>
-                                @endforeach
-                                @endif
+                            @if(isset($all_carts))
+                            <?php $total = 0 ?>
+                            @foreach($all_carts as $cart)
+                            <?php $total += $cart->book->book_price ?>
+                            @endforeach
+                            @endif
                             <b style="color: green; font-size: 20px;">₦{{number_format($total, 2)}}</b>
                         </div>
-                            <form id="paymentForm">
-                                <input type="hidden" value="{{Auth::user()->email}}" id="email-address">
-                                <input type="hidden" id="first-name" value="{{Auth::user()->name}}" />
-                                <input type="hidden" id="amount" value="{{$total}}"  required />
-                                <button type="submit" onclick="payWithPaystack()" class="btn btn-primary btn-block d-block mt-3" style="font-size: 20px; letter-spacing: 2px;">Make Payment</button>
-                            </form>
+                        <form id="paymentForm">
+                            <input type="hidden" value="{{Auth::user()->email}}" id="email-address">
+                            <input type="hidden" value="Cart" id="type">
+                            <input type="hidden" id="first-name" value="{{Auth::user()->name}}" />
+                            <input type="hidden" id="amount" value="{{$total}}" required />
+                            <input type="hidden" id="book_id" value="" required />
+                            <button type="submit" onclick="payWithPaystack()" class="btn btn-primary btn-block d-block mt-3" style="font-size: 20px; letter-spacing: 2px;">Make Payment</button>
+                        </form>
                     </div>
                 </div>
             </div>

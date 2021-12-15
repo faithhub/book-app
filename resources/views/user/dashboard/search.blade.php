@@ -16,7 +16,7 @@
                         <ul id="" class="list-inline p-0 mb-0 row">
                             @if(isset($books))
                             @if($books->count() > 0)
-                            
+
                             @foreach($books as $book)
                             <li class="col-md-6">
                                 <div class="d-flex align-items-center">
@@ -25,12 +25,9 @@
                                             @if($book->book_cover_type == "Book Cover")
                                             <img class="img-fluid rounded w-100" src='{{ asset("BOOKCOVER/$book->book_cover") }}' alt="">
                                             @elseif($book->book_cover_type == "Video Cover")
-                                            <!-- <div class="embed-responsive embed-responsive-1by1">
-                                                <iframe class="embed-responsive-item" src='{{ asset("VIDEOCOVER/$book->video_cover") }}'></iframe>
-                                            </div> -->
-                                                <video class="embed-responsive embed-responsive-1by1" loop controls muted>
-                                                    <source src="{{ asset('VIDEOCOVER/'.$book->video_cover) }}" type="video/mp4" />
-                                                </video>
+                                            <video class="embed-responsive embed-responsive-1by1" loop controls muted>
+                                                <source src="{{ asset('VIDEOCOVER/'.$book->video_cover) }}" type="video/mp4" />
+                                            </video>
                                             @endif
                                         </a>
                                     </div>
@@ -60,11 +57,20 @@
                                                 </b>
                                             </h6>
                                         </div>
-                                        <div class="iq-product-action mt-1">
+                                        <div class="iq-product-action">
                                             @if($book->book_paid_free == "Paid")
-                                            <?php $carts = Session::get('user_carts'); ?>
-                                            @if(in_array($book->id, $carts))
-                                            <i class="ri-shopping-cart-2-fill p-1 text-primary cart btn">Added</i>
+                                            <?php
+                                            $carts = Session::get('user_carts');
+                                            $boughts_books = Session::get('boughts_books');
+                                            $rented_books = Session::get('rented_books');
+                                            ?>
+
+                                            @if(in_array($book->id, $boughts_books))
+                                            <i class="ri-shopping-cart-2-fill p-1 text-primary cart btn" style="cursor: text;">Bought</i>
+                                            @elseif(in_array($book->id, $rented_books))
+                                            <i class="ri-shopping-cart-2-fill p-1 text-primary cart btn" style="cursor: text;">Rent</i>
+                                            @elseif(in_array($book->id, $carts))
+                                            <i class="ri-shopping-cart-2-fill p-1 text-primary cart btn" style="cursor: text;">Added</i>
                                             @else
                                             <form action="{{ route('user.add.cart') }}" method="POST">
                                                 @csrf
@@ -77,6 +83,7 @@
                                             @endif
                                         </div>
 
+
                                         <div class="mb-2 d-flex align-items-center mt-2">
                                             <a href="{{ url('user/view-book/'.$book->book_name.'/'.$book->id) }}" class="btn btn-primary btn-sm mt-3">View Book</a>
                                         </div>
@@ -86,12 +93,12 @@
                             @endforeach
                             @else
                             <div class="col-sm-6 offset-sm-3">
-                               <h3 class="text-center">{{$result ?? '' }}</h3>
+                                <h3 class="text-center">{{$result ?? '' }}</h3>
                             </div>
                             @endif
                             @else
                             <div class="col-sm-6 offset-sm-3">
-                               <h3 class="text-center">{{$result ?? '' }}</h3>
+                                <h3 class="text-center">{{$result ?? '' }}</h3>
                             </div>
                             @endif
                         </ul>

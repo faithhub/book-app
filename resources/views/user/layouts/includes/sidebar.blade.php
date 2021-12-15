@@ -18,14 +18,14 @@
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
 
-                <li class="{{ request()->is('user') || request()->is('user/view-book/*') || request()->is('user/view-material/*')  ? 'active active-now' : '' }}">
+                <li class="{{ request()->is('user') || request()->is('user/view-book/*') || request()->is('user/search-book') || request()->is('user/view-material/*') || request()->is('user/view-book-type/*')  ? 'active active-now' : '' }}">
                     <a href="{{ route('user.dashboard') }}" class=""><i class="fa fa-home"></i><span>Dashboard</span></a>
                 </li>
-                <li class="">
+                <li class="{{ request()->is('user/bought-books') || request()->is('user/rent-books')  ? 'active active-now' : '' }}">
                     <a href="#admin" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="ri-book-line iq-arrow-left"></i><span>My Library</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                     <ul id="admin" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                        <li><a href=""><i class="ri-book-line"></i>Bought Book</a></li>
-                        <li><a href=""><i class="ri-book-line"></i>Rent Books</a></li>
+                        <li class="{{ request()->is('user/bought-books')  ? 'active' : '' }}"><a href="{{ route('user.bought') }}"><i class="ri-book-line"></i>Bought Book</a></li>
+                        <li class="{{ request()->is('user/rent-books')  ? 'active' : '' }}"><a href="{{ route('user.rent') }}"><i class="ri-book-line"></i>Rent Books</a></li>
                     </ul>
                 </li>
                 

@@ -109,7 +109,7 @@ class AuthController extends Controller
                     Session::flash('error', 'Incorrect Credentials');
                     return back();
                 }
-                
+
                 $boughts = BoughtBook::where('user_id', Auth::user()->id)->get();
                 $rents = RentedBook::where('user_id', Auth::user()->id)->get();
                 $boughts_books = [];
@@ -133,7 +133,10 @@ class AuthController extends Controller
                 Session::put('user_carts', $user_carts ?? [0]);
                 Session::put('my_carts', $carts);
                 Session::put('my_cart_count', $cart_count);
+
+                
                 Session::flash('success', 'Login successfully');
+
                 return redirect()->route('user.dashboard');
             } else {
                 $data['title'] = "User Login Page";

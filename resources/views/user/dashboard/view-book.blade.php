@@ -67,16 +67,65 @@
                                         <div class="text-primary mb-1">Country of Publish: <span class="text-body text-me">{{$book->country->country_label}}</span></div>
 
 
-                                        @if($book->book_paid_free == "Paid")
-                                        <div class="mb-4 mt-3 d-flex align-items-center">
-                                            <a href='' onclick="return confirm('Are you sure you want to Buy this material?')" class="btn btn-primary view-more mr-2">Buy Book</a>
-                                            <a href='' onclick="return confirm('Are you sure you want to Rent this material?')" class="btn btn-primary view-more mr-2">Rent Book</a>
+                                        <div class="mb-4 mt-3 align-items-center">
+                                            @if($book->book_paid_free == "Paid")
+                                            <?php
+                                            $carts = Session::get('user_carts');
+                                            $boughts_books = Session::get('boughts_books');
+                                            $rented_books = Session::get('rented_books');
+                                            ?>
+
+                                            @if(in_array($book->id, $boughts_books))
+                                            <i class="ri-shopping-cart-2-fill p-1 text-primary cart btn" style="cursor: text; font-size: 18px">Bought</i>
+                                            <div class="mb-4 mt-3 d-flex align-items-center">
+                                                <a onclick="return confirm('Are you sure you want to access this Book?')" href='{{ url("user/access-book/$book->book_name/$book->id") }}' class="btn btn-primary view-more mr-2">Access Book</a>
+                                            </div>
+                                            @elseif(in_array($book->id, $rented_books))
+                                            <i class="ri-shopping-cart-2-fill p-1 text-primary cart btn" style="cursor: text; font-size: 18px">Rent</i>
+                                            <div class="mb-4 mt-3 d-flex align-items-center">
+                                                <a onclick="return confirm('Are you sure you want to access this Book?')" href='{{ url("user/access-book/$book->book_name/$book->id") }}' class="btn btn-primary view-more mr-2">Access Book</a>
+                                            </div>
+                                            @elseif(in_array($book->id, $carts))
+                                            <i class="ri-shopping-cart-2-fill p-1 text-primary cart btn" style="cursor: text; font-size: 18px">Added</i>
+                                            <div class="mb-4 mt-3 d-flex align-items-center">
+                                                <form id="paymentForm">
+                                                    <input type="hidden" value="{{Auth::user()->email}}" id="email-address">
+                                                    <input type="hidden" value="Buy" id="type">
+                                                    <input type="hidden" id="amount" value="{{$book->book_price}}" required />
+                                                    <input type="hidden" id="book_id" value="{{$book->id}}" required />
+                                                    <button type="submit" onclick="payWithPaystack()" class="btn btn-primary mr-2" style="font-size: 20px; letter-spacing: 2px;">Buy Book</button>
+                                                </form>
+                                                <form id="paymentForm2">
+                                                    <input type="hidden" id="book_id" value="{{$book->id}}" required />
+                                                    <button type="submit" onclick="payWithPaystack2()" class="btn btn-primary mr-2" style="font-size: 20px; letter-spacing: 2px;">Rent Book</button>
+                                                </form>
+                                            </div>
+                                            @else
+                                            <form action="{{ route('user.add.cart') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="book_id" value="{{$book->id}}">
+                                                <button id="add-to-cart" class="p-1 rounded"><i class="ri-shopping-cart-2-fill text-primary cart shadow">Add to Cart</i></button>
+                                            </form>
+                                            <div class="mb-4 mt-3 d-flex align-items-center">
+                                                <form id="paymentForm">
+                                                    <input type="hidden" value="{{Auth::user()->email}}" id="email-address">
+                                                    <input type="hidden" value="Buy" id="type">
+                                                    <input type="hidden" id="amount" value="{{$book->book_price}}" required />
+                                                    <input type="hidden" id="book_id" value="{{$book->id}}" required />
+                                                    <button type="submit" onclick="payWithPaystack()" class="btn btn-primary mr-2" style="font-size: 20px; letter-spacing: 2px;">Buy Book</button>
+                                                </form>
+                                                <form id="paymentForm2">
+                                                    <input type="hidden" id="book_id" value="{{$book->id}}" required />
+                                                    <button type="submit" onclick="payWithPaystack2()" class="btn btn-primary mr-2" style="font-size: 20px; letter-spacing: 2px;">Rent Book</button>
+                                                </form>
+                                                <!-- <a href='' onclick="return confirm('Are you sure you want to Buy this material?')" class="btn btn-primary view-more mr-2">Buy Book</a>
+                                                <a href='' onclick="return confirm('Are you sure you want to Rent this material?')" class="btn btn-primary view-more mr-2">Rent Book</a> -->
+                                            </div>
+                                            @endif
+                                            @else
+                                            <button id="add-to-cart" class="p-1 rounded"><i class="ri-shopping-cart-2-fill text-primary cart shadow" style="cursor: text; font-size: 18px"> Free</i></button>
+                                            @endif
                                         </div>
-                                        @else
-                                        <div class="mb-4 mt-3 d-flex align-items-center">
-                                            <a  onclick="return confirm('Are you sure you want to access this Book?')" href='{{ url("user/access-book/$book->book_name/$book->id") }}' class="btn btn-primary view-more mr-2">Access Book</a>
-                                        </div>
-                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -170,4 +219,6 @@
         </div>
     </div>
 </div>
+@include('user.dashboard.payment')
+<script src="https://js.paystack.co/v1/inline.js"></script>
 @endsection

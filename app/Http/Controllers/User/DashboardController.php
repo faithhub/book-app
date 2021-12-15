@@ -12,6 +12,7 @@ use App\Models\Country;
 use App\Models\RentedBook;
 use App\Models\Transaction;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -57,9 +58,6 @@ class DashboardController extends Controller
     public function material($name, $id)
     {
         try {
-            $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
-            $data['countries'] = Country::orderBy('id', 'asc')->get();
-            $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
             $data['mat'] = $mat = BookMaterial::where('id', $id)->first();
             $data['books'] = $b = Book::where(['book_material_type' => $mat->id])->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'desc')->paginate(12);
             $data['title'] = $mat->name;
@@ -69,6 +67,32 @@ class DashboardController extends Controller
             return redirect(RouteServiceProvider::USER);
         }
     }
+    
+    public function bought_books()
+    {
+        try {
+            $data['books'] = $b = BoughtBook::where('user_id', Auth::user()->id)->with('book')->paginate(15);
+            $data['title'] = "Bought Books";
+            return view('user.dashboard.bought', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::USER);
+        }
+    }
+
+    public function rent_books()
+    {
+        try {
+            $data['books'] = $b = RentedBook::where('user_id', Auth::user()->id)->with('book')->paginate(15);
+            $data['title'] = "rent Books";
+            return view('user.dashboard.rent', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::USER);
+        }
+    }
+
+
 
     public function add_cart(Request $request)
     {
@@ -80,7 +104,7 @@ class DashboardController extends Controller
             Cart::create($data);
 
             $carts = Cart::where('user_id', Auth::user()->id)->with('book')->get();
-            
+
             $boughts = BoughtBook::where('user_id', Auth::user()->id)->get();
             $rents = RentedBook::where('user_id', Auth::user()->id)->get();
             $boughts_books = [];
@@ -208,8 +232,60 @@ class DashboardController extends Controller
 
     public function save_payment(Request $request)
     {
+        function book_data()
+        {
+            $boughts = BoughtBook::where('user_id', Auth::user()->id)->get();
+            $rents = RentedBook::where('user_id', Auth::user()->id)->get();
+            $boughts_books = [];
+            $rented_books = [];
+            foreach ($rents as $rent) {
+                array_push($rented_books, $rent->book_id);
+            }
+            foreach ($boughts as $bought) {
+                array_push($boughts_books, $bought->book_id);
+            }
+            Session::put('boughts_books', $boughts_books ?? [0]);
+            Session::put('rented_books', $rented_books ?? [0]);
+        }
+
+        $data = array(
+            'user_id' => Auth::user()->id,
+            'ref' => $request->ref,
+            'amount' => $request->amount
+        );
+        //return $data;
+        if ($request->type == "Buy") {
+            BoughtBook::create([
+                'user_id' => Auth::user()->id,
+                'book_id' => $request->book_id
+            ]);
+            $book = Book::where('id', $request->book_id)->first();
+            $book->sold = $book->sold + 1;
+            $book->save();
+            Cart::where(['user_id' => Auth::user()->id, 'book_id' => $request->book_id])->delete();
+            book_data();
+            Transaction::create($data);
+            return true;
+        }
+
+        if ($request->type == "Rent") {
+            $data2 = [
+                'user_id' => Auth::user()->id,
+                'book_id' => $request->book_id,
+                'time_borroewd' => Carbon::now(),
+                'return_time' => Carbon::now()->add(1, 'day')
+            ];
+            RentedBook::create($data2);
+            $book = Book::where('id', $request->book_id)->first();
+            $book->rent = $book->rent + 1;
+            $book->save();
+            Cart::where(['user_id' => Auth::user()->id, 'book_id' => $request->book_id])->delete();
+            book_data();
+            Transaction::create($data);
+            return true;
+        }
         $carts = Cart::where('user_id', Auth::user()->id)->get();
-        foreach($carts as $cart){
+        foreach ($carts as $cart) {
             BoughtBook::create([
                 'user_id' => Auth::user()->id,
                 'book_id' => $cart->book_id
@@ -218,17 +294,14 @@ class DashboardController extends Controller
             $book->sold = $book->sold + 1;
             $book->save();
         }
-        $data = array(
-            'user_id' => Auth::user()->id,
-            'ref' => $request->ref,
-            'amount' => $request->amount
-        );
+
         Transaction::create($data);
         Cart::where('user_id', Auth::user()->id)->delete();
         Session::forget('my_cart_count');
         Session::forget('user_carts');
         Session::forget('my_carts');
         Session::put('user_carts', $user_carts ?? [0]);
+
         return true;
     }
 }

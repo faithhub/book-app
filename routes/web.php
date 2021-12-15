@@ -40,6 +40,12 @@ Route::group(
             //Access book
             Route::get('/access-book/{name}/{id}', [\App\Http\Controllers\User\DashboardController::class, 'access_book'])->name('user.access_book');
             
+            //Bought Books
+            Route::get('/bought-books', [\App\Http\Controllers\User\DashboardController::class, 'bought_books'])->name('user.bought');
+            
+            //Rent Books
+            Route::get('/rent-books', [\App\Http\Controllers\User\DashboardController::class, 'rent_books'])->name('user.rent');
+            
             //Add to car
             Route::post('/add-cart', [\App\Http\Controllers\User\DashboardController::class, 'add_cart'])->name('user.add.cart');
             Route::post('/remove-cart', [\App\Http\Controllers\User\DashboardController::class, 'remove_cart'])->name('user.remove.cart');
