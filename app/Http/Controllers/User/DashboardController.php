@@ -67,7 +67,7 @@ class DashboardController extends Controller
             return redirect(RouteServiceProvider::USER);
         }
     }
-    
+
     public function bought_books()
     {
         try {
@@ -222,6 +222,12 @@ class DashboardController extends Controller
             $data['countries'] = Country::orderBy('id', 'asc')->get();
             $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
             $data['book'] = $b = Book::where(['id' => $id])->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->first();
+            if ($b->material->name == "Videos") {
+                $data['material'] = $d = asset('VIDEOMAT/' . $b->book_material_video);
+            } else {
+                $data['material'] = $d = asset('MATERIALPPDF/' . $b->book_material_pdf);
+            }
+            //dd($d);
             $data['title'] = $b->book_name;
             return view('user.dashboard.access-book', $data);
         } catch (\Throwable $th) {
