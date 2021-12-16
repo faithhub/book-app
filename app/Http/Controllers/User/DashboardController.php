@@ -294,7 +294,7 @@ class DashboardController extends Controller
             $book->sold = $book->sold + 1;
             $book->save();
         }
-
+        book_data();
         Transaction::create($data);
         Cart::where('user_id', Auth::user()->id)->delete();
         Session::forget('my_cart_count');
