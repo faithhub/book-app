@@ -107,6 +107,11 @@ class DashboardController extends Controller
 
             $boughts = BoughtBook::where('user_id', Auth::user()->id)->get();
             $rents = RentedBook::where('user_id', Auth::user()->id)->get();
+            foreach ($rents as $rent) {
+                if ($rent->return_time > Carbon::now()) {
+                    $rent->delete();
+                }
+            }
             $boughts_books = [];
             $rented_books = [];
             foreach ($rents as $rent) {
@@ -218,16 +223,32 @@ class DashboardController extends Controller
     public function access_book($name, $id)
     {
         try {
+            $rent = RentedBook::where(['user_id' => Auth::user()->id, 'book_id' => $id])->first();
+            $bought = BoughtBook::where(['user_id' => Auth::user()->id, 'book_id' => $id])->first();
+            if ($rent == null & $bought == null) {
+                Session::flash('warning', 'You do not have permision to access this material');
+                return back();
+            }
+            if ($rent != null) {
+                if ($rent->return_time > Carbon::now()) {
+                    $rent->delete();
+                    Session::flash('warning', 'Rent period for this material has expired, you do not have permision to access this material');
+                    return route('user.dashboard');
+                }
+            }
             $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
             $data['countries'] = Country::orderBy('id', 'asc')->get();
             $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
             $data['book'] = $b = Book::where(['id' => $id])->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->first();
             if ($b->material->name == "Videos") {
+                $data['material_type'] = 'Video';
                 $data['material'] = $d = asset('VIDEOMAT/' . $b->book_material_video);
             } else {
+                $data['material_type'] = 'PDF';
                 $data['material'] = $d = asset('MATERIALPPDF/' . $b->book_material_pdf);
             }
             //dd($d);
+            $data['material_type'] = 'Video';
             $data['title'] = $b->book_name;
             return view('user.dashboard.access-book', $data);
         } catch (\Throwable $th) {
@@ -242,6 +263,11 @@ class DashboardController extends Controller
         {
             $boughts = BoughtBook::where('user_id', Auth::user()->id)->get();
             $rents = RentedBook::where('user_id', Auth::user()->id)->get();
+            foreach ($rents as $rent) {
+                if ($rent->return_time > Carbon::now()) {
+                    $rent->delete();
+                }
+            }
             $boughts_books = [];
             $rented_books = [];
             foreach ($rents as $rent) {

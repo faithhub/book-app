@@ -8,7 +8,7 @@
                 </ul>
             </div>
             <div class="col-lg-6 text-right">
-                Copyright 2020 <a href="#">Booksto</a> All Rights Reserved.
+                Copyright 2020 <a href="#"><b>{{ env('APP_NAME') }}</b></a> All Rights Reserved.
             </div>
         </div>
     </div>

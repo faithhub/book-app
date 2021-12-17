@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\RentedBook;
 use App\Models\User;
 use App\Models\Vendor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -112,6 +113,11 @@ class AuthController extends Controller
 
                 $boughts = BoughtBook::where('user_id', Auth::user()->id)->get();
                 $rents = RentedBook::where('user_id', Auth::user()->id)->get();
+                foreach ($rents as $rent) {
+                    if ($rent->return_time > Carbon::now()) {
+                        $rent->delete();
+                    }
+                }
                 $boughts_books = [];
                 $rented_books = [];
                 foreach ($rents as $rent) {
@@ -123,7 +129,7 @@ class AuthController extends Controller
                 Session::put('boughts_books', $boughts_books ?? [0]);
                 Session::put('rented_books', $rented_books ?? [0]);
 
-                
+
                 $carts = Cart::where('user_id', Auth::user()->id)->with('book')->get();
                 $cart_count = $carts->count();
                 $user_carts = [];
@@ -134,7 +140,7 @@ class AuthController extends Controller
                 Session::put('my_carts', $carts);
                 Session::put('my_cart_count', $cart_count);
 
-                
+
                 Session::flash('success', 'Login successfully');
 
                 return redirect()->route('user.dashboard');
