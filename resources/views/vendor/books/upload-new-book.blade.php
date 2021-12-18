@@ -1,31 +1,11 @@
 @extends('vendor.layouts.app')
 @section('vendor')
 <!-- Page Content  -->
+
 <div id="content-page" class="content-page">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <!--Get the samples from https://www.adobe.com/go/pdfembedapi_samples-->
-                <!-- <div id="adobe-dc-view"></div>
-                <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-                <script type="text/javascript">
-                    document.addEventListener("adobe_dc_view_sdk.ready", function() {
-                        var adobeDCView = new AdobeDC.View({
-                            clientId: "<YOUR_CLIENT_ID>",
-                            divId: "adobe-dc-view"
-                        });
-                        adobeDCView.previewFile({
-                            content: {
-                                location: {
-                                    url: "https://documentcloud.adobe.com/view-sdk-demo/PDFs/Bodea Brochure.pdf"
-                                }
-                            },
-                            metaData: {
-                                fileName: "Bodea Brochure.pdf"
-                            }
-                        });
-                    });
-                </script> -->
                 <div class="iq-edit-list-data">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
@@ -234,13 +214,6 @@
                                             <button type="submit" class="btn btn-primary mr-2">Upload</button>
                                             <button type="reset" class="btn iq-bg-danger">Cancel</button>
                                         </form>
-
-                                        <div class="form-group">
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
-                                            </div>
-                                        </div>
-
                                     </div>
                                 </div>
                             </div>

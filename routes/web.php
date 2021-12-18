@@ -35,6 +35,9 @@ Route::group(
             
             //View material based on type
             Route::get('/view-book-type/{name}/{id}', [\App\Http\Controllers\User\DashboardController::class, 'material'])->name('user.material');
+
+            //Rate Material
+            Route::get('/rate/{id}', [\App\Http\Controllers\User\DashboardController::class, 'rate'])->name('user.rate');
             
             //Payment History
             Route::get('/transactions', [\App\Http\Controllers\User\DashboardController::class, 'payment_history'])->name('user.payment.history');

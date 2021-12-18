@@ -92,8 +92,6 @@ class DashboardController extends Controller
         }
     }
 
-
-
     public function add_cart(Request $request)
     {
         try {
@@ -259,6 +257,7 @@ class DashboardController extends Controller
 
     public function save_payment(Request $request)
     {
+        $rate_data = [];
         function book_data()
         {
             $boughts = BoughtBook::where('user_id', Auth::user()->id)->get();
@@ -325,6 +324,7 @@ class DashboardController extends Controller
             $book = Book::where('id', $cart->book_id)->first();
             $book->sold = $book->sold + 1;
             $book->save();
+            array_push($rate_data, $cart->book_id);
         }
         book_data();
         Transaction::create($data);
@@ -333,7 +333,28 @@ class DashboardController extends Controller
         Session::forget('user_carts');
         Session::forget('my_carts');
         Session::put('user_carts', $user_carts ?? [0]);
+        Session::put('rate_data', $rate_data ?? [0]);
 
         return true;
+    }
+
+    public function rate(Request $request)
+    {
+        $data = Session::get('rate_now');
+        if ($_POST) {
+            # code...
+        }
+
+        // if (!isset($id)) {
+        //     # code...
+        //     Session::flash('warning', 'Access denied');
+        //     return route('user.dashboard');
+        // }
+
+        
+        // $get = BoughtBook::where(['user_id' => Auth::user()->id, 'book_id' => $id])->first();
+        // $get2 = RentedBook::where(['user_id' => Auth::user()->id, 'book_id' => $id])->first();
+
+        
     }
 }

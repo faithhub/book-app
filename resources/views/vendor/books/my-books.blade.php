@@ -1,7 +1,6 @@
 @extends('vendor.layouts.app')
 @section('vendor')
 <!-- Page Content  -->
-
 <div id="content-page" class="content-page">
     <div class="container-fluid">
         <div class="row">
@@ -36,7 +35,7 @@
                                             </div>
                                         </div>
                                         <div class="col-7 pl-0">
-                                            <h4 class="mb-2">{{$book->book_name}}</h4>
+                                            <h5 class="mb-2">{{$book->book_name}}</h5>
                                             <p class="text-body">Author : <b>{{$book->book_author}}</b></p>
                                             <a href="{{ route('vendor.view.book', $book->id) }}" class="btn btn-primary mt-3">Read Now <i class="ri-arrow-right-s-line"></i></a>
                                         </div>
