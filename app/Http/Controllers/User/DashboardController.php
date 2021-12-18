@@ -9,6 +9,7 @@ use App\Models\BookMaterial;
 use App\Models\BoughtBook;
 use App\Models\Cart;
 use App\Models\Country;
+use App\Models\Rate;
 use App\Models\RentedBook;
 use App\Models\Transaction;
 use App\Providers\RouteServiceProvider;
@@ -16,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
@@ -340,21 +342,44 @@ class DashboardController extends Controller
 
     public function rate(Request $request)
     {
-        $data = Session::get('rate_now');
-        if ($_POST) {
-            # code...
+        try {
+
+            $rate_data = Session::get('rate_now');
+            $data['title'] = 'Rate Material (' . $rate_data['book_name'] . ')';
+            $data['book_name'] = $rate_data['book_name'];
+
+            if ($_POST) {
+                $rules = array(
+                    'rate' => ['required'],
+                );
+
+                $validator = Validator::make($request->all(), $rules);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'Rate is required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+                Rate::create([
+                    'user_id' => Auth::user()->id,
+                    'vendor_id' => $rate_data['vendor_id'],
+                    'book_id' => $rate_data['book_id'],
+                    'type' => $rate_data['type'],
+                    'rate' => $request->rate,
+                ]);
+
+                Session::flash('success', 'Rated successfully');
+                Session::forget('rate_now');
+                return redirect()->route('user.dashboard');
+            }
+
+            if (!isset($rate_data)) {
+                return redirect()->route('user.dashboard');
+            }
+            return view('user.dashboard.rate', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::USER);
         }
-
-        // if (!isset($id)) {
-        //     # code...
-        //     Session::flash('warning', 'Access denied');
-        //     return route('user.dashboard');
-        // }
-
-        
-        // $get = BoughtBook::where(['user_id' => Auth::user()->id, 'book_id' => $id])->first();
-        // $get2 = RentedBook::where(['user_id' => Auth::user()->id, 'book_id' => $id])->first();
-
-        
     }
 }

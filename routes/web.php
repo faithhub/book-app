@@ -31,38 +31,38 @@ Route::group(
             Route::get('/', [\App\Http\Controllers\User\DashboardController::class, 'index'])->name('user.dashboard');
             
             //View Book
-            Route::get('/view-book/{name}/{id}', [\App\Http\Controllers\User\DashboardController::class, 'view_book'])->name('user.view.book');
+            Route::get('/view-book/{name}/{id}', [\App\Http\Controllers\User\DashboardController::class, 'view_book'])->name('user.view.book')->middleware('book.rate');
             
             //View material based on type
-            Route::get('/view-book-type/{name}/{id}', [\App\Http\Controllers\User\DashboardController::class, 'material'])->name('user.material');
+            Route::get('/view-book-type/{name}/{id}', [\App\Http\Controllers\User\DashboardController::class, 'material'])->name('user.material')->middleware('book.rate');
 
             //Rate Material
-            Route::get('/rate/{id}', [\App\Http\Controllers\User\DashboardController::class, 'rate'])->name('user.rate');
+            Route::match(['get', 'post'], '/rate', [\App\Http\Controllers\User\DashboardController::class, 'rate'])->name('user.rate');
             
             //Payment History
-            Route::get('/transactions', [\App\Http\Controllers\User\DashboardController::class, 'payment_history'])->name('user.payment.history');
-            Route::post('/save-payment', [\App\Http\Controllers\User\DashboardController::class, 'save_payment'])->name('user.save.payment');
+            Route::get('/transactions', [\App\Http\Controllers\User\DashboardController::class, 'payment_history'])->name('user.payment.history')->middleware('book.rate');
+            Route::post('/save-payment', [\App\Http\Controllers\User\DashboardController::class, 'save_payment'])->name('user.save.payment')->middleware('book.rate');
             
             //Access book
-            Route::get('/access-book/{name}/{id}', [\App\Http\Controllers\User\DashboardController::class, 'access_book'])->name('user.access_book');
+            Route::get('/access-book/{name}/{id}', [\App\Http\Controllers\User\DashboardController::class, 'access_book'])->name('user.access_book')->middleware('book.rate');
             
             //Bought Books
-            Route::get('/bought-books', [\App\Http\Controllers\User\DashboardController::class, 'bought_books'])->name('user.bought');
+            Route::get('/bought-books', [\App\Http\Controllers\User\DashboardController::class, 'bought_books'])->name('user.bought')->middleware('book.rate');
             
             //Rent Books
-            Route::get('/rent-books', [\App\Http\Controllers\User\DashboardController::class, 'rent_books'])->name('user.rent');
+            Route::get('/rent-books', [\App\Http\Controllers\User\DashboardController::class, 'rent_books'])->name('user.rent')->middleware('book.rate');
             
             //Add to car
             Route::post('/add-cart', [\App\Http\Controllers\User\DashboardController::class, 'add_cart'])->name('user.add.cart');
-            Route::post('/remove-cart', [\App\Http\Controllers\User\DashboardController::class, 'remove_cart'])->name('user.remove.cart');
+            Route::post('/remove-cart', [\App\Http\Controllers\User\DashboardController::class, 'remove_cart'])->name('user.remove.cart')->middleware('book.rate');
             Route::match(['get', 'post'], '/checkout', [\App\Http\Controllers\User\DashboardController::class, 'checkout'])->name('user.checkout');
             
             //Search Book
-            Route::match(['get', 'post'], '/search-book', [\App\Http\Controllers\User\DashboardController::class, 'search'])->name('user.search');
+            Route::match(['get', 'post'], '/search-book', [\App\Http\Controllers\User\DashboardController::class, 'search'])->name('user.search')->middleware('book.rate');
 
             //Settings
-            Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\User\SettingsController::class, 'profile'])->name('user.profile');
-            Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\User\DashboardController::class, 'change_password'])->name('user.change.password');
+            Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\User\SettingsController::class, 'profile'])->name('user.profile')->middleware('book.rate');
+            Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\User\DashboardController::class, 'change_password'])->name('user.change.password')->middleware('book.rate');
         });
     }
 );

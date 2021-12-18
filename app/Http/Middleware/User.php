@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\BoughtBook;
 use App\Models\Cart;
+use App\Models\Rate;
 use App\Models\RentedBook;
 use Carbon\Carbon;
 use Closure;
@@ -23,8 +24,9 @@ class User
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()) {
-            $boughts = BoughtBook::where('user_id', Auth::user()->id)->get();
+            $boughts = BoughtBook::where('user_id', Auth::user()->id)->with('book:id,vendor_id')->with('rate')->get();
             $rents = RentedBook::where('user_id', Auth::user()->id)->get();
+
             foreach ($rents as $rent) {
                 if ($rent->return_time > Carbon::now()) {
                     $rent->delete();

@@ -44,4 +44,9 @@ class Book extends Model
     public function country(){
         return $this->belongsTo(Country::class, 'book_country');
     }
+
+    public function rate(){
+        return $this->hasOne(Rate::class, 'book_id');
+    }
+
 }

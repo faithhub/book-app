@@ -16,4 +16,8 @@ class BoughtBook extends Model
     public function book(){
         return $this->belongsTo(Book::class, 'book_id');
     }
+    
+    public function rate(){
+        return $this->hasOne(Rate::class, 'book_id', 'book_id');
+    }
 }

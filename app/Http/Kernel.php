@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'auth.vendor' => \App\Http\Middleware\Vendor::class,
         'guest.user' => \App\Http\Middleware\GuestUser::class,
         'guest.vendor' => \App\Http\Middleware\GuestVendor::class,
+        'book.rate' => \App\Http\Middleware\Rate::class,
     ];
 }
