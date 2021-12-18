@@ -49,7 +49,7 @@ class DashboardController extends Controller
             $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
             $data['countries'] = Country::orderBy('id', 'asc')->get();
             $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
-            $data['book'] = $b = Book::where(['id' => $id])->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->first();
+            $data['book'] = $b = Book::where(['id' => $id])->with(['category:id,name', 'material:id,name', 'country:id,country_label', 'rate'])->orderBy('id', 'asc')->first();
             $data['title'] = $b->book_name;
             return view('user.dashboard.view-book', $data);
         } catch (\Throwable $th) {

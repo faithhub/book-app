@@ -51,11 +51,39 @@
                                         </div>
                                         <div class="mb-3 d-block">
                                             <span class="font-size-20 text-warning">
+                                                @if($book->rate->rate == 1)
+                                                <i class="fa fa-star mr-1"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                @elseif($book->rate->rate == 2)
+                                                <i class="fa fa-star mr-1"></i>
+                                                <i class="fa fa-star mr-1"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                @elseif($book->rate->rate == 3)
+                                                <i class="fa fa-star mr-1"></i>
+                                                <i class="fa fa-star mr-1"></i>
+                                                <i class="fa fa-star mr-1"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                @elseif($book->rate->rate == 4)
                                                 <i class="fa fa-star mr-1"></i>
                                                 <i class="fa fa-star mr-1"></i>
                                                 <i class="fa fa-star mr-1"></i>
                                                 <i class="fa fa-star mr-1"></i>
-                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                @elseif($book->rate->rate == 5)
+                                                <i class="fa fa-star mr-1"></i>
+                                                <i class="fa fa-star mr-1"></i>
+                                                <i class="fa fa-star mr-1"></i>
+                                                <i class="fa fa-star mr-1"></i>
+                                                <i class="fa fa-star mr-1"></i>
+                                                @else
+                                                {{$book->rate->rate}}
+                                                @endif
                                             </span>
                                         </div>
                                         <span class="text-dark mb-4 pb-4 iq-border-bottom d-block">{{$book->book_desc}}</span>
