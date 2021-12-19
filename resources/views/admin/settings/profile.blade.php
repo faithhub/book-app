@@ -49,7 +49,6 @@
                                                 <select class="form-control" name="gender" id="exampleFormControlSelect1">
                                                     <option value="Male" {{ Auth::guard('vendor')->user()->gender == "Male" ? "selected" : '' }}>Male</option>
                                                     <option value="Female" {{ Auth::guard('vendor')->user()->gender == "Female" ? "selected" : '' }}>Female</option>
-                                                    <option value="Others" {{ Auth::guard('vendor')->user()->gender == "Others" ? "selected" : '' }}>Others</option>
                                                 </select>
                                                 @error('gender')
                                                 <span class="invalid-feedback" role="alert" style="display: block">

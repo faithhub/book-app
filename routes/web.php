@@ -67,6 +67,38 @@ Route::group(
     }
 );
 
+//Admin Routes
+Route::group(
+    ['prefix' => 'admin'],
+    function () {
+        // Route::match(['get', 'post'], '/register', [\App\Http\Controllers\Admin\AuthController::class, 'register'])->name('admin.register');
+        Route::match(['get', 'post'], '/login', [\App\Http\Controllers\Admin\AuthController::class, 'login'])->name('admin.login');
+        Route::match(['get'], '/logout', [\App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('admin.logout');
+        Route::group(['middleware' => ['auth.admin']], function () {
+            //Dashboard
+            Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+
+            //About Us
+            Route::get('/about', [\App\Http\Controllers\Vendor\DashboardController::class, 'about'])->name('vendor.about');
+            
+            //Inbox
+            Route::match(['get', 'post'], '/create', [\App\Http\Controllers\Vendor\DashboardController::class, 'create'])->name('vendor.create');
+            Route::match(['get'], '/sent', [\App\Http\Controllers\Vendor\DashboardController::class, 'sent'])->name('vendor.sent');
+            Route::match(['get'], '/inbox', [\App\Http\Controllers\Vendor\DashboardController::class, 'inbox'])->name('vendor.inbox');
+            
+            //Profile
+            Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Vendor\SettingsController::class, 'profile'])->name('vendor.profile');
+            
+            //Update Password
+            Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\Vendor\SettingsController::class, 'change_password'])->name('vendor.change.password');
+            
+            //Books
+            Route::get('/my-books', [\App\Http\Controllers\Vendor\BookController::class, 'my_books'])->name('vendor.my.books');
+            Route::match(['get', 'post'], '/upload-new-book', [\App\Http\Controllers\Vendor\BookController::class, 'upload_new_book'])->name('vendor.upload.new.book');
+            Route::get('/view-book/{id}', [\App\Http\Controllers\Vendor\BookController::class, 'view_book'])->name('vendor.view.book');
+        });
+    }
+);
 //Vendor Routes
 Route::group(
     ['prefix' => 'vendor'],

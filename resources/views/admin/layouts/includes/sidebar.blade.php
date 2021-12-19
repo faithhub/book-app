@@ -38,7 +38,7 @@
                     <a href="{{ route('vendor.about') }}"><i class="fa fa-address-book"></i><span>About Us</span></a>
                 </li>
 
-                <li class="{{ request()->is('vendor/profile') || request()->is('vendor/change-password')  ? 'active active-now' : '' }}">
+                <li class="{{ request()->is('vendor/profile') || request()->is('vendor/change-password')  ? 'active active-menu' : '' }}">
                     <a href="#settings" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="fa fa-cog iq-arrow-left"></i><span>Settings</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                     <ul id="settings" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                         <li class="{{ request()->is('vendor/profile')  ? 'active active-now' : '' }}"><a href="{{ route('vendor.profile') }}"><i class="las la-id-card-alt"></i>My Profile</a></li>
@@ -47,7 +47,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('vendor.logout') }}"><i class="fa fa-power-off"></i><span>Logout</span></a>
+                    <a href="{{ route('admin.logout') }}"><i class="fa fa-power-off"></i><span>Logout</span></a>
                 </li>
             </ul>
         </nav>

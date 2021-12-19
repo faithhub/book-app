@@ -65,8 +65,10 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'auth.user' => \App\Http\Middleware\User::class,
         'auth.vendor' => \App\Http\Middleware\Vendor::class,
+        'auth.admin' => \App\Http\Middleware\Admin::class,
         'guest.user' => \App\Http\Middleware\GuestUser::class,
         'guest.vendor' => \App\Http\Middleware\GuestVendor::class,
+        'guest.admin' => \App\Http\Middleware\GuestAdmin::class,
         'book.rate' => \App\Http\Middleware\Rate::class,
     ];
 }
