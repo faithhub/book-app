@@ -82,6 +82,9 @@
                         <div class="text-center">
                             <p>Didn't have an account? <a href="{{ route('vendor.register') }}" class="">Register here</a></p>
                         </div>
+                        <div class="text-center">
+                            <p>Are you a User?<a href="{{ route('user.login') }}" class=""> login here</a></p>
+                        </div>
                     </form>
                 </div>
             </div>

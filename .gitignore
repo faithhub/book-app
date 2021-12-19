@@ -7,7 +7,7 @@
 .public/VIDEOMAT
 /storage/*.key
 /vendor
-/zipped file
+.zipped file
 .env
 .env.backup
 .phpunit.result.cache
