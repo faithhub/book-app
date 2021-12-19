@@ -62,7 +62,7 @@ Route::group(
 
             //Settings
             Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\User\SettingsController::class, 'profile'])->name('user.profile')->middleware('book.rate');
-            Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\User\DashboardController::class, 'change_password'])->name('user.change.password')->middleware('book.rate');
+            Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\User\SettingsController::class, 'change_password'])->name('user.change.password')->middleware('book.rate');
         });
     }
 );
