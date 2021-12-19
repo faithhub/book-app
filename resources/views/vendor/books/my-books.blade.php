@@ -37,7 +37,7 @@
                                         <div class="col-7 pl-0">
                                             <h5 class="mb-2">{{$book->book_name}}</h5>
                                             <p class="text-body">Author : <b>{{$book->book_author}}</b></p>
-                                            <a href="{{ route('vendor.view.book', $book->id) }}" class="btn btn-primary mt-3">Read Now <i class="ri-arrow-right-s-line"></i></a>
+                                            <a href="{{ route('vendor.view.book', $book->id) }}" class="btn btn-primary mt-3">View <i class="ri-arrow-right-s-line"></i></a>
                                         </div>
                                     </div>
                                 </div>

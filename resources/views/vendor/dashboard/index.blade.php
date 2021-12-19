@@ -72,7 +72,52 @@
                             <div class="rounded-circle iq-card-icon bg-info"><i class="fa fa-users"></i></div>
                             <div class="text-left ml-3">
                                 <h5 class="mb-0"><span class="">Rating by Users</span></h5>
-                                <h5 class="mb-0"><span class="counter">500</span></h5>
+                                <!-- <h5 class="mb-0"><span class="counter">500</span></h5> -->
+                                <h5 class="mb-0 mt-2">
+                                    <div class="mb-3 d-block">
+                                        <span class="font-size-20 text-warning">
+                                            @if(isset($final_rate))
+                                            @if($final_rate == 1)
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            @elseif($final_rate == 2)
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            @elseif($final_rate == 3)
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            @elseif($final_rate == 4)
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            @elseif($final_rate == 5)
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1"></i>
+                                            <i class="fa fa-star mr-1"></i>
+                                            @endif
+                                            @else
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                            @endif
+                                        </span>
+                                    </div>
+                                </h5>
                             </div>
                         </div>
                     </div>

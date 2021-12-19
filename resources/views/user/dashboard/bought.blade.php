@@ -35,12 +35,47 @@
                                             </span>
                                             <p class="font-size-13 line-height mb-1">{{$book->book->book_author}}</p>
                                             <div class="d-block">
-                                                <span class="font-size-13 text-warning">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
+
+                                                <span class="font-size-20 text-warning">
+                                                    @if(isset($book->rate))
+                                                    @if($book->rate->rate == 1)
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    @elseif($book->rate->rate == 2)
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    @elseif($book->rate->rate == 3)
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    @elseif($book->rate->rate == 4)
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    @elseif($book->rate->rate == 5)
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    @endif
+                                                    @else
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                    @endif
                                                 </span>
                                             </div>
                                         </div>

@@ -114,7 +114,7 @@ class AuthController extends Controller
                 $boughts = BoughtBook::where('user_id', Auth::user()->id)->get();
                 $rents = RentedBook::where('user_id', Auth::user()->id)->get();
                 foreach ($rents as $rent) {
-                    if ($rent->return_time > Carbon::now()) {
+                    if (Carbon::now() > $rent->return_time) {
                         $rent->delete();
                     }
                 }

@@ -10,7 +10,7 @@
         var book_id = document.getElementById("book_id").value
         let handler = PaystackPop.setup({
             key: '{{ env("PAYSTACK_KEY") }}', // Replace with your public key
-            email:  '{{ Auth::user()->email }}',
+            email: '{{ Auth::user()->email }}',
             amount: document.getElementById("amount").value * 100,
             ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
             // label: "Optional string that replaces customer email"

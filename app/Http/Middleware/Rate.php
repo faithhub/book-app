@@ -21,36 +21,33 @@ class Rate
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()) {
-            $boughts = BoughtBook::where('user_id', Auth::user()->id)->with('book:id,vendor_id,book_name')->with('rate')->get();
-            $rents = RentedBook::where('user_id', Auth::user()->id)->get();
+            $boughts = BoughtBook::where(['user_id' => Auth::user()->id, 'rated' => 'No'])->with('book:id,vendor_id,book_name')->with('rate')->get();
+            $rents = RentedBook::where(['user_id' => Auth::user()->id, 'rated' => 'No'])->get();
 
+            //dd($rents);
             //Rate
             foreach ($boughts as $data) {
                 # code...
-                if (!isset($data->rate)) {
-                    $rate_data = [
-                        'book_name' => $data->book->book_name,
-                        'vendor_id' => $data->book->vendor_id,
-                        'book_id' => $data->book_id,
-                        'type' => 'Buy'
-                    ];
-                    Session::put('rate_now', $rate_data);
-                    return redirect('user/rate');
-                }
+                $rate_data = [
+                    'book_name' => $data->book->book_name,
+                    'vendor_id' => $data->book->vendor_id,
+                    'book_id' => $data->book_id,
+                    'type' => 'Buy'
+                ];
+                Session::put('rate_now', $rate_data);
+                return redirect('user/rate');
             }
 
             foreach ($rents as $data) {
                 # code...
-                if (!isset($data->rate)) {
-                    $rate_data = [
-                        'book_name' => $data->book->book_name,
-                        'vendor_id' => $data->book->vendor_id,
-                        'book_id' => $data->book_id,
-                        'type' => 'Buy'
-                    ];
-                    Session::put('rate_now', $rate_data);
-                    return redirect('user/rate');
-                }
+                $rate_data = [
+                    'book_name' => $data->book->book_name,
+                    'vendor_id' => $data->book->vendor_id,
+                    'book_id' => $data->book_id,
+                    'type' => 'Rent'
+                ];
+                Session::put('rate_now', $rate_data);
+                return redirect('user/rate');
             }
             return $next($request);
         } else {

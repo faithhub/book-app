@@ -259,85 +259,93 @@ class DashboardController extends Controller
 
     public function save_payment(Request $request)
     {
-        $rate_data = [];
-        function book_data()
-        {
-            $boughts = BoughtBook::where('user_id', Auth::user()->id)->get();
-            $rents = RentedBook::where('user_id', Auth::user()->id)->get();
-            foreach ($rents as $rent) {
-                if ($rent->return_time > Carbon::now()) {
-                    $rent->delete();
+        try {
+            $rate_data = [];
+            function book_data()
+            {
+                $boughts = BoughtBook::where('user_id', Auth::user()->id)->get();
+                $rents = RentedBook::where('user_id', Auth::user()->id)->get();
+                foreach ($rents as $rent) {
+                    if (Carbon::now() > $rent->return_time) {
+                        $rent->delete();
+                    }
                 }
+                $boughts_books = [];
+                $rented_books = [];
+                foreach ($rents as $rent) {
+                    array_push($rented_books, $rent->book_id);
+                }
+                foreach ($boughts as $bought) {
+                    array_push($boughts_books, $bought->book_id);
+                }
+                Session::put('boughts_books', $boughts_books ?? [0]);
+                Session::put('rented_books', $rented_books ?? [0]);
             }
-            $boughts_books = [];
-            $rented_books = [];
-            foreach ($rents as $rent) {
-                array_push($rented_books, $rent->book_id);
-            }
-            foreach ($boughts as $bought) {
-                array_push($boughts_books, $bought->book_id);
-            }
-            Session::put('boughts_books', $boughts_books ?? [0]);
-            Session::put('rented_books', $rented_books ?? [0]);
-        }
 
-        $data = array(
-            'user_id' => Auth::user()->id,
-            'ref' => $request->ref,
-            'amount' => $request->amount
-        );
-        //return $data;
-        if ($request->type == "Buy") {
-            BoughtBook::create([
+            $data = array(
                 'user_id' => Auth::user()->id,
-                'book_id' => $request->book_id
-            ]);
-            $book = Book::where('id', $request->book_id)->first();
-            $book->sold = $book->sold + 1;
-            $book->save();
-            Cart::where(['user_id' => Auth::user()->id, 'book_id' => $request->book_id])->delete();
+                'ref' => $request->ref,
+                'amount' => $request->amount
+            );
+            //return $data;
+            if ($request->type == "Buy") {
+                BoughtBook::create([
+                    'user_id' => Auth::user()->id,
+                    'book_id' => $request->book_id,
+                    'rated' => 'No',
+                ]);
+                $book = Book::where('id', $request->book_id)->first();
+                $book->sold = $book->sold + 1;
+                $book->save();
+                Cart::where(['user_id' => Auth::user()->id, 'book_id' => $request->book_id])->delete();
+                book_data();
+                Transaction::create($data);
+                return true;
+            }
+
+            if ($request->type == "Rent") {
+                $data2 = [
+                    'user_id' => Auth::user()->id,
+                    'book_id' => $request->book_id,
+                    'time_borroewd' => Carbon::now(),
+                    'rated' => 'No',
+                    'return_time' => Carbon::now()->add(1, 'day')
+                ];
+                $request->all();
+                RentedBook::create($data2);
+                $book = Book::where('id', $request->book_id)->first();
+                $book->rent = $book->rent + 1;
+                $book->save();
+                Cart::where(['user_id' => Auth::user()->id, 'book_id' => $request->book_id])->delete();
+                book_data();
+                Transaction::create($data);
+                return true;
+            }
+            $carts = Cart::where('user_id', Auth::user()->id)->get();
+            foreach ($carts as $cart) {
+                BoughtBook::create([
+                    'user_id' => Auth::user()->id,
+                    'book_id' => $cart->book_id,
+                    'rated' => 'No'
+                ]);
+                $book = Book::where('id', $cart->book_id)->first();
+                $book->sold = $book->sold + 1;
+                $book->save();
+                array_push($rate_data, $cart->book_id);
+            }
             book_data();
             Transaction::create($data);
-            return true;
-        }
+            Cart::where('user_id', Auth::user()->id)->delete();
+            Session::forget('my_cart_count');
+            Session::forget('user_carts');
+            Session::forget('my_carts');
+            Session::put('user_carts', $user_carts ?? [0]);
+            Session::put('rate_data', $rate_data ?? [0]);
 
-        if ($request->type == "Rent") {
-            $data2 = [
-                'user_id' => Auth::user()->id,
-                'book_id' => $request->book_id,
-                'time_borroewd' => Carbon::now(),
-                'return_time' => Carbon::now()->add(1, 'day')
-            ];
-            RentedBook::create($data2);
-            $book = Book::where('id', $request->book_id)->first();
-            $book->rent = $book->rent + 1;
-            $book->save();
-            Cart::where(['user_id' => Auth::user()->id, 'book_id' => $request->book_id])->delete();
-            book_data();
-            Transaction::create($data);
             return true;
+        } catch (\Throwable $th) {
+            return $th->getMessage();
         }
-        $carts = Cart::where('user_id', Auth::user()->id)->get();
-        foreach ($carts as $cart) {
-            BoughtBook::create([
-                'user_id' => Auth::user()->id,
-                'book_id' => $cart->book_id
-            ]);
-            $book = Book::where('id', $cart->book_id)->first();
-            $book->sold = $book->sold + 1;
-            $book->save();
-            array_push($rate_data, $cart->book_id);
-        }
-        book_data();
-        Transaction::create($data);
-        Cart::where('user_id', Auth::user()->id)->delete();
-        Session::forget('my_cart_count');
-        Session::forget('user_carts');
-        Session::forget('my_carts');
-        Session::put('user_carts', $user_carts ?? [0]);
-        Session::put('rate_data', $rate_data ?? [0]);
-
-        return true;
     }
 
     public function rate(Request $request)
@@ -367,6 +375,39 @@ class DashboardController extends Controller
                     'type' => $rate_data['type'],
                     'rate' => $request->rate,
                 ]);
+
+
+                $total_point = Rate::where('book_id', $rate_data['book_id'])->sum('rate');
+                $total_count = Rate::where('book_id', $rate_data['book_id'])->count();
+                $final_rate = round($total_point / $total_count, 0);
+
+                //dd($final_rate);
+                if ($rate_data['type'] == 'Buy') {
+                    BoughtBook::where([
+                        'user_id' => Auth::user()->id,
+                        'book_id' => $rate_data['book_id'],
+                    ])->first()
+                        ->update([
+                            'rated' => 'Yes',
+                            'rated_point' => $request->rate
+                        ]);
+                }
+
+                if ($rate_data['type'] == 'Rent') {
+                    RentedBook::where([
+                        'user_id' => Auth::user()->id,
+                        'book_id' => $rate_data['book_id'],
+                    ])->first()
+                        ->update([
+                            'rated' => 'Yes',
+                            'rated_point' => $request->rate
+                        ]);
+                }
+
+                Book::where(['vendor_id' => $rate_data['vendor_id'], 'id' => $rate_data['book_id']])->update([
+                    'rating' => $final_rate,
+                ]);
+
 
                 Session::flash('success', 'Rated successfully');
                 Session::forget('rate_now');

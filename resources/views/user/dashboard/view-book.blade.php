@@ -51,6 +51,7 @@
                                         </div>
                                         <div class="mb-3 d-block">
                                             <span class="font-size-20 text-warning">
+                                                @if(isset($book->rate))
                                                 @if($book->rate->rate == 1)
                                                 <i class="fa fa-star mr-1"></i>
                                                 <i class="fa fa-star mr-1" style="color: gray;"></i>
@@ -81,8 +82,13 @@
                                                 <i class="fa fa-star mr-1"></i>
                                                 <i class="fa fa-star mr-1"></i>
                                                 <i class="fa fa-star mr-1"></i>
+                                                @endif
                                                 @else
-                                                {{$book->rate->rate}}
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
+                                                <i class="fa fa-star mr-1" style="color: gray;"></i>
                                                 @endif
                                             </span>
                                         </div>

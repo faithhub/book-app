@@ -11,6 +11,8 @@ class BoughtBook extends Model
     protected $fillable = [
         'user_id',
         'book_id',
+        'rated',
+        'rated_point',
     ];
 
     public function book(){

@@ -13,6 +13,8 @@ class RentedBook extends Model
         'book_id',
         'time_borroewd',
         'return_time',
+        'rated',
+        'rated_point',
     ];
 
     public function book(){

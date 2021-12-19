@@ -23,7 +23,7 @@
                 </li>
 
                 <li class="{{ request()->is('vendor/my-books') || request()->is('vendor/view-book/*')  ? 'active active-now' : '' }}">
-                    <a href="{{ route('vendor.my.books') }}"><i class="fa fa-book"></i><span>My Books</span></a>
+                    <a href="{{ route('vendor.my.books') }}"><i class="fa fa-book"></i><span>My Materials</span></a>
                 </li>
 
                 <li class="{{ request()->is('vendor/upload-new-book')  ? 'active active-now' : '' }}">

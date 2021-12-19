@@ -1,5 +1,5 @@
-@extends('vendor.layouts.app')
-@section('vendor')
+@extends('user.layouts.app')
+@section('user')
 <!-- Page Content  -->
 
 <style>

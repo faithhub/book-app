@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\SendMail;
 use App\Models\Book;
 use App\Models\Message;
+use App\Models\Rate;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,11 @@ class DashboardController extends Controller
         try {
             //code...
             $data['title'] = "Vendor Dashboard";
+            $total_point = Rate::where('vendor_id', Auth::guard('vendor')->user()->id)->sum('rate');
+            $total_count = Rate::where('vendor_id', Auth::guard('vendor')->user()->id)->count();
+            if($total_count > 0){
+                $data['final_rate'] = round($total_point / $total_count, 0);
+            }
             $data['count_materials'] =  Book::where(['vendor_id' => Auth::guard('vendor')->user()->id])->count();
             $data['count_rented'] =  Book::where(['vendor_id' => Auth::guard('vendor')->user()->id])->sum('rent');
             $data['count_sold'] =  Book::where(['vendor_id' => Auth::guard('vendor')->user()->id])->sum('sold');
@@ -54,7 +60,7 @@ class DashboardController extends Controller
             foreach($sold_1 as $sold){
                 $total_sold += $sold;
             }
-            
+
             $data['total_rent'] = $total_rent;
             $data['total_sold'] = $total_sold;
             return view('vendor.dashboard.index', $data);
