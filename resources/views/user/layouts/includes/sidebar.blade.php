@@ -18,7 +18,7 @@
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
 
-                <li class="{{ request()->is('user') || request()->is('user/view-book/*') || request()->is('user/search-book') || request()->is('user/view-material/*') || request()->is('user/view-book-type/*')  ? 'active active-now' : '' }}">
+                <li class="{{ request()->is('user') || request()->is('user/view-book/*') || request()->is('user/search-book') || request()->is('user/view-material/*') || request()->is('user/view-book-type/*') || request()->is('user/access-book/*')  ? 'active active-now' : '' }}">
                     <a href="{{ route('user.dashboard') }}" class=""><i class="fa fa-home"></i><span>Dashboard</span></a>
                 </li>
                 <li class="{{ request()->is('user/bought-books') || request()->is('user/rent-books')  ? 'active active-now' : '' }}">

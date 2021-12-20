@@ -15,17 +15,19 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('admins')->where('username', 'admin')->delete();
-        DB::table('admins')->insert([
-            [
-                'name' => 'Admin Admin',
-                'username' => 'admin',
-                'email' => 'admin@gmail.com',
-                'mobile' => '09078354678',
-                'dob' => '2021-12-30',
-                'gender' => 'Male',
-                'password' => Hash::make('Admin@123'),
-            ]
-        ]);
+        $check = DB::table('admins')->where('username', 'admin')->first();
+        if(!isset($check)){
+            DB::table('admins')->insert([
+                [
+                    'name' => 'Admin Admin',
+                    'username' => 'admin',
+                    'email' => 'admin@gmail.com',
+                    'mobile' => '09078354678',
+                    'dob' => '2021-12-30',
+                    'gender' => 'Male',
+                    'password' => Hash::make('Admin@123'),
+                ]
+            ]);
+        }
     }
 }
