@@ -32,7 +32,7 @@
             <script type="text/javascript">
                 document.addEventListener("adobe_dc_view_sdk.ready", function() {
                     var adobeDCView = new AdobeDC.View({
-                        clientId: "347d68dea37d4e97a7040026d8f34ad3",
+                        clientId: "{{ env('ADOBECLIENTID') }}",
                         divId: "adobe-dc-view"
                     });
                     adobeDCView.previewFile({

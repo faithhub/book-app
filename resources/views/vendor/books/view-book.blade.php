@@ -49,7 +49,6 @@
                                             @endif
                                         </div>
                                         <div class="mb-3 d-block">
-
                                             <span class="font-size-20 text-warning">
                                                 @if(isset($book->rate))
                                                 @if($book->rate->rate == 1)
