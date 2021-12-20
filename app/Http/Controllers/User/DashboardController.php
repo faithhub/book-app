@@ -309,7 +309,7 @@ class DashboardController extends Controller
                     'book_id' => $request->book_id,
                     'time_borroewd' => Carbon::now(),
                     'rated' => 'No',
-                    'return_time' => Carbon::now()->add(1, 'day')
+                    'return_time' => Carbon::now()->addDays(1)
                 ];
                 $request->all();
                 RentedBook::create($data2);
