@@ -45,6 +45,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="col-md-6 col-lg-6 py-4">
                 <div class="iq-card shadow iq-card-block iq-card-stretch iq-card-height rounded-new">
                     <div class="iq-card-body">
