@@ -4,12 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Book extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'vendor_id',
         'book_name',
@@ -34,7 +32,7 @@ class Book extends Model
     }
 
     public function category(){
-        return $this->belongsTo(BookCategory::class, 'book_cat');
+        return $this->hasOne(BookCategory::class, 'book_id');
     }
 
     public function material(){
@@ -48,5 +46,4 @@ class Book extends Model
     public function rate(){
         return $this->hasOne(Rate::class, 'book_id');
     }
-
 }

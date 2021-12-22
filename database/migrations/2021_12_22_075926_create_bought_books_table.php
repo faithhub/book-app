@@ -15,12 +15,6 @@ class CreateBoughtBooksTable extends Migration
     {
         Schema::create('bought_books', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->bigInteger('book_id')->unsigned();
-            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
-            $table->enum('rated', ['Yes', 'No']);
-            $table->integer('rated_point')->nullable();
             $table->timestamps();
         });
     }

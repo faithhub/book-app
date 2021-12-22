@@ -289,16 +289,5 @@
     window.onload = coverType(id);
     window.onload = materialType(id);
 
-    $(document).ready(function() {
-        //to disable the entire page
-        // $("body").on("contextmenu", function(e) {
-        //     return false;
-        // });
-
-        // //to disable a section
-        // $('body').bind('cut copy paste', function(e) {
-        //     e.preventDefault();
-        // });
-    });
 </script>
 @endsection
