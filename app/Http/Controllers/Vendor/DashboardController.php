@@ -81,6 +81,17 @@ class DashboardController extends Controller
             return redirect(RouteServiceProvider::VENDOR);
         }
     }
+    public function policy()
+    {
+        try {
+            //code...
+            $data['title'] = "Policy";
+            return view('vendor.dashboard.policy', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::VENDOR);
+        }
+    }
 
     public function create(Request $request)
     {

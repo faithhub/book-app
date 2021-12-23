@@ -202,7 +202,7 @@
                                                 <div class="form-group col-sm-12">
                                                     <div class="mb-3 form-check">
                                                         <input type="checkbox" name="policy" class="form-check-input mt-2" id="exampleCheck1">
-                                                        <label class="form-check-label" for="exampleCheck1">I have read the <a href="" target="blank" style="color: green; font-weight: 600;">policy</a> and agree</label>
+                                                        <label class="form-check-label" for="exampleCheck1">I have read the <a href="{{ route('vendor.policy') }}" target="blank" style="color: green; font-weight: 600;">policy</a> and agree</label>
                                                         @error('policy')
                                                         <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                             <strong>{{ $message }}</strong>

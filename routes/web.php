@@ -61,7 +61,7 @@ Route::group(
             Route::match(['get', 'post'], '/search-book', [\App\Http\Controllers\User\DashboardController::class, 'search'])->name('user.search')->middleware('book.rate');
 
             //Settings
-            Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\User\SettingsController::class, 'profile'])->name('user.profile')->middleware('book.rate');
+            Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Uer\SettingsController::class, 'profile'])->name('user.profile')->middleware('book.rate');
             Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\User\SettingsController::class, 'change_password'])->name('user.change.password')->middleware('book.rate');
         });
     }
@@ -113,6 +113,9 @@ Route::group(
             //About Us
             Route::get('/about', [\App\Http\Controllers\Vendor\DashboardController::class, 'about'])->name('vendor.about');
             
+            //Policy
+            Route::get('/policy', [\App\Http\Controllers\Vendor\DashboardController::class, 'policy'])->name('vendor.policy');
+
             //Inbox
             Route::match(['get', 'post'], '/create', [\App\Http\Controllers\Vendor\DashboardController::class, 'create'])->name('vendor.create');
             Route::match(['get'], '/sent', [\App\Http\Controllers\Vendor\DashboardController::class, 'sent'])->name('vendor.sent');
