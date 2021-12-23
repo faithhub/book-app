@@ -14,8 +14,8 @@ class BookCategory extends Model
         'status',
         'role',
     ];
-    public function book(){
-        return $this->belongsTo(Book::class, 'book_id');
-    }
+    // public function book(){
+    //     return $this->belongsTo(Book::class, 'book_id');
+    // }
     
 }
