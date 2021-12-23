@@ -99,8 +99,8 @@
                                         <div class="text-primary mb-1">Year of Publish: <span class="text-body text-me blder">{{$book->book_year}}</span></div>
                                         <div class="text-primary mb-1">Country of Publish: <span class="text-body text-me">{{$book->country->country_label}}</span></div>
                                         <div class="mb-2 d-flex align-items-center mt-2">
-                                            <div class="text-primary mb-1 p-2">Total number of sold: <span class="text-body text-me">{{$book->sold}}</span></div>
-                                            <div class="text-primary mb-1 p-2">Total number of Rent: <span class="text-body text-me">{{$book->rent}}</span></div>
+                                            <div class="text-primary mb-1 p-2">Total number of sold: <span class="text-body text-me">{{$book->sold ?? 0}}</span></div>
+                                            <div class="text-primary mb-1 p-2">Total number of Rent: <span class="text-body text-me">{{$book->rent ?? 0 }}</span></div>
                                         </div>
                                         <div class="mb-2 d-flex align-items-center mt-2">
                                             @if($book->book_material_type == "5")

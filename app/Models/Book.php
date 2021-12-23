@@ -32,7 +32,7 @@ class Book extends Model
     }
 
     public function category(){
-        return $this->belongsTo(BookCategory::class, 'book_id');
+        return $this->belongsTo(BookCategory::class, 'book_cat');
     }
 
     public function material(){
