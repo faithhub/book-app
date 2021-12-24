@@ -18,22 +18,31 @@
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
 
-                <li class="{{ request()->is('vendor')  ? 'active active-now' : '' }}">
-                    <a href="{{ route('vendor.dashboard') }}" ><i class="fa fa-home"></i><span>Dashboard</span></a>
+                <li class="{{ request()->is('admin')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('admin.dashboard') }}" ><i class="fa fa-home"></i><span>Dashboard</span></a>
                 </li>
 
                 <li class="{{ request()->is('vendor/my-books') || request()->is('vendor/view-book/*')  ? 'active active-now' : '' }}">
-                    <a href="{{ route('vendor.my.books') }}"><i class="fa fa-book"></i><span>My Materials</span></a>
+                    <a href="{{ route('vendor.my.books') }}"><i class="fa fa-users"></i><span>Admins</span></a>
+                </li>
+                <li class="{{ request()->is('vendor/my-books') || request()->is('vendor/view-book/*')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('vendor.my.books') }}"><i class="fa fa-users"></i><span>Vendors</span></a>
+                </li>
+                <li class="{{ request()->is('vendor/my-books') || request()->is('vendor/view-book/*')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('vendor.my.books') }}"><i class="fa fa-users"></i><span>Users</span></a>
                 </li>
 
-                <li class="{{ request()->is('vendor/upload-new-book')  ? 'active active-now' : '' }}">
+                <!-- <li class="{{ request()->is('vendor/upload-new-book')  ? 'active active-now' : '' }}">
                     <a href="{{ route('vendor.upload.new.book') }}"><i class="fa fa-book"></i><span>Upload New Material</span></a>
-                </li>
+                </li> -->
 
                 <li class="{{ request()->is('vendor/inbox') || request()->is('vendor/sent') || request()->is('vendor/create')  ? 'active active-now' : '' }}">
                     <a href="{{ route('vendor.inbox') }}"><i class="fa fa-envelope-open"></i><span>Inbox</span></a>
                 </li>
 
+                <li class="{{ request()->is('vendor/about')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('vendor.about') }}"><i class="fa fa-address-book"></i><span>Policy</span></a>
+                </li>
                 <li class="{{ request()->is('vendor/about')  ? 'active active-now' : '' }}">
                     <a href="{{ route('vendor.about') }}"><i class="fa fa-address-book"></i><span>About Us</span></a>
                 </li>

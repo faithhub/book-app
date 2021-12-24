@@ -65,12 +65,12 @@ class AuthController extends Controller
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        if (Auth::user()) // this means that the admin was logged in.
+        if (Auth::guard('admin')->user()) // this means that the admin was logged in.
         {
-            Auth::logoutCurrentDevice();
-            Session::flash('sucess', 'Logged out successfully');
+            Auth::guard('admin')->logout();
+            Session::flash('success', 'Logged out successfully');
             return redirect()->route('admin.login');
         }
         return redirect()->route('admin.login');

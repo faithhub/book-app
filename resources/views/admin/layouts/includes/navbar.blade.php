@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="navbar-breadcrumb">
-                        <h5 class="mb-0 active text-capitalize" style="letter-spacing: 2px;">Welcome {{Auth::guard('vendor')->user()->name}}</h5>
+                        <h5 class="mb-0 active text-capitalize" style="letter-spacing: 2px;">Welcome {{Auth::guard('admin')->user()->name}}</h5>
                     </div>
                     <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
                         <i class="ri-menu-3-line"></i>
@@ -35,7 +35,7 @@
                             <li class="line-height pt-3">
                                 <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
                                     <div class="caption">
-                                        <h6 class="mb-1 line-height text-capitalize" style="font-weight: 600 !important; letter-spacing: 2px;">{{ Auth::guard('vendor')->user()->username }}</h6>
+                                        <h6 class="mb-1 line-height text-capitalize" style="font-weight: 600 !important; letter-spacing: 2px;">{{ Auth::guard('admin')->user()->username }}</h6>
                                         <p class="mb-0" style="color: green; letter-spacing: 2px; font-weight: 600 !important;">Online</p>
                                     </div>
                                 </a>
@@ -43,7 +43,7 @@
                                     <div class="iq-card shadow-none m-0">
                                         <div class="iq-card-body p-0 ">
                                             <div class="bg-primary p-3">
-                                                <h5 class="mb-0 text-white line-height text-capitalize" style="font-weight: 600 !important; letter-spacing: 2px;">{{ Auth::guard('vendor')->user()->username }}</h5>
+                                                <h5 class="mb-0 text-white line-height text-capitalize" style="font-weight: 600 !important; letter-spacing: 2px;">{{ Auth::guard('admin')->user()->username }}</h5>
                                             </div>
                                             <a href="{{ route('user.profile') }}" class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
@@ -68,7 +68,7 @@
                                                 </div>
                                             </a>
                                             <div class="d-inline-block w-100 text-center p-3">
-                                                <a class="bg-primary iq-sign-btn" href="{{ route('vendor.logout') }}" role="button">Sign out<i class="ri-login-box-line ml-2"></i></a>
+                                                <a class="bg-primary iq-sign-btn" href="{{ route('admin.logout') }}" role="button">Sign out<i class="ri-login-box-line ml-2"></i></a>
                                             </div>
                                         </div>
                                     </div>
