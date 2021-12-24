@@ -77,6 +77,12 @@ Route::group(
         Route::group(['middleware' => ['auth.admin']], function () {
             //Dashboard
             Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+            
+            //Vendors
+            Route::get('/vendors', [\App\Http\Controllers\Admin\DashboardController::class, 'vendors'])->name('admin.vendors');
+            
+            //Users
+            Route::get('/users', [\App\Http\Controllers\Admin\DashboardController::class, 'users'])->name('admin.users');
 
             //About Us
             Route::get('/about', [\App\Http\Controllers\Vendor\DashboardController::class, 'about'])->name('vendor.about');
@@ -87,10 +93,10 @@ Route::group(
             Route::match(['get'], '/inbox', [\App\Http\Controllers\Vendor\DashboardController::class, 'inbox'])->name('vendor.inbox');
             
             //Profile
-            Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Vendor\SettingsController::class, 'profile'])->name('vendor.profile');
+            Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Admin\SettingsController::class, 'profile'])->name('admin.profile');
             
             //Update Password
-            Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\Vendor\SettingsController::class, 'change_password'])->name('vendor.change.password');
+            Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\Admin\SettingsController::class, 'change_password'])->name('admin.change.password');
             
             //Books
             Route::get('/my-books', [\App\Http\Controllers\Vendor\BookController::class, 'my_books'])->name('vendor.my.books');

@@ -63,4 +63,33 @@ class DashboardController extends Controller
             return redirect(RouteServiceProvider::ADMIN);
         }
     }
+
+    public function vendors()
+    {
+        try {
+            //code...
+            $data['title'] = "All Vendors";
+            $data['sn'] = 1;
+            $data['vendors'] = Vendor::orderBy('id', 'desc')->paginate(15);
+            return view('admin.dashboard.vendors', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::ADMIN);
+        }
+    }
+
+    public function users()
+    {
+        try {
+            //code...
+            $data['title'] = "All Users";
+            $data['sn'] = 1;
+            $data['users'] = User::orderBy('id', 'desc')->paginate(15);
+            return view('admin.dashboard.users', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::ADMIN);
+        }
+    }
+
 }

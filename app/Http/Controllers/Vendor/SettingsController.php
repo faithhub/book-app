@@ -110,8 +110,7 @@ class SettingsController extends Controller
                     return back()->withErrors(['new_password' => 'The New password and Confirm password not match']);
                 }
 
-                $user_id = Auth::guard('vendor')->user()->id;
-                $obj_user = Vendor::find($user_id);
+                $obj_user = Vendor::find(Auth::guard('vendor')->user()->id);
                 $obj_user->password = Hash::make($request->new_password);
                 $obj_user->save();
                 $request->session()->flash('success', 'Password changed successfully');

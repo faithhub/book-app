@@ -102,15 +102,14 @@ class SettingsController extends Controller
                     return back()->withErrors(['new_password' => 'The New password and Confirm password not match']);
                 }
 
-                $user_id = Auth::user()->id;
-                $obj_user = User::find($user_id);
+                $obj_user = User::find(Auth::user()->id);
                 $obj_user->password = Hash::make($request->new_password);
                 $obj_user->save();
                 $request->session()->flash('success', 'Password changed successfully');
                 return \back();
 
             } else {
-                $data['title'] = "User Edit Profile";
+                $data['title'] = "User Update Password";
                 return view('user.settings.change-password', $data);
             }
         } catch (\Throwable $th) {

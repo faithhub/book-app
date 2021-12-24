@@ -1,5 +1,5 @@
-@extends('vendor.layouts.app')
-@section('vendor')
+@extends('admin.layouts.app')
+@section('admin')
 <!-- Page Content  -->
 <div id="content-page" class="content-page">
     <div class="container-fluid">
@@ -15,7 +15,7 @@
                                     </div>
                                 </div>
                                 <div class="iq-card-body">
-                                    <form method="POST" action="{{ route('vendor.change.password') }}">
+                                    <form method="POST" action="{{ route('admin.change.password') }}">
                                         @csrf
                                         <div class="form-group">
                                             <label for="cpass">Current Password:</label>
