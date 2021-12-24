@@ -24,11 +24,13 @@ class User
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()) {
+            //dd("bjkbjkbk");
             $boughts = BoughtBook::where('user_id', Auth::user()->id)->with('book:id,vendor_id')->with('rate')->get();
             $rents = RentedBook::where('user_id', Auth::user()->id)->get();
 
             foreach ($rents as $rent) {
                 if (Carbon::now() > $rent->return_time) {
+                    dd(Carbon::now(), $rent->return_time);
                     $rent->delete();
                 }
             }

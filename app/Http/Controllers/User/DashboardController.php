@@ -230,7 +230,7 @@ class DashboardController extends Controller
                 return back();
             }
             if ($rent != null) {
-                if ($rent->return_time > Carbon::now()) {
+                if (Carbon::now() > $rent->return_time) {
                     $rent->delete();
                     Session::flash('warning', 'Rent period for this material has expired, you do not have permision to access this material');
                     return route('user.dashboard');
@@ -267,6 +267,7 @@ class DashboardController extends Controller
                 $rents = RentedBook::where('user_id', Auth::user()->id)->get();
                 foreach ($rents as $rent) {
                     if (Carbon::now() > $rent->return_time) {
+                        dd(Carbon::now(), $rent->return_time);
                         $rent->delete();
                     }
                 }

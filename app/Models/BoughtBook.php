@@ -16,11 +16,13 @@ class BoughtBook extends Model
     ];
 
     
-    public function book(){
+    public function book()
+    {
         return $this->belongsTo(Book::class, 'book_id');
     }
-    
-    public function rate(){
+
+    public function rate()
+    {
         return $this->hasOne(Rate::class, 'book_id', 'book_id');
     }
 }

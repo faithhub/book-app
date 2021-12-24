@@ -115,6 +115,7 @@ class AuthController extends Controller
                 $rents = RentedBook::where('user_id', Auth::user()->id)->get();
                 foreach ($rents as $rent) {
                     if (Carbon::now() > $rent->return_time) {
+                        dd(Carbon::now(), $rent->return_time);
                         $rent->delete();
                     }
                 }
