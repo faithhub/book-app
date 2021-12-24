@@ -169,4 +169,31 @@ class BookController extends Controller
             return redirect(RouteServiceProvider::VENDOR);
         }
     }
+
+    public function access_book($name, $id)
+    {
+        try {
+            $my_book = Book::where(['vendor_id' => Auth::guard('vendor')->user()->id, 'id' => $id])->first();
+            if ($my_book == null) {
+                Session::flash('warning', 'Unable to access this material');
+                return back();
+            }
+            $data['book'] = $b = Book::where(['id' => $id])->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->first();
+            //dd($b->material->name);
+            if ($b->material->name == "Videos") {
+                $data['material_type'] = 'Video';
+                $data['material'] = $d = asset('VIDEOMAT/' . $b->book_material_video);
+            } else {
+                $data['material_type'] = 'PDF';
+                $data['material'] = $d = asset('MATERIALPPDF/' . $b->book_material_pdf);
+            }
+            //dd($d);
+            //$data['material_type'] = 'Video';
+            $data['title'] = $b->book_name;
+            return view('vendor.books.access-book', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::VENDOR);
+        }
+    }
 }

@@ -131,6 +131,9 @@ Route::group(
             Route::get('/my-books', [\App\Http\Controllers\Vendor\BookController::class, 'my_books'])->name('vendor.my.books');
             Route::match(['get', 'post'], '/upload-new-book', [\App\Http\Controllers\Vendor\BookController::class, 'upload_new_book'])->name('vendor.upload.new.book');
             Route::get('/view-book/{id}', [\App\Http\Controllers\Vendor\BookController::class, 'view_book'])->name('vendor.view.book');
+            
+            //Access book
+            Route::get('/access-book/{name}/{id}', [\App\Http\Controllers\Vendor\BookController::class, 'access_book'])->name('vendor.access_book');
         });
     }
 );
