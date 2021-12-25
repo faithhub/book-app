@@ -85,16 +85,21 @@ Route::group(
             Route::get('/users', [\App\Http\Controllers\Admin\DashboardController::class, 'users'])->name('admin.users');
 
             //About Us
-            Route::get('/about', [\App\Http\Controllers\Vendor\DashboardController::class, 'about'])->name('vendor.about');
+            Route::get('/about', [\App\Http\Controllers\Admin\DashboardController::class, 'about'])->name('admin.about');
+            Route::match(['get', 'post'], '/edit-about', [\App\Http\Controllers\Admin\DashboardController::class, 'edit_about'])->name('admin.edit.about');
+            
+            //Policy Us
+            Route::get('/policy', [\App\Http\Controllers\Admin\DashboardController::class, 'policy'])->name('admin.policy');
+            Route::match(['get', 'post'], '/edit-policy', [\App\Http\Controllers\Admin\DashboardController::class, 'edit_policy'])->name('admin.edit.policy');
             
             //Inbox
-            Route::match(['get', 'post'], '/create', [\App\Http\Controllers\Vendor\DashboardController::class, 'create'])->name('vendor.create');
-            Route::match(['get'], '/sent', [\App\Http\Controllers\Vendor\DashboardController::class, 'sent'])->name('vendor.sent');
-            Route::match(['get'], '/inbox', [\App\Http\Controllers\Vendor\DashboardController::class, 'inbox'])->name('vendor.inbox');
+            Route::match(['get', 'post'], '/create', [\App\Http\Controllers\Admin\DashboardController::class, 'create'])->name('admin.create');
+            Route::match(['get'], '/sent', [\App\Http\Controllers\Admin\DashboardController::class, 'sent'])->name('admin.sent');
+            Route::match(['get'], '/inbox', [\App\Http\Controllers\Admin\DashboardController::class, 'inbox'])->name('admin.inbox');
             
             //Profile
             Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Admin\SettingsController::class, 'profile'])->name('admin.profile');
-            
+
             //Update Password
             Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\Admin\SettingsController::class, 'change_password'])->name('admin.change.password');
             

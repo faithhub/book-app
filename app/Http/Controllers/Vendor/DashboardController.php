@@ -7,6 +7,7 @@ use App\Mail\SendMail;
 use App\Models\Book;
 use App\Models\Message;
 use App\Models\Rate;
+use App\Models\Vendor;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,7 @@ class DashboardController extends Controller
             $data['title'] = "Vendor Dashboard";
             $total_point = Rate::where('vendor_id', Auth::guard('vendor')->user()->id)->sum('rate');
             $total_count = Rate::where('vendor_id', Auth::guard('vendor')->user()->id)->count();
-            if($total_count > 0){
+            if ($total_count > 0) {
                 $data['final_rate'] = round($total_point / $total_count, 0);
             }
             $data['count_materials'] =  Book::where(['vendor_id' => Auth::guard('vendor')->user()->id])->count();
@@ -53,11 +54,11 @@ class DashboardController extends Controller
             }
 
 
-            foreach($rented_1 as $rent){
+            foreach ($rented_1 as $rent) {
                 $total_rent += $rent;
             }
 
-            foreach($sold_1 as $sold){
+            foreach ($sold_1 as $sold) {
                 $total_sold += $sold;
             }
 
@@ -116,12 +117,18 @@ class DashboardController extends Controller
                     return back()->withErrors($validator)->withInput();
                 }
 
-                $data = $request->except('_token');
-
+                
+                $data = [
+                    "vendor_id" => Auth::guard('vendor')->user()->id,
+                    "sender" => "Vendor",
+                    "subject" => $request->subject,
+                    "content" => $request->content
+                ];
+                
                 //Send MAil
-                Mail::to("support@gmail.com")
-                    ->cc("amaofaith.o@gmail.com")
-                    ->bcc("adebayooluwadara@gmail.com")
+                Mail::to(env("ADMIN_MAILER"))
+                    ->cc(env("MAIL_CC"))
+                    ->bcc(env("MAIL_BC"))
                     ->send(new SendMail($data));
 
                 //Save Message in Database
@@ -131,8 +138,8 @@ class DashboardController extends Controller
             }
 
             $data['title'] = "Vendor Create Message";
-            $data['inbox_count'] = 0;
-            $data['sent_count'] = Message::where('vendor_id', Auth::guard('vendor')->user()->id)->count();
+            $data['inbox_count'] =  Message::where([ 'vendor_id' => Auth::guard('vendor')->user()->id,'sender' => "Admin"])->count();
+            $data['sent_count'] = Message::where(['vendor_id' => Auth::guard('vendor')->user()->id, 'sender' => "Vendor"])->count();
             return view('vendor.dashboard.create', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
@@ -142,10 +149,11 @@ class DashboardController extends Controller
     public function sent()
     {
         try {
+            $data['sn'] = 1;
             $data['title'] = "Vendor Sent Messages";
-            $data['inbox_count'] = 0;
-            $data['sent_count'] = Message::where('vendor_id', Auth::guard('vendor')->user()->id)->count();
-            $data['messages'] = Message::where('vendor_id', Auth::guard('vendor')->user()->id)->orderBy('id', 'desc')->paginate(10);
+            $data['inbox_count'] =  Message::where([ 'vendor_id' => Auth::guard('vendor')->user()->id,'sender' => "Admin"])->count();
+            $data['sent_count'] = Message::where(['vendor_id' => Auth::guard('vendor')->user()->id, 'sender' => "Vendor"])->count();
+            $data['messages'] = Message::where(['vendor_id' => Auth::guard('vendor')->user()->id, 'sender' => "Vendor"])->orderBy('id', 'desc')->get();
             return view('vendor.dashboard.sent', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
@@ -155,10 +163,11 @@ class DashboardController extends Controller
     public function inbox()
     {
         try {
+            $data['sn'] = 1;
             $data['title'] = "Vendor Inbox Messages";
-            $data['sent_count'] = Message::where('vendor_id', Auth::guard('vendor')->user()->id)->count();
-            $data['inbox_count'] = 0;
-            // $data['messages'] = Message::where('vendor_id', Auth::guard('vendor')->user()->id)->orderBy('id', 'desc')->paginate(10);
+            $data['sent_count'] = Message::where(['vendor_id' => Auth::guard('vendor')->user()->id, 'sender' => "Vendor"])->count();
+            $data['inbox_count'] =  Message::where([ 'vendor_id' => Auth::guard('vendor')->user()->id,'sender' => "Admin"])->count();
+            $data['messages'] = Message::where(['vendor_id' => Auth::guard('vendor')->user()->id, 'sender' => "Admin"])->orderBy('id', 'desc')->get();
             return view('vendor.dashboard.inbox', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());

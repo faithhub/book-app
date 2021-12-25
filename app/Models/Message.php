@@ -10,7 +10,12 @@ class Message extends Model
     use HasFactory;
     protected $fillable = [
         'vendor_id',
+        'sender',
         'subject',
         'content',
     ];
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class, 'vendor_id');
+    }
 }

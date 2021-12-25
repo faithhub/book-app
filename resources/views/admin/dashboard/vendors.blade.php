@@ -17,7 +17,7 @@
                     </div>
                     
                     <div class="iq-card-body">
-                        <table class="table">
+                        <table class="data-tables table">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">#</th>

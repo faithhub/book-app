@@ -1,6 +1,6 @@
 <div class="iq-sidebar">
     <div class="iq-sidebar-logo d-flex justify-content-between">
-        <a href="{{ route('vendor.dashboard') }}" class="header-logo">
+        <a href="{{ route('admin.dashboard') }}" class="header-logo">
             <img src="{{ asset('logos/logo.png') }}" class="img-fluid rounded-normal" alt="">
             <div class="logo-title">
                 <span class="text-primary text-uppercase">VLL AFRICA</span>
@@ -33,16 +33,16 @@
                     <a href="{{ route('admin.users') }}"><i class="fa fa-users"></i><span>Users</span></a>
                 </li>
 
-                <li class="{{ request()->is('vendor/inbox') || request()->is('vendor/sent') || request()->is('vendor/create')  ? 'active active-now' : '' }}">
-                    <a href="{{ route('vendor.inbox') }}"><i class="fa fa-envelope-open"></i><span>Inbox</span></a>
+                <li class="{{ request()->is('admin/inbox') || request()->is('admin/sent') || request()->is('admin/create')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('admin.inbox') }}"><i class="fa fa-envelope-open"></i><span>Inbox</span></a>
                 </li>
 
-                <li class="{{ request()->is('vendor/about')  ? 'active active-now' : '' }}">
-                    <a href="{{ route('vendor.about') }}"><i class="fa fa-address-book"></i><span>Policy</span></a>
+                <li class="{{ request()->is('admin/policy') ||  request()->is('admin/edit-policy') ? 'active active-now' : '' }}">
+                    <a href="{{ route('admin.policy') }}"><i class="fa fa-address-book"></i><span>Policy</span></a>
                 </li>
                 
-                <li class="{{ request()->is('vendor/about')  ? 'active active-now' : '' }}">
-                    <a href="{{ route('vendor.about') }}"><i class="fa fa-address-book"></i><span>About Us</span></a>
+                <li class="{{ request()->is('admin/about') ||  request()->is('admin/edit-about')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('admin.about') }}"><i class="fa fa-address-book"></i><span>About Us</span></a>
                 </li>
 
                 <li class="{{ request()->is('admin/profile') || request()->is('admin/change-password')  ? 'active active-now' : '' }}">

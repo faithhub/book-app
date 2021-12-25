@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class SendMail extends Mailable
 {
@@ -19,7 +20,11 @@ class SendMail extends Mailable
      */
     public function __construct($data)
     {
-        $this->name = Auth::guard('vendor')->user()->name;
+        if($data['sender'] == "Admin"){
+            $this->name = "Admin Support";
+        }else{
+            $this->name = Auth::guard('vendor')->user()->name;
+        }
         $this->data = $data;
     }
 
@@ -31,10 +36,11 @@ class SendMail extends Mailable
     public function build()
     {
         // return $this->view('view.name');
-        return $this->subject($this->data['subject'])->markdown('emails.create.vendor', [
+        return $this->subject(Str::limit($this->data['subject'], 20, '...'))->markdown('emails.create.vendor', [
             'subject' => $this->data['subject'],
             'content' => $this->data['content'],
             'name' => $this->name,
+            
         ]);
     }
 }

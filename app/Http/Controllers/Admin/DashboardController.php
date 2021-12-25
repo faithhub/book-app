@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendMail;
 use App\Models\Admin;
 use App\Models\Book;
+use App\Models\Message;
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
@@ -47,11 +52,11 @@ class DashboardController extends Controller
             }
 
 
-            foreach($rented_1 as $rent){
+            foreach ($rented_1 as $rent) {
                 $total_rent += $rent;
             }
 
-            foreach($sold_1 as $sold){
+            foreach ($sold_1 as $sold) {
                 $total_sold += $sold;
             }
 
@@ -92,4 +97,196 @@ class DashboardController extends Controller
         }
     }
 
+    public function about()
+    {
+        try {
+            //code...
+            $data['title'] = "About Us";
+            $data['sn'] = 1;
+            $data['about'] = Setting::first();
+            return view('admin.dashboard.about', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::ADMIN);
+        }
+    }
+
+    public function edit_about(Request $request)
+    {
+        try {
+            $data['about'] = Setting::first();
+            if ($_POST) {
+
+                $rules = array(
+                    'about' => 'required',
+                );
+
+                //dd($request->all());
+                $validator = Validator::make($request->all(), $rules);
+                if ($validator->fails()) {
+                    $request->session()->flash('warning', 'About Us content is required');
+                    return back()->withErrors($validator);
+                }
+
+                $get_settings = Setting::first();
+                if ($get_settings) {
+                    # code...
+                    $get_settings->about = $request->about;
+                    $get_settings->save();
+                    Session::flash('success', 'About Us updated successfully');
+                    return redirect()->route('admin.about');
+                }
+
+                Setting::create([
+                    'about' => $request->about
+                ]);
+                Session::flash('success', 'About Us updated successfully');
+                return redirect()->route('admin.about');
+            }
+
+            $data['title'] = "Edit About Us";
+            return view('admin.dashboard.edit-about', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::ADMIN);
+        }
+    }
+
+    public function policy()
+    {
+        try {
+            $data['policy'] = Setting::first();
+            $data['title'] = "Policy";
+            return view('admin.dashboard.policy', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::ADMIN);
+        }
+    }
+
+    public function edit_policy(Request $request)
+    {
+        try {
+            $data['policy'] = Setting::first();
+            if ($_POST) {
+
+                $rules = array(
+                    'policy' => 'required',
+                );
+
+                $validator = Validator::make($request->all(), $rules);
+                if ($validator->fails()) {
+                    $request->session()->flash('warning', 'Policy content is required');
+                    return back()->withErrors($validator);
+                }
+
+                $get_settings = Setting::first();
+                if ($get_settings) {
+                    # code...
+                    $get_settings->policy = $request->policy;
+                    $get_settings->save();
+                    Session::flash('success', 'Policy updated successfully');
+                    return redirect()->route('admin.policy');
+                }
+
+                Setting::create([
+                    'policy' => $request->policy
+                ]);
+                Session::flash('success', 'Policy updated successfully');
+                return redirect()->route('admin.policy');
+            }
+            //code...
+            $data['title'] = "Edit Policy";
+            return view('admin.dashboard.edit-policy', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::ADMIN);
+        }
+    }
+
+    public function create(Request $request)
+    {
+        try {
+            $data['vendors'] = Vendor::orderBy('id', 'desc')->get(['name', 'email', 'username', 'id']);
+            if ($_POST) {
+
+                $rules = array(
+                    'vendor_id' => ['required', 'max:200'],
+                    'subject' => ['required', 'max:200'],
+                    'content' => ['required'],
+                );
+
+                $fieldNames = array(
+                    'vendor_id' => "Vendor Name",
+                    'subject' => "Message Subject",
+                    'content' => "Message Content"
+                );
+
+                $validator = Validator::make($request->all(), $rules);
+                $validator->setAttributeNames($fieldNames);
+
+                if ($validator->fails()) {
+                    Session::flash('warning', 'All fields are required');
+                    return back()->withErrors($validator)->withInput();
+                }
+
+                $vendor = Vendor::find($request->vendor_id);
+                $data = [
+                    "vendor_id" => $vendor->id,
+                    "sender" => "Admin",
+                    "subject" => $request->subject,
+                    "content" => $request->content
+                ];
+
+                //dd($data);
+
+                //Send MAil
+                Mail::to($vendor->email)
+                    ->cc(env("MAIL_CC"))
+                    ->bcc(env("MAIL_BC"))
+                    ->send(new SendMail($data));
+
+                //Save Message in Database
+                Message::create($data);
+                Session::flash('success', 'Message Sent Successfully');
+                return redirect()->route('admin.sent');
+            }
+
+            $data['title'] = "Admin Create Message";
+            $data['inbox_count'] =  Message::where('sender', "Vendor")->count();;
+            $data['sent_count'] = Message::where('sender', "Admin")->count();
+            return view('admin.inbox.create', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::VENDOR);
+        }
+    }
+    public function sent()
+    {
+        try {
+            $data['sn'] = 1;
+            $data['title'] = "Admin Sent Messages";
+            $data['inbox_count'] =  Message::where('sender', "Vendor")->count();;
+            $data['sent_count'] = Message::where('sender', "Admin")->count();
+            $data['messages'] = Message::where('sender', "Admin")->with('vendor:id,name,email,username')->orderBy('id', 'desc')->get();
+            return view('admin.inbox.sent', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::VENDOR);
+        }
+    }
+    public function inbox()
+    {
+        try {
+            $data['sn'] = 1;
+            $data['title'] = "Admin Inbox Messages";
+            $data['sent_count'] =  Message::where('sender', "Admin")->count();;
+            $data['inbox_count'] =  Message::where('sender', "Vendor")->count();;
+            $data['messages'] = Message::where('sender', "Vendor")->with('vendor:id,name,email,username')->orderBy('id', 'desc')->get();
+            return view('admin.inbox.inbox', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::VENDOR);
+        }
+    }
 }

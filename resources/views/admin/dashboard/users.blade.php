@@ -16,7 +16,7 @@
                         <h4 class="card-title mb-0">Users</h4>
                     </div>
                     <div class="iq-card-body">
-                        <table class="table">
+                        <table class="data-tables table">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">#</th>

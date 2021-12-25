@@ -17,6 +17,7 @@ class CreateMessagesTable extends Migration
             $table->id();
             $table->bigInteger('vendor_id')->unsigned();
             $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade');
+            $table->enum('sender', ['Admin', 'Vendor']);
             $table->string('subject');
             $table->longText('content');
             $table->timestamps();
