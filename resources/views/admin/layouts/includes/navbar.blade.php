@@ -45,7 +45,7 @@
                                             <div class="bg-primary p-3">
                                                 <h5 class="mb-0 text-white line-height text-capitalize" style="font-weight: 600 !important; letter-spacing: 2px;">{{ Auth::guard('admin')->user()->username }}</h5>
                                             </div>
-                                            <a href="{{ route('user.profile') }}" class="iq-sub-card iq-bg-primary-hover">
+                                            <a href="{{ route('admin.profile') }}" class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">
                                                         <i class="ri-file-user-line"></i>
@@ -56,7 +56,7 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="{{ route('user.change.password') }}" class="iq-sub-card iq-bg-primary-hover">
+                                            <a href="{{ route('admin.change.password') }}" class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">
                                                         <i class="ri-account-box-line"></i>
