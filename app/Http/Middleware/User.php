@@ -30,7 +30,7 @@ class User
 
             foreach ($rents as $rent) {
                 if (Carbon::now() > $rent->return_time) {
-                    dd(Carbon::now(), $rent->return_time);
+                    // dd(Carbon::now(), $rent->return_time);
                     $rent->delete();
                 }
             }

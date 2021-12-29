@@ -248,7 +248,7 @@ class DashboardController extends Controller
                 $data['material'] = $d = asset('MATERIALPPDF/' . $b->book_material_pdf);
             }
             //dd($d);
-            $data['material_type'] = 'Video';
+            // $data['material_type'] = 'Video';
             $data['title'] = $b->book_name;
             return view('user.dashboard.access-book', $data);
         } catch (\Throwable $th) {

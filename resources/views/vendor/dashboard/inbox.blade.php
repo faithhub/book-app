@@ -47,7 +47,6 @@
                         <h4 class="card-title mb-0">Inbox Messages</h4>
                     </div>
                     <div class="iq-card-body pb-4">
-
                         <table class="data-tables table">
                             <thead class="thead-light">
                                 <tr>
@@ -103,12 +102,6 @@
                                 @endif
                             </tbody>
                         </table>
-
-                        <div class="mt-4 d-flex justify-content-center">
-                            @if(isset($messages))
-                            {!! $messages->links() !!}
-                            @endif
-                        </div>
                     </div>
                 </div>
             </div>

@@ -45,11 +45,11 @@
                             @endif
                         </table>
                     </div>
-                    <div class="mt-4 d-flex justify-content-center">
+                    <!-- <div class="mt-4 d-flex justify-content-center">
                         @if(isset($users))
                         {!! $users->links() !!}
                         @endif
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
