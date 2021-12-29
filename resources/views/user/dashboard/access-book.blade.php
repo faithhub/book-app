@@ -42,7 +42,7 @@
                             }
                         },
                         metaData: {
-                            fileName: "Bodea Brochure.pdf"
+                            fileName: "{{ $title }}.pdf"
                         }
                     }, {
                         showDownloadPDF: false
