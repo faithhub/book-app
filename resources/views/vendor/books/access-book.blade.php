@@ -41,7 +41,9 @@
                             fileName: "{{ $title }}.pdf"
                         }
                     }, {
-                        showDownloadPDF: false
+                        showAnnotationTools: false,
+                        showDownloadPDF: false,
+                        showPrintPDF: false
                     });
                 });
             </script>
