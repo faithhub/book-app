@@ -33,7 +33,7 @@
                     <a href="{{ route('admin.users') }}"><i class="fa fa-users"></i><span>Users</span></a>
                 </li>
 
-                <li class="{{ request()->is('admin/inbox') || request()->is('admin/sent') || request()->is('admin/create')  ? 'active active-now' : '' }}">
+                <!-- <li class="{{ request()->is('admin/inbox') || request()->is('admin/sent') || request()->is('admin/create')  ? 'active active-now' : '' }}">
                     <a href="{{ route('admin.inbox') }}"><i class="fa fa-envelope-open"></i><span>Inbox</span></a>
                 </li>
 
@@ -43,7 +43,7 @@
                 
                 <li class="{{ request()->is('admin/about') ||  request()->is('admin/edit-about')  ? 'active active-now' : '' }}">
                     <a href="{{ route('admin.about') }}"><i class="fa fa-address-book"></i><span>About Us</span></a>
-                </li>
+                </li> -->
 
                 <li class="{{ request()->is('admin/profile') || request()->is('admin/change-password')  ? 'active active-now' : '' }}">
                     <a href="#settings" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="fa fa-cog iq-arrow-left"></i><span>Settings</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
