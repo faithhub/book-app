@@ -67,6 +67,48 @@ Route::group(
     }
 );
 
+//Vendor Routes
+Route::group(
+    ['prefix' => 'vendor'],
+    function () {
+        Route::match(['get', 'post'], '/register', [\App\Http\Controllers\Vendor\AuthController::class, 'register'])->name('vendor.register');
+        Route::match(['get', 'post'], '/login', [\App\Http\Controllers\Vendor\AuthController::class, 'login'])->name('vendor.login');
+        Route::match(['get'], '/logout', [\App\Http\Controllers\Vendor\AuthController::class, 'logout'])->name('vendor.logout');
+        Route::group(['middleware' => ['auth.vendor']], function () {
+            //Dashboard
+            Route::get('/', [\App\Http\Controllers\Vendor\DashboardController::class, 'index'])->name('vendor.dashboard');
+
+            //About Us
+            Route::get('/about', [\App\Http\Controllers\Vendor\DashboardController::class, 'about'])->name('vendor.about');
+            
+            //Policy
+            Route::get('/policy', [\App\Http\Controllers\Vendor\DashboardController::class, 'policy'])->name('vendor.policy');
+
+            //Inbox
+            Route::match(['get', 'post'], '/create', [\App\Http\Controllers\Vendor\DashboardController::class, 'create'])->name('vendor.create');
+            Route::match(['get'], '/sent', [\App\Http\Controllers\Vendor\DashboardController::class, 'sent'])->name('vendor.sent');
+            Route::match(['get'], '/inbox', [\App\Http\Controllers\Vendor\DashboardController::class, 'inbox'])->name('vendor.inbox');
+            
+            //Profile
+            Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Vendor\SettingsController::class, 'profile'])->name('vendor.profile');
+            
+            //Update Password
+            Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\Vendor\SettingsController::class, 'change_password'])->name('vendor.change.password');
+            
+            //Books
+            Route::get('/my-books', [\App\Http\Controllers\Vendor\BookController::class, 'my_books'])->name('vendor.my.books');
+            Route::match(['get', 'post'], '/upload-new-book', [\App\Http\Controllers\Vendor\BookController::class, 'upload_new_book'])->name('vendor.upload.new.book');
+            Route::get('/view-book/{id}', [\App\Http\Controllers\Vendor\BookController::class, 'view_book'])->name('vendor.view.book');
+            Route::match(['get', 'post'], '/edit-book/{name}/{id}', [\App\Http\Controllers\Vendor\BookController::class, 'edit_book'])->name('vendor.edit.book');
+            Route::post('/save-edit-book', [\App\Http\Controllers\Vendor\BookController::class, 'save_edit_book'])->name('vendor.save_edit.book');
+            
+            //Access book
+            Route::get('/access-book/{name}/{id}', [\App\Http\Controllers\Vendor\BookController::class, 'access_book'])->name('vendor.access_book');
+        });
+    }
+);
+
+
 //Admin Routes
 Route::group(
     ['prefix' => 'admin'],
@@ -104,47 +146,9 @@ Route::group(
             Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\Admin\SettingsController::class, 'change_password'])->name('admin.change.password');
             
             //Books
-            Route::get('/my-books', [\App\Http\Controllers\Vendor\BookController::class, 'my_books'])->name('vendor.my.books');
-            Route::match(['get', 'post'], '/upload-new-book', [\App\Http\Controllers\Vendor\BookController::class, 'upload_new_book'])->name('vendor.upload.new.book');
-            Route::get('/view-book/{id}', [\App\Http\Controllers\Vendor\BookController::class, 'view_book'])->name('vendor.view.book');
-        });
-    }
-);
-//Vendor Routes
-Route::group(
-    ['prefix' => 'vendor'],
-    function () {
-        Route::match(['get', 'post'], '/register', [\App\Http\Controllers\Vendor\AuthController::class, 'register'])->name('vendor.register');
-        Route::match(['get', 'post'], '/login', [\App\Http\Controllers\Vendor\AuthController::class, 'login'])->name('vendor.login');
-        Route::match(['get'], '/logout', [\App\Http\Controllers\Vendor\AuthController::class, 'logout'])->name('vendor.logout');
-        Route::group(['middleware' => ['auth.vendor']], function () {
-            //Dashboard
-            Route::get('/', [\App\Http\Controllers\Vendor\DashboardController::class, 'index'])->name('vendor.dashboard');
-
-            //About Us
-            Route::get('/about', [\App\Http\Controllers\Vendor\DashboardController::class, 'about'])->name('vendor.about');
-            
-            //Policy
-            Route::get('/policy', [\App\Http\Controllers\Vendor\DashboardController::class, 'policy'])->name('vendor.policy');
-
-            //Inbox
-            Route::match(['get', 'post'], '/create', [\App\Http\Controllers\Vendor\DashboardController::class, 'create'])->name('vendor.create');
-            Route::match(['get'], '/sent', [\App\Http\Controllers\Vendor\DashboardController::class, 'sent'])->name('vendor.sent');
-            Route::match(['get'], '/inbox', [\App\Http\Controllers\Vendor\DashboardController::class, 'inbox'])->name('vendor.inbox');
-            
-            //Profile
-            Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Vendor\SettingsController::class, 'profile'])->name('vendor.profile');
-            
-            //Update Password
-            Route::match(['get', 'post'], '/change-password', [\App\Http\Controllers\Vendor\SettingsController::class, 'change_password'])->name('vendor.change.password');
-            
-            //Books
-            Route::get('/my-books', [\App\Http\Controllers\Vendor\BookController::class, 'my_books'])->name('vendor.my.books');
-            Route::match(['get', 'post'], '/upload-new-book', [\App\Http\Controllers\Vendor\BookController::class, 'upload_new_book'])->name('vendor.upload.new.book');
-            Route::get('/view-book/{id}', [\App\Http\Controllers\Vendor\BookController::class, 'view_book'])->name('vendor.view.book');
-            
-            //Access book
-            Route::get('/access-book/{name}/{id}', [\App\Http\Controllers\Vendor\BookController::class, 'access_book'])->name('vendor.access_book');
+            Route::get('/materials', [\App\Http\Controllers\Admin\DashboardController::class, 'materials'])->name('admin.materials');
+            Route::get('/view-material/{id}', [\App\Http\Controllers\Admin\DashboardController::class, 'view_material'])->name('admin.view.material');
+            Route::get('/access-material/{name}/{id}', [\App\Http\Controllers\Admin\DashboardController::class, 'access'])->name('admin.access.material');
         });
     }
 );

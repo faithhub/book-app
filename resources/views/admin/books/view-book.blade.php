@@ -1,5 +1,5 @@
-@extends('vendor.layouts.app')
-@section('vendor')
+@extends('admin.layouts.app')
+@section('admin')
 <style>
     .text-me {
         color: #6c757d;
@@ -103,37 +103,10 @@
                                             <div class="text-primary mb-1 p-2">Total number of sold: <span class="text-body text-me">{{$book->sold}}</span></div>
                                             <div class="text-primary mb-1 p-2">Total number of Rent: <span class="text-body text-me">{{$book->rent}}</span></div>
                                         </div>
-                                        <div class="mb-2 d-flex align-items-center mt-2">
-                                            @if($book->book_material_type == "5")
-                                            <!-- <a download="" href='{{ asset("VIDEOMAT/$book->book_material_video") }}' class="btn btn-primary view-more mr-2">Download Material</a> -->
-                                            @else
-                                            <!-- <a download="" href='{{ asset("MATERIALPPDF/$book->book_material_pdf") }}' class="btn btn-primary view-more mr-2">Download Material</a> -->
-                                            @endif
-                                            <!-- <a href="book-pdf.html" class="btn btn-primary view-more mr-2">Rent Book</a> -->
+
+                                        <div class="mb-4 mt-3 d-flex align-items-center">
+                                            <a onclick="return confirm('Are you sure you want to access this Book?')" href='{{ url("admin/access-material/$book->book_name/$book->id") }}' class="btn btn-primary view-more mr-2">Access Book</a>
                                         </div>
-                                        <!-- <div class="mb-4 d-flex align-items-center">
-                                            <a href="book-pdf.html" class="btn btn-danger view-more mr-2">Rent Book</a>
-                                        </div> -->
-                                        <!-- <div class="mb-3">
-                                            <a href="#" class="text-body text-center"><span class="avatar-30 rounded-circle bg-primary d-inline-block mr-2"><i class="ri-heart-fill"></i></span><span>Add to Wishlist</span></a>
-                                        </div> -->
-                                        <!-- <div class="iq-social d-flex align-items-center">
-                                            <h5 class="mr-2">Share:</h5>
-                                            <ul class="list-inline d-flex p-0 mb-0 align-items-center">
-                                                <li>
-                                                    <a href="#" class="avatar-40 rounded-circle bg-primary mr-2 facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="avatar-40 rounded-circle bg-primary mr-2 twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="avatar-40 rounded-circle bg-primary mr-2 youtube"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="avatar-40 rounded-circle bg-primary pinterest"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>

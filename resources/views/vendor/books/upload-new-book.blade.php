@@ -14,7 +14,7 @@
                                 <div class="iq-card shadow" style="border-radius: 30px;">
                                     <div class="iq-card-header d-flex justify-content-between">
                                         <div class="iq-header-title">
-                                            <h4 class="card-title">Upload New Book</h4>
+                                            <h4 class="card-title">Upload New Material</h4>
                                         </div>
                                     </div>
                                     <div class="iq-card-body">

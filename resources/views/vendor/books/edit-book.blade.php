@@ -14,16 +14,17 @@
                                 <div class="iq-card shadow" style="border-radius: 30px;">
                                     <div class="iq-card-header d-flex justify-content-between">
                                         <div class="iq-header-title">
-                                            <h4 class="card-title">Upload New Book</h4>
+                                            <h4 class="card-title">Edit Material</h4>
                                         </div>
                                     </div>
                                     <div class="iq-card-body">
-                                        <form method="POST" action="{{ route('vendor.upload.new.book') }}" enctype="multipart/form-data">
+                                        <form method="POST" action="" enctype="multipart/form-data">
                                             @csrf
+                                            <input type="hidden" value="{{ $book->id }}" name="id">
                                             <div class="row align-items-center">
                                                 <div class="form-group col-sm-12">
                                                     <label for="cpass"><b>Name of Author:</b></label>
-                                                    <input type="text" class="form-control" id="cpass" value="{{old('book_author')}}" name="book_author">
+                                                    <input type="text" class="form-control" id="cpass" value="{{ $book->book_author }}" name="book_author">
                                                     @error('book_author')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                         <strong>{{ $message }}</strong>
@@ -33,7 +34,7 @@
 
                                                 <div class="form-group col-sm-12">
                                                     <label for="cpass"><b>Title of Material:</b></label>
-                                                    <input type="text" class="form-control" id="cpass" value="{{old('book_name')}}" name="book_name">
+                                                    <input type="text" class="form-control" id="cpass" value="{{ $book->book_name }}" name="book_name">
                                                     @error('book_name')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                         <strong>{{ $message }}</strong>
@@ -42,7 +43,7 @@
                                                 </div>
                                                 <div class="form-group col-sm-12">
                                                     <label for="cpass"><b>Year of Publish:</b></label>
-                                                    <input type="number" class="form-control" id="cpass" value="{{old('book_year')}}" name="book_year">
+                                                    <input type="number" class="form-control" id="cpass" value="{{ $book->book_year }}" name="book_year">
                                                     @error('book_year')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                         <strong>{{ $message }}</strong>
@@ -56,7 +57,7 @@
                                                         <option value="">Select a Country</option>
                                                         @if(isset($countries))
                                                         @foreach($countries as $cats)
-                                                        <option value="{{$cats->id}}" {{ old('book_country') == $cats->id ? "selected" : '' }}>{{$cats->country_label}}</option>
+                                                        <option value="{{$cats->id}}" {{ $book->book_country  == $cats->id ? "selected" : '' }}>{{$cats->country_label}}</option>
                                                         @endforeach
                                                         @endif
                                                     </select>
@@ -72,7 +73,7 @@
                                                         <option value="">Select a Category</option>
                                                         @if(isset($book_cats))
                                                         @foreach($book_cats as $cats)
-                                                        <option value="{{$cats->id}}" {{ old('book_cat') == $cats->id ? "selected" : '' }}>{{$cats->name}}</option>
+                                                        <option value="{{$cats->id}}" {{ $book->book_cat == $cats->id ? "selected" : '' }}>{{$cats->name}}</option>
                                                         @endforeach
                                                         @endif
                                                     </select>
@@ -86,8 +87,8 @@
                                                     <label for="cpassk"><b>Paid/Free</b></label>
                                                     <select class="form-control" id="bookPriceID" onchange="bookPrice(this.value)" name="book_paid_free" id="exampleFormControlSelect1">
                                                         <option value="">Choose One</option>
-                                                        <option value="Paid" {{ old('book_paid_free') == 'Paid' ? "selected" : '' }}>Paid</option>
-                                                        <option value="Free" {{ old('book_paid_free') == 'Free' ? "selected" : '' }}>Free</option>
+                                                        <option value="Paid" {{ $book->book_paid_free == 'Paid' ? "selected" : '' }}>Paid</option>
+                                                        <option value="Free" {{ $book->book_paid_free == 'Free' ? "selected" : '' }}>Free</option>
                                                     </select>
                                                     @error('book_paid_free')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
@@ -97,7 +98,7 @@
                                                 </div>
                                                 <div class="form-group col-sm-12" id="PaidDiv1" style="display: none;">
                                                     <label for="cpass"><b>Price:</b></label>
-                                                    <input type="number" class="form-control" id="cpass" value="{{old('book_price')}}" name="book_price">
+                                                    <input type="number" class="form-control" id="cpass" value="{{ $book->book_price }}" name="book_price">
                                                     @error('book_price')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                         <strong>{{ $message }}</strong>
@@ -106,7 +107,7 @@
                                                 </div>
                                                 <div class="form-group col-sm-12">
                                                     <label for="cpass"><b>Tag:</b></label>
-                                                    <input type="text" class="form-control" id="cpass" value="{{old('book_tag')}}" name="book_tag">
+                                                    <input type="text" class="form-control" id="cpass" value="{{ $book->book_tag }}" name="book_tag">
                                                     @error('book_tag')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                         <strong>{{ $message }}</strong>
@@ -119,7 +120,7 @@
                                                         <option value="">Select a Type</option>
                                                         @if(isset($materials))
                                                         @foreach($materials as $cats)
-                                                        <option value="{{$cats->id}}" {{ old('book_material_type') == $cats->id ? "selected" : '' }}>{{$cats->name}}</option>
+                                                        <option value="{{$cats->id}}" {{ $book->book_material_type == $cats->id ? "selected" : '' }}>{{$cats->name}}</option>
                                                         @endforeach
                                                         @endif
                                                     </select>
@@ -133,8 +134,8 @@
                                                     <label for="cpassk"><b>Book Cover / Video Cover</b></label>
                                                     <select class="form-control" id="coverTypeID" onchange="coverType(this.value)" name="book_cover_type" id="exampleFormControlSelect1">
                                                         <option value="">Choose One</option>
-                                                        <option value="Book Cover" {{ old('book_cover_type') == 'Book Cover' ? "selected" : '' }}>Book Cover</option>
-                                                        <option value="Video Cover" {{ old('book_cover_type') == 'Video Cover' ? "selected" : '' }}>Video Cover</option>
+                                                        <option value="Book Cover" {{ $book->book_cover_type == 'Book Cover' ? "selected" : '' }}>Book Cover</option>
+                                                        <option value="Video Cover" {{ $book->book_cover_type == 'Video Cover' ? "selected" : '' }}>Video Cover</option>
                                                     </select>
                                                     @error('book_cover_type')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
@@ -192,7 +193,7 @@
                                                 </div>
                                                 <div class="form-group col-sm-12">
                                                     <label for="npass"><b>Book Description:</b></label>
-                                                    <textarea name="book_desc" id="npass" class="form-control">{{old('book_desc')}}</textarea>
+                                                    <textarea name="book_desc" id="npass" class="form-control">{{ $book->book_desc }}</textarea>
                                                     @error('book_desc')
                                                     <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                         <strong>{{ $message }}</strong>
@@ -201,8 +202,8 @@
                                                 </div>
                                                 <div class="form-group col-sm-12">
                                                     <div class="mb-3 form-check">
-                                                        <input type="checkbox" name="policy" class="form-check-input mt-2" id="exampleCheck1">
-                                                        <label class="form-check-label" for="exampleCheck1">I have read the <a href="" target="blank" style="color: green; font-weight: 600;">policy</a> and agree</label>
+                                                        <input type="checkbox" checked name="policy" class="form-check-input mt-2" id="exampleCheck1">
+                                                        <label class="form-check-label" for="exampleCheck1">I have read the <a href="{{ route('vendor.policy') }}" target="blank" style="color: green; font-weight: 600;">policy</a> and agree</label>
                                                         @error('policy')
                                                         <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                                             <strong>{{ $message }}</strong>
@@ -211,7 +212,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-primary mr-2">Upload</button>
+                                            <button type="submit" class="btn btn-primary mr-2">Update</button>
                                             <button type="reset" class="btn iq-bg-danger">Cancel</button>
                                         </form>
                                     </div>
@@ -288,17 +289,5 @@
     }
     window.onload = coverType(id);
     window.onload = materialType(id);
-
-    $(document).ready(function() {
-        //to disable the entire page
-        // $("body").on("contextmenu", function(e) {
-        //     return false;
-        // });
-
-        // //to disable a section
-        // $('body').bind('cut copy paste', function(e) {
-        //     e.preventDefault();
-        // });
-    });
 </script>
 @endsection

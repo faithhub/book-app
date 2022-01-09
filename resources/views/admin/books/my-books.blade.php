@@ -1,5 +1,5 @@
-@extends('vendor.layouts.app')
-@section('vendor')
+@extends('admin.layouts.app')
+@section('admin')
 <!-- Page Content  -->
 <div id="content-page" class="content-page">
     <div class="container-fluid">
@@ -8,11 +8,11 @@
                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                     <div class="iq-card-header d-flex justify-content-between">
                         <div class="iq-header-title">
-                            <h4 class="card-title">My Materials</h4>
+                            <h4 class="card-title">All Materials</h4>
                         </div>
-                        <div class="iq-card-header-toolbar d-flex align-items-center">
+                        <!-- <div class="iq-card-header-toolbar d-flex align-items-center">
                             <a href="{{ route('vendor.upload.new.book') }}" class="btn btn-primary">Add New Material</a>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="iq-card-body single-similar-contens">
                         <ul class="list-inline p-0 mb-0 row">
@@ -37,7 +37,7 @@
                                         <div class="col-7 pl-0">
                                             <h5 class="mb-2">{{$book->book_name}}</h5>
                                             <p class="text-body">Author : <b>{{$book->book_author}}</b></p>
-                                            <a href="{{ route('vendor.view.book', $book->id) }}" class="btn btn-primary mt-3">View <i class="ri-arrow-right-s-line"></i></a>
+                                            <a href="{{ route('admin.view.material', $book->id) }}" class="btn btn-primary mt-3">View <i class="ri-arrow-right-s-line"></i></a>
                                         </div>
                                     </div>
                                 </div>

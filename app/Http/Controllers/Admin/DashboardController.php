@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Mail\SendMail;
 use App\Models\Admin;
 use App\Models\Book;
+use App\Models\BookCategory;
+use App\Models\BookMaterial;
+use App\Models\Country;
 use App\Models\Message;
 use App\Models\Setting;
 use App\Models\User;
@@ -287,6 +290,54 @@ class DashboardController extends Controller
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return redirect(RouteServiceProvider::VENDOR);
+        }
+    }
+
+    public function materials(){
+        try {
+            $data['title'] = "All Materials";
+            $data['books'] = $b = Book::with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->paginate(15);
+            return view('admin.books.my-books', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::ADMIN);
+        }
+    }
+    public function view_material($id)
+    {
+        try {
+            $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
+            $data['countries'] = Country::orderBy('id', 'asc')->get();
+            $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
+            $data['book'] = $b = Book::where(['id' => $id])->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->first();
+            $data['title'] = $b->book_name;
+            return view('admin.books.view-book', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::ADMIN);
+        }
+    }
+    public function access($name, $id)
+    {
+        try {
+            $my_book = Book::where(['id' => $id])->first();
+            if ($my_book == null) {
+                Session::flash('warning', 'Unable to access this material');
+                return back();
+            }
+            $data['book'] = $b = Book::where(['id' => $id])->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->first();
+            if ($b->material->name == "Videos") {
+                $data['material_type'] = 'Video';
+                $data['material'] = $d = asset('VIDEOMAT/' . $b->book_material_video);
+            } else {
+                $data['material_type'] = 'PDF';
+                $data['material'] = $d = asset('MATERIALPPDF/' . $b->book_material_pdf);
+            }
+            $data['title'] = $b->book_name;
+            return view('admin.books.access', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', $th->getMessage());
+            return redirect(RouteServiceProvider::ADMIN);
         }
     }
 }

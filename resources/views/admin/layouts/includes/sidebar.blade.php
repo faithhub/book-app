@@ -19,12 +19,12 @@
             <ul id="iq-sidebar-toggle" class="iq-menu">
 
                 <li class="{{ request()->is('admin')  ? 'active active-now' : '' }}">
-                    <a href="{{ route('admin.dashboard') }}" ><i class="fa fa-home"></i><span>Dashboard</span></a>
+                    <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i><span>Dashboard</span></a>
                 </li>
 
-                <!-- <li class="{{ request()->is('vendor/my-books') || request()->is('vendor/view-book/*')  ? 'active active-now' : '' }}">
-                    <a href="{{ route('vendor.my.books') }}"><i class="fa fa-users"></i><span>Admins</span></a>
-                </li> -->
+                <li class="{{ request()->is('admin/materials') || request()->is('admin/view-material/*') || request()->is('admin/access-material/*')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('admin.materials') }}"><i class="fa fa-book"></i><span>Materials</span></a>
+                </li>
                 <li class="{{ request()->is('admin/vendors') ? 'active active-now' : '' }}">
                     <a href="{{ route('admin.vendors') }}"><i class="fa fa-users"></i><span>Vendors</span></a>
                 </li>
@@ -33,17 +33,17 @@
                     <a href="{{ route('admin.users') }}"><i class="fa fa-users"></i><span>Users</span></a>
                 </li>
 
-                <!-- <li class="{{ request()->is('admin/inbox') || request()->is('admin/sent') || request()->is('admin/create')  ? 'active active-now' : '' }}">
+                <li class="{{ request()->is('admin/inbox') || request()->is('admin/sent') || request()->is('admin/create')  ? 'active active-now' : '' }}">
                     <a href="{{ route('admin.inbox') }}"><i class="fa fa-envelope-open"></i><span>Inbox</span></a>
                 </li>
 
                 <li class="{{ request()->is('admin/policy') ||  request()->is('admin/edit-policy') ? 'active active-now' : '' }}">
                     <a href="{{ route('admin.policy') }}"><i class="fa fa-address-book"></i><span>Policy</span></a>
                 </li>
-                
+
                 <li class="{{ request()->is('admin/about') ||  request()->is('admin/edit-about')  ? 'active active-now' : '' }}">
                     <a href="{{ route('admin.about') }}"><i class="fa fa-address-book"></i><span>About Us</span></a>
-                </li> -->
+                </li>
 
                 <li class="{{ request()->is('admin/profile') || request()->is('admin/change-password')  ? 'active active-now' : '' }}">
                     <a href="#settings" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="fa fa-cog iq-arrow-left"></i><span>Settings</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
