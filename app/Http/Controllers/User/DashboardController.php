@@ -53,7 +53,7 @@ class DashboardController extends Controller
             $data['title'] = $b->book_name;
             return view('user.dashboard.view-book', $data);
         } catch (\Throwable $th) {
-            Session::flash('error', $th->getMessage());
+            Session::flash('error', "Material not found");
             return redirect(RouteServiceProvider::USER);
         }
     }
@@ -198,7 +198,18 @@ class DashboardController extends Controller
             $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
             $data['title'] = "Search Result Page";
             $data['result'] = "No result found";
-            if ($_POST) {
+            if ($_POST) { {
+                }
+                if ($request->type == "Material") {
+                    if ($request->mat_id == null) {
+                        $data['books'] = $b = Book::with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'desc')->paginate(12);
+                        return view('user.dashboard.search', $data);
+                    } else {
+                        $data['books'] = $b = Book::where('book_material_type', 'LIKE', '%' . $request->mat_id . '%')
+                            ->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'desc')->paginate(12);
+                        return view('user.dashboard.search', $data);
+                    }
+                }
                 if ($request->book_name == null && $request->book_author == null && $request->book_material_type == null && $request->book_cat == null && $request->book_paid_free == null) {
                     return view('user.dashboard.search', $data);
                 }
@@ -251,7 +262,7 @@ class DashboardController extends Controller
             $data['title'] = $b->book_name;
             return view('user.dashboard.access-book', $data);
         } catch (\Throwable $th) {
-            Session::flash('error', $th->getMessage());
+            Session::flash('error', "Material not found");
             return redirect(RouteServiceProvider::USER);
         }
     }

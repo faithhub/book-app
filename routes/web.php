@@ -148,6 +148,7 @@ Route::group(
             //Books
             Route::get('/materials', [\App\Http\Controllers\Admin\DashboardController::class, 'materials'])->name('admin.materials');
             Route::get('/view-material/{id}', [\App\Http\Controllers\Admin\DashboardController::class, 'view_material'])->name('admin.view.material');
+            Route::get('/delete-material/{id}', [\App\Http\Controllers\Admin\DashboardController::class, 'delete_material'])->name('admin.delete.material');
             Route::get('/access-material/{name}/{id}', [\App\Http\Controllers\Admin\DashboardController::class, 'access'])->name('admin.access.material');
         });
     }

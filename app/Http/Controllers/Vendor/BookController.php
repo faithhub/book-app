@@ -166,7 +166,7 @@ class BookController extends Controller
             $data['title'] = $b->book_name;
             return view('vendor.books.view-book', $data);
         } catch (\Throwable $th) {
-            Session::flash('error', $th->getMessage());
+            Session::flash('error', "Material not found");
             return redirect(RouteServiceProvider::VENDOR);
         }
     }

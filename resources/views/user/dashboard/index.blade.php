@@ -1,6 +1,28 @@
 @extends('user.layouts.app')
 @section('user')
 <div id="content-page" class="content-page">
+    <form class="col-12 d-flex" method="POST" action="{{ route('user.search') }}">
+    @csrf
+        <input type="hidden" name="type" value="Material">
+        <div class="form-group col-md-10">
+            <select class="form-control" name="mat_id" id="exampleFormControlSelect1">
+                <option value="">Search Material Type</option>
+                @if(isset($mats))
+                @foreach($mats as $mat)
+                <option value="{{$mat->id}}">{{$mat->name}}</option>
+                @endforeach
+                @endif
+            </select>
+            @error('gender')
+            <span class="invalid-feedback" role="alert" style="display: block">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+        <div class="form-group col-md-2">
+            <button type="submit" class="btn btn-primary mr-2">Search</button>
+        </div>
+    </form>
     @if(isset($books))
     @foreach($mats as $value)
     <?php

@@ -8,8 +8,12 @@ use App\Models\Admin;
 use App\Models\Book;
 use App\Models\BookCategory;
 use App\Models\BookMaterial;
+use App\Models\BoughtBook;
+use App\Models\Cart;
 use App\Models\Country;
 use App\Models\Message;
+use App\Models\Rate;
+use App\Models\RentedBook;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\Vendor;
@@ -264,6 +268,7 @@ class DashboardController extends Controller
             return redirect(RouteServiceProvider::VENDOR);
         }
     }
+    
     public function sent()
     {
         try {
@@ -278,6 +283,7 @@ class DashboardController extends Controller
             return redirect(RouteServiceProvider::VENDOR);
         }
     }
+
     public function inbox()
     {
         try {
@@ -303,6 +309,7 @@ class DashboardController extends Controller
             return redirect(RouteServiceProvider::ADMIN);
         }
     }
+
     public function view_material($id)
     {
         try {
@@ -313,10 +320,11 @@ class DashboardController extends Controller
             $data['title'] = $b->book_name;
             return view('admin.books.view-book', $data);
         } catch (\Throwable $th) {
-            Session::flash('error', $th->getMessage());
+            Session::flash('error', "Material not found");
             return redirect(RouteServiceProvider::ADMIN);
         }
     }
+
     public function access($name, $id)
     {
         try {
@@ -335,6 +343,26 @@ class DashboardController extends Controller
             }
             $data['title'] = $b->book_name;
             return view('admin.books.access', $data);
+        } catch (\Throwable $th) {
+            Session::flash('error', "Material not found");
+            return redirect(RouteServiceProvider::ADMIN);
+        }
+    }
+
+    public function delete_material($id){
+        try {
+            //code...
+            $material = Book::find($id);
+            if(isset($material)){
+                Cart::where('book_id', $material->id)->delete();
+                Rate::where('book_id', $material->id)->delete();
+                BoughtBook::where('book_id', $material->id)->delete();
+                RentedBook::where('book_id', $material->id)->delete();
+                $material->delete();
+                Session::flash('success', 'Material Deleted');
+                return redirect()->route('admin.materials');
+            }
+            return redirect()->route('admin.materials');
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return redirect(RouteServiceProvider::ADMIN);

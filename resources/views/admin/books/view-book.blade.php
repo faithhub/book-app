@@ -105,7 +105,8 @@
                                         </div>
 
                                         <div class="mb-4 mt-3 d-flex align-items-center">
-                                            <a onclick="return confirm('Are you sure you want to access this Book?')" href='{{ url("admin/access-material/$book->book_name/$book->id") }}' class="btn btn-primary view-more mr-2">Access Book</a>
+                                            <a onclick="return confirm('Are you sure you want to access this Material?')" href='{{ url("admin/access-material/$book->book_name/$book->id") }}' class="btn btn-primary view-more mr-2">Access Book</a>
+                                            <a onclick="return confirm('Are you sure you want to delete this Material?')" href='{{ url("admin/delete-material/$book->id") }}' class="btn btn-danger view-more mr-2">Delete Book</a>
                                         </div>
                                     </div>
                                 </div>

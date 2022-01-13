@@ -146,6 +146,7 @@ class DashboardController extends Controller
             return redirect(RouteServiceProvider::VENDOR);
         }
     }
+
     public function sent()
     {
         try {
@@ -160,6 +161,7 @@ class DashboardController extends Controller
             return redirect(RouteServiceProvider::VENDOR);
         }
     }
+    
     public function inbox()
     {
         try {

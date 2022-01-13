@@ -19,7 +19,7 @@
             <ul id="iq-sidebar-toggle" class="iq-menu">
 
                 <li class="{{ request()->is('user') || request()->is('user/view-book/*') || request()->is('user/search-book') || request()->is('user/view-material/*') || request()->is('user/view-book-type/*') || request()->is('user/access-book/*')  ? 'active active-now' : '' }}">
-                    <a href="{{ route('user.dashboard') }}" class=""><i class="fa fa-home"></i><span>Dashboard</span></a>
+                    <a href="{{ route('user.dashboard') }}" class=""><i class="fa fa-home"></i><span>Book Shop</span></a>
                 </li>
                 <li class="{{ request()->is('user/bought-books') || request()->is('user/rent-books')  ? 'active active-now' : '' }}">
                     <a href="#admin" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="ri-book-line iq-arrow-left"></i><span>My Library</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
