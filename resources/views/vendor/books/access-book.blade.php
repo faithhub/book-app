@@ -26,11 +26,8 @@
             <!-- <div id="e
             View"></div> -->
             <div id="adobe-dc-view" class="cloud-container"></div>
-
-            <!-- <img src="{{ $material }}" width="800px" height="2100px" />
-            <embed src="{{ $material }}" width="800px" height="2100px" /> -->
-            <!-- <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-            <script type="text/javascript">
+            <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+            <!-- <script type="text/javascript">
                 document.addEventListener("adobe_dc_view_sdk.ready", function() {
                     var adobeDCView = new AdobeDC.View({
                         clientId: "{{ env('ADOBECLIENTID') }}",
