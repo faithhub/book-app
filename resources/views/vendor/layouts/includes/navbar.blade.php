@@ -23,15 +23,6 @@
                     </button> -->
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto navbar-list">
-                            <!-- <li class="nav-item nav-icon search-content">
-                                <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
-                                    <i class="ri-search-line"></i>
-                                </a>
-                                <form action="#" class="search-box p-0">
-                                    <input type="text" class="text search-input" placeholder="Type here to search...">
-                                    <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                                </form>
-                            </li> -->
                             <li class="line-height pt-3">
                                 <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
                                     <div class="caption">
@@ -45,7 +36,7 @@
                                             <div class="bg-primary p-3">
                                                 <h5 class="mb-0 text-white line-height text-capitalize" style="font-weight: 600 !important; letter-spacing: 2px;">{{ Auth::guard('vendor')->user()->username }}</h5>
                                             </div>
-                                            <a href="{{ route('user.profile') }}" class="iq-sub-card iq-bg-primary-hover">
+                                            <a href="{{ route('vendor.profile') }}" class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">
                                                         <i class="ri-file-user-line"></i>
@@ -56,7 +47,7 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="{{ route('user.change.password') }}" class="iq-sub-card iq-bg-primary-hover">
+                                            <a href="{{ route('vendor.change.password') }}" class="iq-sub-card iq-bg-primary-hover">
                                                 <div class="media align-items-center">
                                                     <div class="rounded iq-card-icon iq-bg-primary">
                                                         <i class="ri-account-box-line"></i>

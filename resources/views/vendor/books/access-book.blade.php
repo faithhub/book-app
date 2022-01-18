@@ -23,33 +23,8 @@
                 <source src="{{ $material }}" type="video/mp4" />
             </video>
             @elseif($material_type == "PDF")
-            <!-- <div id="e
-            View"></div> -->
             <div id="adobe-dc-view" class="cloud-container"></div>
             <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-            <!-- <script type="text/javascript">
-                document.addEventListener("adobe_dc_view_sdk.ready", function() {
-                    var adobeDCView = new AdobeDC.View({
-                        clientId: "{{ env('ADOBECLIENTID') }}",
-                        divId: "adobe-dc-view"
-                    });
-                    adobeDCView.previewFile({
-                        content: {
-                            location: {
-                                url: "{{ $material }}"
-                            }
-                        },
-                        metaData: {
-                            fileName: "{{ $title }}.pdf"
-                        }
-                    }, {
-                        showAnnotationTools: false,
-                        showDownloadPDF: false,
-                        showPrintPDF: false
-                    });
-                });
-            </script> -->
-
             <script type="text/javascript">
                 console.log("{{ $material }}")
                 document.addEventListener("adobe_dc_view_sdk.ready", function() {
