@@ -67,7 +67,10 @@
                             fileName: "{{ $title }}.pdf"
                         }
                     }, {
-                        enableSearchAPIs: true
+                        enableSearchAPIs: true,
+                        showAnnotationTools: false,
+                        showDownloadPDF: false,
+                        showPrintPDF: false
                     });
 
                     const allowTextSelection = false;
