@@ -51,6 +51,7 @@
             </script> -->
 
             <script type="text/javascript">
+                console.log("{{ $material }}")
                 document.addEventListener("adobe_dc_view_sdk.ready", function() {
                     var adobeDCView = new AdobeDC.View({
                         clientId: "{{ env('ADOBECLIENTID') }}",
