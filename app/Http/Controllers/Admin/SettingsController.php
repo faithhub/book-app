@@ -71,7 +71,7 @@ class SettingsController extends Controller
 
                 $rules = array(
                     'old_password'     => 'required',
-                    'new_password'  => ['required', 'min:8', 'max:16', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/', 'regex:/[@$!%*#?&+-]/'],
+                    'new_password'  => ['required', 'min:8', 'same:confirm_new_password', 'max:16', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/', 'regex:/[@$!%*#?&+-]/'],
                     'confirm_new_password' => 'required'
                 );
 
@@ -92,11 +92,6 @@ class SettingsController extends Controller
                 if (!Hash::check($request->old_password, $current_password)) {
                     $request->session()->flash('warning', 'Password Wrong');
                     return back()->withErrors(['old_password' => 'Please enter correct current password']);
-                }
-
-                if ($request->new_password != $request->confirm_new_password) {
-                    $request->session()->flash('warning', 'Password not set');
-                    return back()->withErrors(['new_password' => 'The New password and Confirm password not match']);
                 }
 
                 $obj_user = Admin::find(Auth::guard('admin')->user()->id);
