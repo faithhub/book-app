@@ -4,8 +4,8 @@
     <form class="col-12 d-flex" method="POST" action="{{ route('user.search') }}">
     @csrf
         <input type="hidden" name="type" value="Material">
-        <div class="form-group col-md-10">
-            <select class="form-control" name="mat_id" id="exampleFormControlSelect1">
+        <div class="form-group col-md-12">
+            <select class="form-control" onchange='if(this.value != "") { this.form.submit(); }' name="mat_id" id="exampleFormControlSelect1">
                 <option value="">Search Material Type</option>
                 @if(isset($mats))
                 @foreach($mats as $mat)
@@ -19,9 +19,9 @@
             </span>
             @enderror
         </div>
-        <div class="form-group col-md-2">
+        <!-- <div class="form-group col-md-2">
             <button type="submit" class="btn btn-primary mr-2">Search</button>
-        </div>
+        </div> -->
     </form>
     @if(isset($books))
     @foreach($mats as $value)
