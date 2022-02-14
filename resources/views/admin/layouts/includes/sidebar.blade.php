@@ -21,9 +21,11 @@
                 <li class="{{ request()->is('admin')  ? 'active active-now' : '' }}">
                     <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i><span>Dashboard</span></a>
                 </li>
-
                 <li class="{{ request()->is('admin/materials') || request()->is('admin/view-material/*') || request()->is('admin/access-material/*')  ? 'active active-now' : '' }}">
                     <a href="{{ route('admin.materials') }}"><i class="fa fa-book"></i><span>Materials</span></a>
+                </li>
+                <li class="{{ request()->is('admin/upload-new-book')  ? 'active active-now' : '' }}">
+                    <a href="{{ route('admin.upload.new.book') }}"><i class="fa fa-book"></i><span>Upload New Material</span></a>
                 </li>
                 <li class="{{ request()->is('admin/vendors') ? 'active active-now' : '' }}">
                     <a href="{{ route('admin.vendors') }}"><i class="fa fa-users"></i><span>Vendors</span></a>

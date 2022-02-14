@@ -30,12 +30,13 @@
             <div id="adobe-dc-view" class="cloud-container"></div>
             <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
             <script type="text/javascript">
+                console.log("{{ $material }}")
                 document.addEventListener("adobe_dc_view_sdk.ready", function() {
                     var adobeDCView = new AdobeDC.View({
                         clientId: "{{ env('ADOBECLIENTID') }}",
                         divId: "adobe-dc-view"
                     });
-                    adobeDCView.previewFile({
+                    var previewFilePromise = adobeDCView.previewFile({
                         content: {
                             location: {
                                 url: "{{ $material }}"
@@ -44,12 +45,27 @@
                         metaData: {
                             fileName: "{{ $title }}.pdf"
                         }
-
                     }, {
+                        enableSearchAPIs: true,
                         showAnnotationTools: false,
                         showDownloadPDF: false,
                         showPrintPDF: false
                     });
+
+                    const allowTextSelection = false;
+
+                    previewFilePromise.then(adobeViewer => {
+                        adobeViewer.getAPIs().then(apis => {
+                            apis.enableTextSelection(allowTextSelection)
+                                .then(() => console.log("Success"))
+                                .catch(error => console.log(error));
+                        });
+                    });
+                    // previewFilePromise.then(adobeViewer => {
+                    //     adobeViewer.getAPIs().then(apis => {
+                    //         // All viewer APIs can be invoked here
+                    //     });
+                    // });
                 });
             </script>
             @endif

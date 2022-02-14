@@ -1,6 +1,6 @@
 <div class="iq-sidebar">
     <div class="iq-sidebar-logo d-flex justify-content-between">
-        <a href="index.html" class="header-logo">
+        <a href="{{ route('user.dashboard') }}" class="header-logo">
             <img src="{{ asset('logos/logo.png') }}" class="img-fluid rounded-normal" alt="">
             <div class="logo-title">
                 <span class="text-primary text-uppercase">VLL AFRICA</span>
@@ -36,6 +36,21 @@
                     <a href="{{ route('user.payment.history') }}" class=""><i class="ri-checkbox-multiple-blank-line"></i><span>Transactions</span></a>
                 </li>
                 
+                <li class="{{ request()->is('user/subscription') ? 'active active-now' : '' }}">
+                    <a href="{{ route('user.sub') }}" class=""><i class="ri-checkbox-multiple-blank-line"></i><span>Subscription</span></a>
+                </li>
+
+                @if(Auth::user()->in_group)
+                <li class="{{ request()->is('user/group') || request()->is('user/create-group-member') || request()->is('user/group-bought-books') || request()->is('user/group-rent-books')  ? 'active active-now' : '' }}">
+                    <a href="#groups" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="las la-th-list iq-arrow-left"></i><span>Group</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                    <ul id="groups" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                        <li class="{{ request()->is('user/profile')  ? 'active' : '' }}"><a href="{{ route('user.group') }}"><i class="las la-id-card-alt"></i>Group Members</a></li>
+                        <li class="{{ request()->is('user/change-password')  ? 'active' : '' }}"><a href="{{ route('user.group.bought.books') }}"><i class="ri-lock-line"></i>Bought Books</a></li>
+                        <li class="{{ request()->is('user/change-password')  ? 'active' : '' }}"><a href="{{ route('user.group.rent.books') }}"><i class="ri-lock-line"></i>Rented Books</a></li>
+                    </ul>
+                </li>
+                @endif
+                
                 <li class="{{ request()->is('user/profile') || request()->is('user/edit-profile') || request()->is('user/change-password')  ? 'active active-now' : '' }}">
                     <a href="#settings" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="las la-th-list iq-arrow-left"></i><span>Settings</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                     <ul id="settings" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
@@ -54,7 +69,7 @@
                 <div class="iq-card-body">
                     <div class="sidebarbottom-content">
                         <div class="image"><img src="images/page-img/side-bkg.png" alt=""></div>
-                        <button type="submit" class="btn w-100 btn-primary mt-4 view-more">Become Membership</button>
+                        <button type="submit" class="btn w-100 btn-primary mt-4 view-more">Subscribe Now</button>
                     </div>
                 </div>
             </div>

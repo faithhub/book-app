@@ -29,6 +29,18 @@ Route::group(
         Route::match(['get'], '/logout', [\App\Http\Controllers\User\AuthController::class, 'logout'])->name('user.logout');
         Route::group(['middleware' => ['auth.user']], function () {
             Route::get('/', [\App\Http\Controllers\User\DashboardController::class, 'index'])->name('user.dashboard');
+            // ->middleware('sub')
+
+            //Subscription
+            Route::match(['get', 'post'], '/subscription', [\App\Http\Controllers\User\DashboardController::class, 'subscription'])->name('user.sub');
+            
+            //Group
+            Route::get('/group', [\App\Http\Controllers\User\DashboardController::class, 'group'])->name('user.group')->middleware('book.rate');
+            Route::match(['get', 'post'], '/create-group-member', [\App\Http\Controllers\User\DashboardController::class, 'create_group_member'])->name('user.create.group.member')->middleware('book.rate');
+            Route::get('/delete-group-member/{id}', [\App\Http\Controllers\User\DashboardController::class, 'delete_group_member'])->name('user.delete.group.member')->middleware('book.rate');
+            Route::get('/group-bought-books', [\App\Http\Controllers\User\DashboardController::class, 'group_bought_books'])->name('user.group.bought.books')->middleware('book.rate');
+            Route::get('/group-rent-books', [\App\Http\Controllers\User\DashboardController::class, 'group_rent_books'])->name('user.group.rent.books')->middleware('book.rate');
+            
             
             //View Book
             Route::get('/view-book/{name}/{id}', [\App\Http\Controllers\User\DashboardController::class, 'view_book'])->name('user.view.book')->middleware('book.rate');
@@ -150,6 +162,12 @@ Route::group(
             Route::get('/view-material/{id}', [\App\Http\Controllers\Admin\DashboardController::class, 'view_material'])->name('admin.view.material');
             Route::get('/delete-material/{id}', [\App\Http\Controllers\Admin\DashboardController::class, 'delete_material'])->name('admin.delete.material');
             Route::get('/access-material/{name}/{id}', [\App\Http\Controllers\Admin\DashboardController::class, 'access'])->name('admin.access.material');
+            Route::get('/my-books', [\App\Http\Controllers\Admin\BookController::class, 'my_books'])->name('admin.my.books');
+            Route::match(['get', 'post'], '/upload-new-book', [\App\Http\Controllers\Admin\BookController::class, 'upload_new_book'])->name('admin.upload.new.book');
+            Route::get('/view-book/{id}', [\App\Http\Controllers\Admin\BookController::class, 'view_book'])->name('admin.view.book');
+            Route::match(['get', 'post'], '/edit-book/{name}/{id}', [\App\Http\Controllers\Admin\BookController::class, 'edit_book'])->name('admin.edit.book');
+            Route::post('/save-edit-book', [\App\Http\Controllers\Admin\BookController::class, 'save_edit_book'])->name('admin.save_edit.book');
+            
         });
     }
 );

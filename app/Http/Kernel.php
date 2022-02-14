@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'guest.vendor' => \App\Http\Middleware\GuestVendor::class,
         'guest.admin' => \App\Http\Middleware\GuestAdmin::class,
         'book.rate' => \App\Http\Middleware\Rate::class,
+        'sub' => \App\Http\Middleware\Subscription::class,
     ];
 }

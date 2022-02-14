@@ -19,8 +19,7 @@ class CreateRatesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('book_id')->unsigned();
             $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
-            $table->bigInteger('vendor_id')->unsigned();
-            $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade');
+            $table->foreignId('vendor_id')->nullable()->constrained('vendors')->nullOnDelete();
             $table->string('type');
             $table->integer('rate');
             $table->timestamps();

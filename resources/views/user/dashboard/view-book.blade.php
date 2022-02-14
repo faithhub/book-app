@@ -103,6 +103,7 @@
 
 
                                         <div class="mb-4 mt-3 align-items-center">
+                                            @if(isset(Auth::user()->plan_id))
                                             @if($book->book_paid_free == "Paid")
                                             <?php
                                             $carts = Session::get('user_carts');
@@ -135,6 +136,16 @@
                                                     <button type="submit" onclick="payWithPaystack2()" class="btn btn-primary mr-2" style="font-size: 20px; letter-spacing: 2px;">Rent Book</button>
                                                 </form>
                                             </div>
+                                            @elseif(in_array($book->id, $rent_g))
+                                            <i class="ri-shopping-cart-2-fill p-1 text-primary cart btn" style="cursor: text; font-size: 18px">Rent by Group Member</i>
+                                            <div class="mb-4 mt-3 d-flex align-items-center">
+                                                <a onclick="return confirm('Are you sure you want to access this Book?')" href='{{ url("user/access-book/$book->book_name/$book->id") }}' class="btn btn-primary view-more mr-2">Access Book</a>
+                                            </div>
+                                            @elseif(in_array($book->id, $bought_g))
+                                            <i class="ri-shopping-cart-2-fill p-1 text-primary cart btn" style="cursor: text; font-size: 18px">Bought by Group Member</i>
+                                            <div class="mb-4 mt-3 d-flex align-items-center">
+                                                <a onclick="return confirm('Are you sure you want to access this Book?')" href='{{ url("user/access-book/$book->book_name/$book->id") }}' class="btn btn-primary view-more mr-2">Access Book</a>
+                                            </div>
                                             @else
                                             <form action="{{ route('user.add.cart') }}" method="POST">
                                                 @csrf
@@ -159,6 +170,13 @@
                                             @endif
                                             @else
                                             <button id="add-to-cart" class="p-1 rounded"><i class="ri-shopping-cart-2-fill text-primary cart shadow" style="cursor: text; font-size: 18px"> Free</i></button>
+                                            <div class="mb-4 mt-3 d-flex align-items-center">
+                                                <a onclick="return confirm('Are you sure you want to access this Book?')" href='{{ url("user/access-book/$book->book_name/$book->id") }}' class="btn btn-primary view-more mr-2">Access Book</a>
+                                            </div>
+                                            @endif
+                                            @else
+
+                                            <a href="{{ route('user.sub') }}" class="btn btn-primary mr-2" style="font-size: 20px; letter-spacing: 2px;">Subscribe</a>
                                             @endif
                                         </div>
                                     </div>
@@ -184,6 +202,15 @@
                                 <label for="cpass"><b>Title of Material:</b></label>
                                 <input type="text" class="form-control" id="cpass" value="{{old('book_name')}}" name="book_name">
                                 @error('book_name')
+                                <span class="invalid-feedback mb-2" role="alert" style="display: block">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="cpass"><b>Tag:</b></label>
+                                <input type="text" class="form-control" id="cpass" value="{{old('book_tag')}}" name="book_tag">
+                                @error('book_tag')
                                 <span class="invalid-feedback mb-2" role="alert" style="display: block">
                                     <strong>{{ $message }}</strong>
                                 </span>

@@ -14,8 +14,8 @@ class BookMaterialSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('book_materials')->delete();
-
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('book_materials')->truncate();
         DB::table('book_materials')->insert([
             
             [

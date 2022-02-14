@@ -198,6 +198,18 @@
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                     @enderror
+                                                </div>                                                
+                                                <div class="form-group col-sm-12" id="citation" style="display: block">
+                                                    <label for="cpass"><b>Law Report Citation:</b></label>
+                                                    <div class="custom-file">
+                                                        <input type="file" accept="" name="citation" class="custom-file-input" id="customFile">
+                                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                                    </div>
+                                                    @error('citation')
+                                                    <span class="invalid-feedback mb-2" role="alert" style="display: block">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
                                                 </div>
                                                 <div class="form-group col-sm-12">
                                                     <div class="mb-3 form-check">
@@ -245,6 +257,11 @@
     }
 
     function materialType(id) {
+        if(id == '2'){
+                document.getElementById('citation').style.display = 'block';
+        }else{
+                document.getElementById('citation').style.display = 'none';
+        }
         switch (id) {
             case "5":
                 document.getElementById('videoUpload').style.display = 'block';
@@ -256,6 +273,7 @@
                 break;
         }
     }
+    
 
     function coverType(id) {
         switch (id) {

@@ -1,5 +1,5 @@
-@extends('vendor.layouts.app')
-@section('vendor')
+@extends('admin.layouts.app')
+@section('admin')
 <!-- Page Content  -->
 
 <div id="content-page" class="content-page">

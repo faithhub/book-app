@@ -18,6 +18,13 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('username')->unique();
+            $table->foreignId('plan_id')->nullable()->constrained('subscriptions')->nullOnDelete();
+            $table->boolean('in_group')->default(false);
+            $table->boolean('active_group')->default(false);
+            $table->foreignId('group_id')->nullable()->constrained('groups')->nullOnDelete();
+            $table->date('plan_start')->nullable();
+            $table->date('plan_ended')->nullable();
+            $table->string('plan')->nullable();
             $table->string('gender');
             $table->string('dob');
             $table->string('mobile');

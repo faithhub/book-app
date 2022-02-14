@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             BookCategorySeeder::class,
             BookMaterialSeeder::class,
-            CountrySeeder::class
+            CountrySeeder::class,
+            SubscriptionSeeder::class
         ]);
     }
 }

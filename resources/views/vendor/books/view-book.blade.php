@@ -99,8 +99,11 @@
                                         <div class="text-primary mb-1">Tag: <span class="text-body text-me">{{$book->book_tag}}</span></div>
                                         <div class="text-primary mb-1">Year of Publish: <span class="text-body text-me blder">{{$book->book_year}}</span></div>
                                         <div class="text-primary mb-1">Country of Publish: <span class="text-body text-me">{{$book->country->country_label}}</span></div>
+                                        @if($book->book_material_type == 2)
+                                        <div class="text-primary mb-1">Law Report Citation: <a href="{{  asset('MATERIALPPDF/'.$book->citation) }}" target="blank" class="badge badge-primary"> View</a></div>
+                                        @endif
                                         <div class="mb-2 d-flex align-items-center mt-2">
-                                            <div class="text-primary mb-1 p-2">Total number of sold: <span class="text-body text-me">{{$book->sold ?? 0}}</span></div>
+                                            <div class="text-primary mb-1 p-2">Total number of sold: <span class="text-body text-me">{{$book->sold ?? 0 }}</span></div>
                                             <div class="text-primary mb-1 p-2">Total number of Rent: <span class="text-body text-me">{{$book->rent ?? 0 }}</span></div>
                                         </div>
                                         <div class="mb-2 d-flex align-items-center mt-2">
@@ -110,7 +113,7 @@
                                             </div>
                                             @endif
                                             <div class="mb-4 mt-3 d-flex align-items-center">
-                                            <a href='{{ url("vendor/edit-book/$book->book_name/$book->id") }}' class="btn btn-primary view-more mr-2">Edit Book</a>
+                                                <a href='{{ url("vendor/edit-book/$book->book_name/$book->id") }}' class="btn btn-primary view-more mr-2">Edit Book</a>
                                             </div>
                                         </div>
                                     </div>

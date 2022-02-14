@@ -15,8 +15,8 @@ class BookCategorySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('book_categories')->delete();
-
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('book_categories')->truncate();
         DB::table('book_categories')->insert([
             [
                 'name' => 'Business & Commercial Law ',

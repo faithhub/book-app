@@ -24,7 +24,14 @@ class User extends Authenticatable
         'username',
         'mobile',
         'dob',
-        'gender'
+        'gender',
+        'in_group',
+        'group_id',
+        'plan_id',
+        'plan',
+        'active_group',
+        'plan_start',
+        'plan_ended',
     ];
 
     /**
@@ -45,4 +52,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sub_plan()
+    {
+        return $this->hasOne(Subscription::class, 'id', 'plan_id');
+    }
 }

@@ -4,8 +4,10 @@ namespace App\Http\Middleware;
 
 use App\Models\BoughtBook;
 use App\Models\Cart;
+use App\Models\Group;
 use App\Models\Rate;
 use App\Models\RentedBook;
+use App\Models\User as ModelsUser;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
@@ -24,6 +26,18 @@ class User
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()) {
+            if (Carbon::now() > Auth::user()->plan_ended) {
+                # code...
+                if (Auth::user()->in_group) {
+                    $group = Group::find(Auth::user()->group_id);
+                    if (Carbon::now() > $group->plan_ended) {
+                        ModelsUser::where('id', Auth::user()->id)
+                            ->update(['active_group' => false]);
+                    }
+                }
+                ModelsUser::where('id', Auth::user()->id)
+                    ->update(['plan_id' => null]);
+            }
             //dd("bjkbjkbk");
             $boughts = BoughtBook::where('user_id', Auth::user()->id)->with('book:id,vendor_id')->with('rate')->get();
             $rents = RentedBook::where('user_id', Auth::user()->id)->get();

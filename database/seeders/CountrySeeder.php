@@ -260,8 +260,8 @@ class CountrySeeder extends Seeder
         );
 
 
-        DB::table('countries')->delete();
-
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('countries')->truncate();
         DB::table('countries')->insert($settings_countries);
     }
 }

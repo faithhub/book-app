@@ -25,6 +25,8 @@ class Book extends Model
         'video_cover',
         'book_material_pdf',
         'book_material_video',
+        'citation',
+        'is_admin',
     ];
 
     public function vendor(){

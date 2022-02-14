@@ -99,13 +99,19 @@
                                         <div class="text-primary mb-1">Tag: <span class="text-body text-me">{{$book->book_tag}}</span></div>
                                         <div class="text-primary mb-1">Year of Publish: <span class="text-body text-me blder">{{$book->book_year}}</span></div>
                                         <div class="text-primary mb-1">Country of Publish: <span class="text-body text-me">{{$book->country->country_label}}</span></div>
+                                        @if($book->book_material_type == 2)
+                                        <div class="text-primary mb-1">Law Report Citation: <a href="{{  asset('MATERIALPPDF/'.$book->citation) }}" target="blank" class="badge badge-primary"> View</a></div>
+                                        @endif
                                         <div class="mb-2 d-flex align-items-center mt-2">
-                                            <div class="text-primary mb-1 p-2">Total number of sold: <span class="text-body text-me">{{$book->sold}}</span></div>
-                                            <div class="text-primary mb-1 p-2">Total number of Rent: <span class="text-body text-me">{{$book->rent}}</span></div>
+                                            <div class="text-primary mb-1 p-2">Total number of sold: <span class="text-body text-me">{{$book->sold ?? 0}}</span></div>
+                                            <div class="text-primary mb-1 p-2">Total number of Rent: <span class="text-body text-me">{{$book->rent ?? 0}}</span></div>
                                         </div>
 
                                         <div class="mb-4 mt-3 d-flex align-items-center">
                                             <a onclick="return confirm('Are you sure you want to access this Material?')" href='{{ url("admin/access-material/$book->book_name/$book->id") }}' class="btn btn-primary view-more mr-2">Access Book</a>
+                                            @if($book->is_admin)
+                                                <a href='{{ url("admin/edit-book/$book->book_name/$book->id") }}' class="btn btn-primary view-more mr-2">Edit Book</a>
+                                            @endif
                                             <a onclick="return confirm('Are you sure you want to delete this Material?')" href='{{ url("admin/delete-material/$book->id") }}' class="btn btn-danger view-more mr-2">Delete Book</a>
                                         </div>
                                     </div>

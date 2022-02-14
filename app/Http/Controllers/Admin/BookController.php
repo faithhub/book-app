@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vendor;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
@@ -22,8 +22,7 @@ class BookController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth.vendor');
-        
+        $this->middleware('auth.admin');
         function save_file($file, $path)
         {
             $name = $path . date('dMY') . time() . '.' . $file->getClientOriginalExtension();
@@ -33,16 +32,17 @@ class BookController extends Controller
         }
     }
 
+    //
     public function my_books()
     {
         try {
             $data['title'] = "My Materials";
-            $data['books'] = $b = Book::where('vendor_id', Auth::guard('vendor')->user()->id)->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->paginate(5);
+            $data['books'] = $b = Book::where('is_admin', true)->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->paginate(5);
             //dd($b);
-            return view('vendor.books.my-books', $data);
+            return view('admin.books.my-books', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
-            return redirect(RouteServiceProvider::VENDOR);
+            return redirect(RouteServiceProvider::ADMIN);
         }
     }
 
@@ -125,7 +125,7 @@ class BookController extends Controller
                 }
 
                 $data = array(
-                    'vendor_id' => Auth::guard('vendor')->user()->id,
+                    'vendor_id' => null,
                     'book_author' => $request->book_author,
                     'book_name' => $request->book_name,
                     'book_year' => $request->book_year,
@@ -142,24 +142,22 @@ class BookController extends Controller
                     'citation' => $request->hasFile('citation') ? $citation : '',
                     'book_material_video' => $request->hasFile('book_material_video') ? $book_material_video : '',
                     'book_desc' => $request->book_desc,
-                    'is_admin' => false,
+                    'is_admin' => true,
                 );
-
-                //dd($data);
 
                 Book::create($data);
                 Session::flash('success', 'Material Uploaded Successfully');
-                return redirect()->route('vendor.my.books');
+                return redirect()->route('admin.materials');
             }
 
-            $data['title'] = "Vendor Upload New Material";
+            $data['title'] = "Admin Upload New Material";
             $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
             $data['countries'] = Country::orderBy('id', 'asc')->get();
             $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
-            return view('vendor.books.upload-new-book', $data);
+            return view('admin.books.upload', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
-            return redirect(RouteServiceProvider::VENDOR);
+            return redirect(RouteServiceProvider::ADMIN);
         }
     }
 
@@ -175,19 +173,19 @@ class BookController extends Controller
             return view('vendor.books.view-book', $data);
         } catch (\Throwable $th) {
             Session::flash('error', "Material not found");
-            return redirect(RouteServiceProvider::VENDOR);
+            return redirect(RouteServiceProvider::ADMIN);
         }
     }
 
     public function edit_book(Request $request, $name, $id)
     {
         try {
-            $my_book = Book::where(['vendor_id' => Auth::guard('vendor')->user()->id, 'id' => $id])->first();
+            $my_book = Book::where(['is_admin' => true, 'id' => $id])->first();
             if ($my_book == null) {
                 Session::flash('warning', 'Unable to access this material');
                 return back();
             }
-            
+
             if ($_POST) {
                 $rules = array(
                     'book_author' => ['required'],
@@ -263,7 +261,6 @@ class BookController extends Controller
 
                 $book = Book::find($request->id);
                 $data = array(
-                    'vendor_id' => Auth::guard('vendor')->user()->id,
                     'book_author' => $request->book_author,
                     'book_name' => $request->book_name,
                     'book_year' => $request->book_year,
@@ -281,20 +278,20 @@ class BookController extends Controller
                     'book_material_video' => $request->hasFile('book_material_video') ? $book_material_video : $book->book_material_video,
                     'book_desc' => $request->book_desc,
                 );
-                
+
                 DB::table('books')->where('id', $request->id)->update($data);
                 Session::flash('success', 'Material Updated Successfully');
-                return redirect()->route('vendor.my.books');
+                return redirect()->route('admin.materials');
             }
             $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
             $data['countries'] = Country::orderBy('id', 'asc')->get();
             $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
-            $data['book'] = $b = Book::where(['vendor_id' => Auth::guard('vendor')->user()->id, 'id' => $id])->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->first();
+            $data['book'] = $b = Book::where(['is_admin' => true, 'id' => $id])->with(['category:id,name', 'material:id,name', 'country:id,country_label'])->orderBy('id', 'asc')->first();
             $data['title'] = $b->book_name;
-            return view('vendor.books.edit-book', $data);
+            return view('admin.books.edit', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
-            return redirect(RouteServiceProvider::VENDOR);
+            return redirect(RouteServiceProvider::ADMIN);
         }
     }
 
@@ -322,7 +319,7 @@ class BookController extends Controller
             return view('vendor.books.access-book', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
-            return redirect(RouteServiceProvider::VENDOR);
+            return redirect(RouteServiceProvider::ADMIN);
         }
     }
 }
