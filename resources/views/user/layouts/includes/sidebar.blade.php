@@ -24,8 +24,8 @@
                 <li class="{{ request()->is('user/bought-books') || request()->is('user/rent-books')  ? 'active active-now' : '' }}">
                     <a href="#admin" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="ri-book-line iq-arrow-left"></i><span>My Library</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                     <ul id="admin" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                        <li class="{{ request()->is('user/bought-books')  ? 'active' : '' }}"><a href="{{ route('user.bought') }}"><i class="ri-book-line"></i>Bought Book</a></li>
-                        <li class="{{ request()->is('user/rent-books')  ? 'active' : '' }}"><a href="{{ route('user.rent') }}"><i class="ri-book-line"></i>Rent Books</a></li>
+                        <li class="{{ request()->is('user/bought-books')  ? 'active' : '' }}"><a href="{{ route('user.bought') }}"><i class="ri-book-line"></i>Bought Books</a></li>
+                        <li class="{{ request()->is('user/rent-books')  ? 'active' : '' }}"><a href="{{ route('user.rent') }}"><i class="ri-book-line"></i>Rented Books</a></li>
                     </ul>
                 </li>
                 
