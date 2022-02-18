@@ -53,7 +53,7 @@
                             <div class="row align-items-center">
                                 <div class="form-group col-sm-12">
                                     <label for="cpass"><b>Support Email:</b></label>
-                                    <input type="text" class="form-control" id="cpass" value="Support@gmail.com" disabled>
+                                    <input type="text" class="form-control" id="cpass" value="{{ env('ADMIN_MAILER') }}" disabled>
                                 </div>
                                 <div class="form-group col-sm-12">
                                     <label for="cpass"><b>Subject:</b></label>
