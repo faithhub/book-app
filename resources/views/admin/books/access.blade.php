@@ -41,6 +41,7 @@
                             fileName: "{{ $title }}.pdf"
                         }
                     }, {
+                        enableSearchAPIs: true,
                         showAnnotationTools: false,
                         showDownloadPDF: false,
                         showPrintPDF: false
