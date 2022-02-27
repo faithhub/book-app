@@ -1,5 +1,5 @@
-@extends('user.layouts.app')
-@section('user')
+@extends('admin.layouts.app')
+@section('admin')
 <style>
     .text-me {
         color: #6c757d;
