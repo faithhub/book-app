@@ -41,10 +41,10 @@
                             fileName: "{{ $title }}.pdf"
                         }
                     }, {
-                        showAnnotationTools: false,
+                        enableSearchAPIs: true,
+                        showAnnotationTools: true,
                         showDownloadPDF: false,
                         showPrintPDF: false,
-                        enableSearchAPIs: true,
                         // showAnnotationTools: false,
                         // showDownloadPDF: false,
                         // showPrintPDF: false
