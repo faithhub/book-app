@@ -42,7 +42,7 @@
                             fileName: "{{ $title }}.pdf"
                         }
                     }, {
-                        enableSearchAPIs: true,
+                        // enableSearchAPIs: true,
                         showAnnotationTools: false,
                         showDownloadPDF: false,
                         showPrintPDF: false
@@ -52,6 +52,9 @@
 
                     previewFilePromise.then(adobeViewer => {
                         adobeViewer.getAPIs().then(apis => {
+                            apis.search(true)
+                                .then(searchObject => console.log(searchObject))
+                                .catch(error => console.log(error));
                             apis.enableTextSelection(allowTextSelection)
                                 .then(() => console.log("Success"))
                                 .catch(error => console.log(error));
