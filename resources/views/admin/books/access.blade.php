@@ -41,10 +41,14 @@
                             fileName: "{{ $title }}.pdf"
                         }
                     }, {
-                        enableSearchAPIs: true,
                         showAnnotationTools: false,
                         showDownloadPDF: false,
-                        showPrintPDF: false
+                        showPrintPDF: false,
+
+                        // enableSearchAPIs: true,
+                        // showAnnotationTools: false,
+                        // showDownloadPDF: false,
+                        // showPrintPDF: false
                     });
                 });
             </script>
