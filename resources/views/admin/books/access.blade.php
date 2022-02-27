@@ -49,6 +49,16 @@
                         // showDownloadPDF: false,
                         // showPrintPDF: false
                     });
+
+                    const allowTextSelection = false;
+
+                    previewFilePromise.then(adobeViewer => {
+                        adobeViewer.getAPIs().then(apis => {
+                            apis.enableTextSelection(allowTextSelection)
+                                .then(() => console.log("Success"))
+                                .catch(error => console.log(error));
+                        });
+                    });
                 });
             </script>
             @endif
