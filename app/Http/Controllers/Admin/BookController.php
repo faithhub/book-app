@@ -153,7 +153,7 @@ class BookController extends Controller
             $data['title'] = "Admin Upload New Material";
             $data['book_cats'] = BookCategory::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
             $data['countries'] = Country::orderBy('id', 'asc')->get();
-            $data['materials'] = BookMaterial::where(['status' => 'Active', 'role' => 'Vendor'])->orderBy('name', 'asc')->get();
+            $data['materials'] = $b = BookMaterial::where(['status' => 'Active'])->whereIn('role', ['Vendor', 'Admin'])->orderBy('name', 'asc')->get();
             return view('admin.books.upload', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());

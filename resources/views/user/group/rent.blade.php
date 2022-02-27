@@ -7,7 +7,7 @@
                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                     <div class="iq-card-header d-flex justify-content-between align-items-center position-relative mb-0 similar-detail">
                         <div class="iq-header-title">
-                            <h4 class="card-title mb-0">Bought Books</h4>
+                            <h4 class="card-title mb-0">Rented Books</h4>
                         </div>
                         <div class="iq-card-header-toolbar d-flex align-items-center">
                         </div>

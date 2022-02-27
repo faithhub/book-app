@@ -17,7 +17,7 @@ class BookMaterialSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('book_materials')->truncate();
         DB::table('book_materials')->insert([
-            
+
             [
                 'name' => 'Textbooks',
                 'status' => 'Active',
@@ -42,6 +42,11 @@ class BookMaterialSeeder extends Seeder
                 'name' => 'Videos',
                 'status' => 'Active',
                 'role' => 'Vendor',
+            ],
+            [
+                'name' => 'Law',
+                'status' => 'Active',
+                'role' => 'Admin',
             ],
         ]);
     }
