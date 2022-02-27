@@ -44,8 +44,7 @@
                         showAnnotationTools: false,
                         showDownloadPDF: false,
                         showPrintPDF: false,
-
-                        // enableSearchAPIs: true,
+                        enableSearchAPIs: true,
                         // showAnnotationTools: false,
                         // showDownloadPDF: false,
                         // showPrintPDF: false
